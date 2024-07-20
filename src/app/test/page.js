@@ -5,8 +5,8 @@ import ProductCard2 from "@/components/ProductCard2";
 import ImageFooter from "@/components/Footer/ImageFooter";
 const page = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <ImageFooter /> 
+    <div className="flex justify-between">
+     
     </div>
   );
 };

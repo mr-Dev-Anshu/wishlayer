@@ -5,7 +5,6 @@ import EventsDecoration from "@/components/EventsDecoration";
 import Ads from "@/components/Ads";
 import Party from "@/components/Explore/Party";
 import Room from "@/components/Explore/Room";
-import ImageFooter from "@/components/Footer/ImageFooter";
 import Footer from "@/components/Footer/Footer";
 export default function Home() {
   return (
@@ -15,9 +14,9 @@ export default function Home() {
       <CakeExplore />
       <EventsDecoration />
       <Ads />
-      <Party /> 
-      <Room/>
-     <Footer/>
+      <Party />
+      <Room />
+      <Footer />
     </div>
   );
 }
