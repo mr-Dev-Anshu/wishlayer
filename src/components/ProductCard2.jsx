@@ -3,9 +3,9 @@
 import React from "react";
 import Image from "next/image";
 
-const ProductCard2 = ({ img, discount, title, price }) => {
+const ProductCard2 = ({ img, discount, title, price  , rating  }) => {
   const totalStars = 5; // Total number of stars in the rating system
-  const filledStars = Math.round(3); // Round rating to nearest whole number
+  const filledStars = Math.round(rating); // Round rating to nearest whole number
   return (
     <div className="relative w-full max-w-sm  rounded-lg overflow-hidden shadow-lg">
       {/* Background Image */}

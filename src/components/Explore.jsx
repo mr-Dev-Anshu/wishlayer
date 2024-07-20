@@ -1,15 +1,14 @@
 // src/components/Explore.js
 import React from "react";
-import explorecake from "@/assets/explorecake.png";
 import Image from "next/image";
-import ProductCard from "./ProductCard";
+import ProductCard2 from "./ProductCard2";
 
 const Explore = ({headingImage , data , title }) => {
   return (
     <div className="">
       <div className="my-12">
         <div className="flex text-3xl font-bold justify-center">
-          Explore Our {title}
+          {title}
         </div>
         <div className="flex justify-center mt-2 ">
           <div className="w-14 h-2 bg-[#F0642966] rounded-lg"></div>
@@ -19,7 +18,7 @@ const Explore = ({headingImage , data , title }) => {
       <div className="grid md:grid-cols-6 px-12 py-12">
         {data.map((item) => (
           <div className="md:col-span-2">
-            <ProductCard
+            <ProductCard2
               img={item.img}
               discount={item.discount}
               title={item.title}
