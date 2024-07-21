@@ -25,13 +25,13 @@ export default function SimpleSlider() {
       <>
         <Slider {...settings} className="slider-container">
           <div>
-            <Image src={hero1} alt="hero1" layout="responsive" width={800} height={400} />
+            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero1" layout="responsive" width={800} height={400} />
           </div>
           <div>
-            <Image src={hero2} alt="hero2" layout="responsive" width={800} height={400} />
+            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero2" layout="responsive" width={800} height={400} />
           </div>
           <div>
-            <Image src={hero3} alt="hero3" layout="responsive" width={800} height={400} />
+            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero3" layout="responsive" width={800} height={400} />
           </div>
         </Slider>
   
