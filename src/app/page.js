@@ -16,7 +16,6 @@ export default function Home() {
       <Ads />
       <Party />
       <Room />
-      <Footer />
     </div>
   );
 }

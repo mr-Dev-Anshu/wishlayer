@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.scroll-hidden {
+    overflow: auto; /* Allow scrolling */
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .scroll-hidden::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+  }
