@@ -6,11 +6,11 @@ import Link from "next/link";
 
 const ProductList = () => {
   return (
-    <div className="px-6">
-      <div className="grid border border-gray-200 md:grid-cols-3  py-4 gap-4  overflow-y-scroll h-screen scroll-hidden">
-        {[...CakeData, ...EventsData].map((item) => (
-          <Link href={`/${item.type}`}>
-            <div className="md:col-span-1   ">
+    <div className="px-4 md:px-8 lg:px-12">
+      <div className="grid border border-gray-200 md:grid-cols-2 lg:grid-cols-3 py-4 gap-6 overflow-y-auto h-screen">
+        {[...CakeData, ...EventsData].map((item, index) => (
+          <Link href={`/${item.type}`} key={index}>
+            <div className="md:col-span-1">
               <ProductCard2
                 img={item.img}
                 discount={item.discount}

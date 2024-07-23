@@ -6,30 +6,30 @@ import { AboutContent } from "@/constant/AboutContent";
 
 const RoomInfo = () => {
   return (
-    <div className="flex p-10 md:mr-20">
-      <div className="w-[620px]">
+    <div className="flex flex-col md:flex-row p-4 md:p-10 md:mr-20">
+      <div className="w-full md:w-[620px] mb-6 md:mb-0">
         <p></p>
       </div>
-      <div className="p-2">
-        <div className="">
-          <p className="text-xl font-medium">Hotel Comfort Inn</p>
-          <p className="flex text-xs pb-2">
-            4.9{" "}
+      <div className="w-full md:w-auto p-2">
+        <div>
+          <p className="text-lg md:text-xl font-medium">Hotel Comfort Inn</p>
+          <p className="flex text-xs pb-2 items-center">
+            4.9
             <span className="px-2 text-yellow-500 py-0.5">
               <FaStar />
-            </span>{" "}
+            </span>
             (2025)
           </p>
           <hr />
         </div>
-        <div className="flex py-3 pt-10">
-          <div className="flex flex-col border-2 p-2 w-[280px] border-[#F06429] rounded-s-md ">
+        <div className="flex flex-col md:flex-row py-3 pt-10">
+          <div className="flex flex-col border-2 p-2 w-full md:w-[280px] border-[#F06429] rounded-t-md md:rounded-s-md md:rounded-e-none">
             <label htmlFor="event_date" className="text-[#F06429] px-4">
               Check-in Date
             </label>
-            <input type="date" id="event_date" className=" px-4" />
+            <input type="date" id="event_date" className="px-4" />
           </div>
-          <div className="flex flex-col border-2 p-2 w-[280px] border-[#F06429] border-l-0 rounded-e-md">
+          <div className="flex flex-col border-2 p-2 w-full md:w-[280px] border-[#F06429] md:border-l-0 border-t-0 md:border-t-2 rounded-b-md md:rounded-e-md md:rounded-s-none">
             <label htmlFor="event_type" className="text-[#F06429] px-4">
               Check-in Time
             </label>
@@ -40,15 +40,15 @@ const RoomInfo = () => {
           <p className="text-[#F06429]">Select Your Slot</p>
           <div className="bg-[#FFF3EE] flex flex-col p-2 rounded-md">
             <label className="p-2">
-              <input type="radio" value="option1" id="option1" name="options" />{" "}
+              <input type="radio" value="option1" id="option1" name="options" />
               2352 <span className="text-xs">3 Hrs</span>
             </label>
             <label className="p-2">
-              <input type="radio" value="option2" id="option1" name="options" />{" "}
+              <input type="radio" value="option2" id="option1" name="options" />
               2800 <span className="text-xs">6 Hrs</span>
             </label>
             <label className="p-2">
-              <input type="radio" value="option3" id="option1" name="options" />{" "}
+              <input type="radio" value="option3" id="option1" name="options" />
               3360 <span className="text-xs">12 Hrs</span>
             </label>
           </div>
@@ -67,29 +67,28 @@ const RoomInfo = () => {
             </select>
           </div>
         </div>
-        <div className="flex justify-end">
-          <div className=" mt-6 ">
+        <div className="flex flex-col md:flex-row justify-between items-center md:justify-end">
+          <div className="mt-6 md:mt-0 md:mr-4">
             <p className="text-[#F06429] text-xs px-1 pr-6">Total Price</p>
             <p className="font-semibold px-1">2352</p>
           </div>
-          <button className="bg-[#F06429] rounded-md  text-white p-2 mt-6 ">
+          <button className="bg-[#F06429] rounded-md text-white p-2 mt-6 md:mt-0">
             Reserve Now
           </button>
         </div>
         <div className="flex justify-end pt-4">
-          <p className="text-xs font-extralight">
-            By Clicking 'Reserve now' Button, you agree to out{" "}
-            <span className="text-[#F06429] ">T&C</span> and{" "}
-            <span className="text-[#F06429] ">Hotel Policies</span>
+          <p className="text-xs font-extralight text-center md:text-right">
+            By Clicking 'Reserve now' Button, you agree to our{" "}
+            <span className="text-[#F06429]">T&C</span> and{" "}
+            <span className="text-[#F06429]">Hotel Policies</span>
           </p>
         </div>
         <div className="py-10">
           <div className="p-4">
-            <p className="text-[#F06429] font-semibold flex ">
-              {" "}
+            <p className="text-[#F06429] font-semibold flex items-center">
               <span className="p-1 pr-2">
                 <TbHearts />
-              </span>{" "}
+              </span>
               Couple Friendly
             </p>
             <p>
@@ -98,10 +97,9 @@ const RoomInfo = () => {
             </p>
           </div>
           <div className="p-4">
-            <p className="text-[#F06429] font-semibold flex">
-              {" "}
+            <p className="text-[#F06429] font-semibold flex items-center">
               <span className="p-1 pr-2">
-                <FaWallet />{" "}
+                <FaWallet />
               </span>
               Pay At Hotel
             </p>
@@ -111,25 +109,22 @@ const RoomInfo = () => {
             </p>
           </div>
           <div className="p-4">
-            <p className="text-[#F06429] font-semibold flex ">
-              {" "}
+            <p className="text-[#F06429] font-semibold flex items-center">
               <span className="p-1 pr-2">
-                {" "}
-                <FaAddressCard />{" "}
+                <FaAddressCard />
               </span>
               Local ID Accepted
             </p>
-            <p>We accept Same City Guests with hassle free check-in</p>
+            <p>We accept Same City Guests with hassle-free check-in</p>
           </div>
         </div>
-        <p className=" text-[#F06429] py-2 px-5 font-semibold">
+        <p className="text-[#F06429] py-2 px-5 font-semibold">
           Amenities at Hotel Comfort Inn
         </p>
-        <div className="grid grid-cols-3">
-          {" "}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
           {AboutContent.map((items, index) => {
             return (
-              <div className="flex p-4">
+              <div key={index} className="flex p-4 items-center">
                 <p className="pr-4 p-1">{items.icon}</p>
                 <p>{items.title}</p>
               </div>

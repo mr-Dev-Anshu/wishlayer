@@ -4,31 +4,32 @@ import Image from "next/image";
 import React from "react";
 import img1 from "@/assets/cakeIcons.png";
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
-      <div className="flex justify-between mt-6">
-        <div>
+    <div className="px-4 md:px-6 lg:px-8">
+      <div className="flex flex-col md:flex-row gap-6 mt-6">
+        <div className="w-full md:w-1/4 lg:w-1/5">
           <Filter />
         </div>
-        <div>
+        <div className="w-full md:w-3/4 lg:w-4/5">
           <ProductList />
         </div>
       </div>
-      <div className="grid  px-24 md:grid-cols-2 items-center  md:my-24">
-        <div className="md:col-span-1">
-          <Image src={img1} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12 px-4 md:px-24 lg:px-32">
+        <div className="flex items-center justify-center">
+          <Image src={img1} alt="Cake Icons" className="object-cover rounded-lg" />
         </div>
-        <div className=" col-span-1">
-          <div className="flex gap-4 ">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col md:flex-row gap-4">
             <input
               placeholder="Enter Your Email ..."
-              className="w-[80%]  p-3 rounded-md focus:outline-none border border-gray-400 focus:border-green-600"
+              className="w-full md:w-[80%] p-3 rounded-md border border-gray-400 focus:border-green-600 focus:outline-none"
               type="text"
             />
-            <button className="bg-[#F35C5C] p-3 w-fit  text-white font-semibold rounded-lg">
+            <button className="bg-[#F35C5C] text-white font-semibold rounded-lg px-6 py-3 w-full md:w-auto">
               Subscribe
-            </button>{" "}
+            </button>
           </div>
         </div>
       </div>
@@ -36,4 +37,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

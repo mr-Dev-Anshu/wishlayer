@@ -14,10 +14,10 @@ const page = () => {
   return (
     <div className="">
       <div className=" grid md:grid-cols-5 ">
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <Products img={img} />
         </div>
-        <div className="col-span-3">
+        <div className="md:col-span-3">
           <CakeProductInfo />
           <RatingAndReview />
         </div>
