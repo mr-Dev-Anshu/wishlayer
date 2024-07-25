@@ -27,13 +27,17 @@ const RoomInfo = () => {
             <label htmlFor="event_date" className="text-[#F06429] px-4">
               Check-in Date
             </label>
-            <input type="date" id="event_date" className="px-4" />
+            <input
+              type="date"
+              id="event_date"
+              className="px-4 focus:outline-none"
+            />
           </div>
           <div className="flex flex-col border-2 p-2 w-full md:w-[280px] border-[#F06429] md:border-l-0 border-t-0 md:border-t-2 rounded-b-md md:rounded-e-md md:rounded-s-none">
             <label htmlFor="event_type" className="text-[#F06429] px-4">
               Check-in Time
             </label>
-            <input type="time" className="px-4" />
+            <input type="time" className="px-4 focus:outline-none" />
           </div>
         </div>
         <div className="py-4">
@@ -41,7 +45,7 @@ const RoomInfo = () => {
           <div className="bg-[#FFF3EE] flex flex-col p-2 rounded-md">
             <label className="p-2">
               <input type="radio" value="option1" id="option1" name="options" />
-              2352 <span className="text-xs">3 Hrs</span>
+              2352 <span className="text-xs focus:outline-none">3 Hrs</span>
             </label>
             <label className="p-2">
               <input type="radio" value="option2" id="option1" name="options" />
@@ -58,7 +62,7 @@ const RoomInfo = () => {
             <label htmlFor="guestDetails" className="text-[#F06429] px-4 pt-2">
               Room & Guest Details
             </label>
-            <select id="guestDetails" className="px-3">
+            <select id="guestDetails" className="px-3  focus:outline-none">
               <option value="" disabled>
                 Select an option
               </option>
@@ -67,7 +71,7 @@ const RoomInfo = () => {
             </select>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-center md:justify-end">
+        <div className="flex md:mt-4 flex-col md:flex-row justify-between items-center md:justify-end">
           <div className="mt-6 md:mt-0 md:mr-4">
             <p className="text-[#F06429] text-xs px-1 pr-6">Total Price</p>
             <p className="font-semibold px-1">2352</p>

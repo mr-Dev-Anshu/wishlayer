@@ -10,10 +10,11 @@ import RatingAndReview from "@/components/Productpage/RatingAndReview";
 import Filter from "@/components/Products/Filter";
 import ProductList from "@/components/Products/ProductList";
 import RoomInfo from "@/components/Productpage/RoomInfo";
+import AuthPage from "@/components/auth/AuthPage";
 const page = () => {
   return (
     <div className="flex justify-between">
-       <RoomInfo/>
+       <AuthPage/> 
     </div>
   );
 };

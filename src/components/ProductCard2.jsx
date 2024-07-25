@@ -26,7 +26,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
 
       {/* Card Content */}
       <div className="p-2 md:p-4">
-        <p className="text-center text-lg md:text-xl font-medium my-1 md:my-2">
+        <p className="text-center  md:text-xl font-medium my-1 md:my-2">
           {title}
         </p>
         <p className="text-yellow-500 text-lg md:text-xl flex justify-center">
@@ -35,7 +35,9 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
           ))}
         </p>
         <div className="mt-2 md:mt-4 flex justify-center">
-          <span className="text-base md:text-lg font-bold text-gray-900">${price}</span>
+          <span className="text-base md:text-lg font-bold text-gray-900">
+            ${price}
+          </span>
         </div>
       </div>
     </div>

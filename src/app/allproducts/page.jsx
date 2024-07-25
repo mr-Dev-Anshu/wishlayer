@@ -18,7 +18,11 @@ const Page = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12 px-4 md:px-24 lg:px-32">
         <div className="flex items-center justify-center">
-          <Image src={img1} alt="Cake Icons" className="object-cover rounded-lg" />
+          <Image
+            src={img1}
+            alt="Cake Icons"
+            className="object-cover rounded-lg"
+          />
         </div>
         <div className="flex items-center justify-center">
           <div className="flex flex-col md:flex-row gap-4">

@@ -50,7 +50,7 @@ const ProductCard = ({ img, discount, title, price }) => {
             </span>
           </div>
         </div>
-        <p className="  flex justify-center  text-xl font-medium my-2">
+        <p className="  flex justify-center  md:text-xl font-medium my-2">
           {title}{" "}
         </p>
         <div className="mt-4 flex justify-center ">
