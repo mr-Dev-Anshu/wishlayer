@@ -24,11 +24,11 @@ const Filter = () => {
 
   return (
     <div className="space-y-6 px-4 md:px-6 lg:px-8">
-      <h1 className="text-xl md:text-2xl font-bold">Filters</h1>
+      <h1 className="text-xl md:text-xl font-bold">Filters</h1>
 
       <div className="space-y-4">
         {filter.map((item) => (
-          <div key={item} className="flex items-center text-base md:text-lg lg:text-xl">
+          <div key={item} className="flex items-center md:text-base  lg:text-xl">
             <div className="flex items-center gap-2 md:gap-3 lg:gap-4 font-semibold">
               <LiaGreaterThanSolid size={16} className="text-gray-500" />
               <span>{item}</span>
@@ -66,7 +66,7 @@ const Filter = () => {
         </div>
 
         {ratings.map((item) => (
-          <div key={item} className="flex items-center text-base md:text-lg lg:text-xl gap-4">
+          <div key={item} className="flex items-center md:text-base lg:text-xl gap-4">
             <div
               className="cursor-pointer"
               onClick={() => handleFilterClick(item)}
