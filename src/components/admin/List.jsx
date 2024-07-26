@@ -1,13 +1,13 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-const List = ({ data, handleDelete, handleView }) => {
+const List = ({ data, handleDelete, handleView , add  }) => {
   const router = useRouter();
   return (
     <div className="space-y-6 p-4">
       <div className="flex justify-between border-b border-gray-400 text-2xl md:text-xl font-medium py-2">
         <span> List</span>
         <button
-          onClick={() => router.push("/admin/cake")}
+          onClick={() => router.push(`/admin/${add}`)}
           className="bg-teal-500 text-white px-4 py-2 rounded"
         >
           Add New
@@ -53,5 +53,4 @@ const List = ({ data, handleDelete, handleView }) => {
     </div>
   );
 };
-
 export default List;

@@ -1,21 +1,65 @@
+"use client";
 import CakeProductInfo from "@/components/Productpage/CakeProductInfo";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
-import React from "react";
+import RoomInfo from "@/components/Productpage/RoomInfo";
+import { db } from "@/config/firebase.config";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
-const page = () => {
-  const img = [
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/cake2.png?alt=media&token=a4cbecd2-163e-4611-a824-8d9b1c82763a",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/cake3.png?alt=media&token=dc524eff-b5d3-4ac3-990a-cf99d3aa1cf5",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/cake4.png?alt=media&token=ef29acd8-9733-48f6-8400-0000d44b89f6",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/cake5.png?alt=media&token=076025a1-226f-40e0-a0ea-e8cc81afffa4",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/offer2.png?alt=media&token=ffeadaac-eaba-4bad-a456-4e07c5a690aa",
-  ];
+const MyComponent = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const [images, setImages] = useState();
+  const [productData, setProductData] = useState();
+
+  console.log(id);
+
+  const getData = async () => {
+    const imgQ = query(collection(db, "images"), where("data_id", "==", id));
+    const imgDataSnap = await getDocs(imgQ);
+    const docRef = doc(db, "cakes", id);
+    const productSnap = await getDoc(docRef);
+
+    const allImages = [];
+    const product = [];
+
+    imgDataSnap.forEach((doc) => {
+      allImages.push({ id: doc.id, ...doc.data() });
+    });
+
+    console.log(allImages);
+    setImages(allImages);
+    console.log(productSnap.data());
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const isLoading = !images;
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton count={60} />
+      </div>
+    );
+  }
+
   return (
     <div className="">
       <div className=" grid md:grid-cols-5 ">
         <div className="md:col-span-2">
-          <Products img={img} />
+          <Products img={images} />
         </div>
         <div className="md:col-span-3">
           <CakeProductInfo />
@@ -25,5 +69,14 @@ const page = () => {
       </div>
     </div>
   );
+};
+
+const page = () => {
+  const [shownConponent, setShownComponent] = useState(false);
+
+  useEffect(() => {
+    setShownComponent(true);
+  }, []);
+  return <div>{shownConponent && <MyComponent />}</div>;
 };
 export default page;

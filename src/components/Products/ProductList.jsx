@@ -41,7 +41,7 @@ const ProductList = () => {
     <div className="md:flex md:justify-center ">
       <div className="grid border px-4 border-gray-200 md:grid-cols-2 lg:grid-cols-2 py-4 gap-6 overflow-y-auto scroll-hidden   h-screen">
         {data?.map((item, index) => (
-          <Link href={`/${item.type}`} key={index}>
+          <Link href={`/${item.type}?id=${item.id}`} key={index}>
             <div className="md:col-span-1">
               <ProductCard2
                 img={item.cover_img}

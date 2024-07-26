@@ -25,9 +25,9 @@ const Header = () => {
         </div>
         <div>
           <ul className="flex gap-12">
-            {NavList.map((item) => (
-              <li>
-                <Link href={item.to}>{item.title}</Link>
+            {NavList.map((item , index) => (
+              <li key={index}>
+                <Link  href={item.to}>{item.title}</Link>
               </li>
             ))}
           </ul>
