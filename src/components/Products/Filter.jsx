@@ -23,13 +23,13 @@ const Filter = () => {
   };
 
   return (
-    <div className="space-y-6 px-4 md:px-6 lg:px-8">
-      <h1 className="text-xl md:text-xl font-bold">Filters</h1>
+    <div className="space-y-6 px-1 md:px-2">
+      <h1 className="text-lg md:text-xl lg:text-2xl font-semibold">Filters</h1>
 
       <div className="space-y-4">
         {filter.map((item) => (
-          <div key={item} className="flex items-center md:text-base  lg:text-xl">
-            <div className="flex items-center gap-2 md:gap-3 lg:gap-4 font-semibold">
+          <div key={item} className="flex items-center text-sm md:text-base lg:text-lg font-semibold">
+            <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
               <LiaGreaterThanSolid size={16} className="text-gray-500" />
               <span>{item}</span>
             </div>
@@ -64,9 +64,8 @@ const Filter = () => {
             <option value="1000+">1000+</option>
           </select>
         </div>
-
         {ratings.map((item) => (
-          <div key={item} className="flex items-center md:text-base lg:text-xl gap-4">
+          <div key={item} className="flex items-center text-sm md:text-base lg:text-lg gap-4 font-semibold">
             <div
               className="cursor-pointer"
               onClick={() => handleFilterClick(item)}
@@ -77,7 +76,7 @@ const Filter = () => {
                 <FaRegSquare size={20} className="text-gray-500" />
               )}
             </div>
-            <div className="flex items-center gap-2 font-semibold">
+            <div className="flex items-center gap-2">
               <span>{item}</span>
             </div>
           </div>

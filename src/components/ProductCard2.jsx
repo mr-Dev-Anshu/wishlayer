@@ -19,7 +19,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
         {/* Discount Badge */}
         {discount && (
           <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-black text-white text-xs md:text-sm font-bold px-1 md:px-2 py-0.5 md:py-1 rounded-full">
-            -{discount}
+            -{discount}%
           </div>
         )}
       </div>
@@ -36,7 +36,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
         </p>
         <div className="mt-2 md:mt-4 flex justify-center">
           <span className="text-base md:text-lg font-bold text-gray-900">
-            ${price}
+            ₹{price}
           </span>
         </div>
       </div>

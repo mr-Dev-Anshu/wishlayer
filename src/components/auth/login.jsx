@@ -3,14 +3,14 @@ import Image from "next/image";
 import React, { useState } from "react";
 import authImage from "@/assets/auth.png";
 import flag from "@/assets/flag.webp";
-import { signup } from "@/authThing/action";
+import { login } from "@/authThing/action";
 import Swal from "sweetalert2";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-const AuthPage = () => {
+
+const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -26,17 +26,10 @@ const AuthPage = () => {
     });
 
     const formData = new FormData(e.target);
-    const fullName = formData.get("full_name");
+    const phone = formData.get("phone");
     const password = formData.get("password");
-    const confirmPassword = formData.get("confirm_password");
 
-    if (
-      !fullName ||
-      !password ||
-      fullName.trim() === "" ||
-      password.trim() === "" ||
-      confirmPassword.trim() === ""
-    ) {
+    if (!phone || !password || phone.trim() === "" || password.trim() === "") {
       setErrorMessage("Please fill in the credentials!");
       setLoading(false);
       Swal.fire({
@@ -47,30 +40,19 @@ const AuthPage = () => {
       return;
     }
 
-    if (confirmPassword !== password) {
-      Swal.fire({
-        title: "Error!",
-        text: "Confirm Password and Password does not match ",
-        icon: "error",
-      });
-      return;
-    }
-
     try {
-      await signup(formData);
+      await login(formData);
       Swal.fire({
         title: "Good job!",
         text: "You are successfully logged in!",
         icon: "success",
       });
-
-      router.push("/");
     } catch (error) {
       console.log(error);
       setErrorMessage(error?.message);
       Swal.fire({
         title: "Error!",
-        text: "Please provide Valid information",
+        text: error.message || "Please provide valid information",
         icon: "error",
       });
       setLoading(false);
@@ -78,7 +60,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="md:flex h-screen w-full justify-center items-center">
+    <div className="md:flex h-screen w-full justify-center  items-center">
       <div className="md:w-[50%]">
         <Image
           className="rounded-md"
@@ -88,19 +70,13 @@ const AuthPage = () => {
         />
       </div>
       <form onSubmit={handleLogin} action="">
-        <div className="space-y-4 md:w-[50] mt-4 md:mt-0 px-4 border border-gray-200 ">
+        <div className="space-y-8 md:w-[50] mt-4  md:mt-0 px-4 border border-gray-200">
           <p className="md:text-2xl font-medium text-[#F06429]">
-            Create an Account
+            Login to Your Account
           </p>
           <p className="font-semibold">
-            Hello There let's Start Journey with us ..
+            Welcome back! Please login to your account.
           </p>
-          <input
-            name="full_name"
-            type="text"
-            placeholder="Full Name"
-            className="w-full md:p-3 rounded-md p-2 focus:outline-none border border-gray-400"
-          />
           <div className="grid grid-cols-5 items-center">
             <div className="col-span-1 border border-gray-400 md:py-3 py-2 px-1 flex gap-2">
               <Image className="rounded-md" src={flag} width={20} height={20} />
@@ -121,24 +97,18 @@ const AuthPage = () => {
             placeholder="Password"
             className="w-full md:p-3 rounded-md p-2 focus:outline-none border border-gray-400"
           />
-          <input
-            name="confirm_password"
-            type="password"
-            placeholder="Confirm Password"
-            className="w-full md:p-3 rounded-md p-2 focus:outline-none border border-gray-400"
-          />
           <button
             type="submit"
             className="text-xl md:font-bold bg-[#F06429] px-4 py-2 w-full text-white rounded-md"
           >
-            Sign Up
+            Login
           </button>
           <p>
-            Already have an Account{" "}
-            <Link href={"login"}>
+            Don't have an Account?{" "}
+            <Link href={"/signup"}>
               {" "}
               <span className="text-[#F06429] px-3 cursor-pointer">
-                Login now
+                Sign up now
               </span>
             </Link>
           </p>
@@ -147,4 +117,5 @@ const AuthPage = () => {
     </div>
   );
 };
-export default AuthPage;
+
+export default LoginPage;

@@ -8,10 +8,10 @@ const Page = () => {
   return (
     <div className="px-4 md:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row gap-6 mt-6">
-        <div className="w-full md:w-1/4 lg:w-1/5">
+        <div className="w-full  lg:w-1/6">
           <Filter />
         </div>
-        <div className="w-full md:w-3/4 lg:w-4/5">
+        <div className="w-full  ">
           <ProductList />
         </div>
       </div>
