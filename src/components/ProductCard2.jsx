@@ -6,7 +6,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
   const totalStars = 5; // Total number of stars in the rating system
   const filledStars = Math.round(rating); // Round rating to nearest whole number
   return (
-    <div className="relative w-full min-h-[260px] md:min-h-[400px] rounded-lg  overflow-hidden shadow-lg">
+    <div className="relative w-full min-h-[260px] px-2 md:px-2  md:min-h-[400px] rounded-lg  overflow-hidden shadow-lg">
       {/* Background Image */}
       <div className="relative w-full h-[150px]  md:w-[250px] md:h-[250px]">
         <Image

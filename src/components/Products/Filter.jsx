@@ -20,7 +20,7 @@ const Filter = () => {
         ? prev.filter((ele) => ele !== item)
         : [...prev, item]
     );
-  };
+  }; 
 
   return (
     <div className="space-y-6 px-1 md:px-2">
