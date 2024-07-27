@@ -47,7 +47,7 @@ const ProductList = () => {
                 img={item.cover_img}
                 discount={item.discount}
                 title={item.title}
-                price={item.price}
+                price={item.mainPrice}
                 id={item.id}
                 type={item.type}
               />

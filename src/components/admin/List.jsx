@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-const List = ({ data, handleDelete, handleView , add  }) => {
+import Link from "next/link";
+const List = ({ data, handleDelete, add }) => {
   const router = useRouter();
   return (
     <div className="space-y-6 p-4">
@@ -32,12 +33,11 @@ const List = ({ data, handleDelete, handleView , add  }) => {
                 <td className="p-4">₹{item.price}</td>
                 <td className="p-4">{item.discount}%</td>
                 <td className="p-4 space-y-2">
-                  <button
-                    onClick={() => handleView(item.id)}
-                    className="bg-blue-500 text-white px-4 py-1 rounded"
-                  >
-                    View
-                  </button>
+                  <Link href={`/${add}?id=${item.id}`}>
+                    <button className="bg-blue-500 text-white px-4 py-1 rounded">
+                      View
+                    </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="bg-red-500 text-white px-4 py-1 rounded"

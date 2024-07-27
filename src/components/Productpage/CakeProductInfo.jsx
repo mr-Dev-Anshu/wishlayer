@@ -3,48 +3,61 @@ import Image from "next/image";
 import React, { useState } from "react";
 import img1 from "@/assets/cakeIcons.png";
 
-const CakeProductInfo = () => {
+const CakeProductInfo = ({ data }) => {
   const [weight, setWeight] = useState();
+  const [discountedPrice, setDiscountedPrice] = useState();
 
+  const [mainPrice, setMainPrice] = useState();
+  const handleMainPrice = (value) => {
+    setMainPrice(value);
+  };
+  const handleDiscountedPrice = (value) => {
+    setDiscountedPrice(value);
+  };
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
         <span className="mb-2 md:mb-0">
-          <Image
-            src={
-              "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/eggless.webp?alt=media&token=785cbd2c-0463-4c02-960a-2766ac36ae78"
-            }
-            height={40}
-            width={40}
-          />
+          <Image src={img1} height={40} width={40} />
         </span>
         <h1 className="text-xl md:text-2xl font-semibold text-center md:text-left">
-          Our Classic Chocolate Truffel Cake{" "}
+          {data.title}
         </h1>
         <p className="text-center md:text-left">Like this</p>
       </div>
       <div>
         <span className="text-xl md:text-2xl mr-2">
-          4.5/5 <span className="text-xl md:text-2xl text-yellow-500">★</span> (245)
+          4.5/5 <span className="text-xl md:text-2xl text-yellow-500">★</span>{" "}
+          (245)
         </span>
       </div>
       <div className="border-b border-gray-600 border-dotted"></div>
       <div className="md:flex   flex-col md:flex-row gap-2 md:gap-4 text-lg md:text-xl font-semibold items-center">
-        <span className="line-through text-gray-500 ml-2">₹450</span>
-        <span className="text-red-500 ml-2">₹400</span>
-        <span className="text-green-500 ml-2">(9% OFF)</span>
+        <span className="line-through text-gray-500 ml-2">
+          ₹{mainPrice || data.mainPrice}
+        </span>
+        <span className="text-red-500 ml-2">
+          ₹{discountedPrice || data.discountedPrice}
+        </span>
+        <span className="text-green-500 ml-2">({data.discount}% OFF)</span>
         <span className="text-sm ml-2">(inclusive of GST)</span>
       </div>
       <div className="flex flex-wrap gap-2 md:gap-4 font-semibold">
-        {["0.5Kg", "1Kg", "2Kg", "4Kg"].map((item) => (
+        {data.weightPrice.map((item) => (
           <span
-            onClick={() => setWeight(item)}
+            onClick={() => {
+              setWeight(item.weight);
+              handleMainPrice(item.mainPrice);
+              handleDiscountedPrice(item.discountedPrice);
+            }}
             className={`p-2 cursor-pointer rounded-md border-gray-400 border w-20 text-center ${
-              weight === item ? "border-red-500 text-black" : "text-gray-400"
+              weight === item.weight
+                ? "border-red-500 text-black"
+                : "text-gray-400"
             }`}
-            key={item}
+            key={item.weight}
           >
-            {item}
+            {item.weight}KG
           </span>
         ))}
       </div>
@@ -82,8 +95,7 @@ const CakeProductInfo = () => {
       <div>
         <h1 className="text-lg font-semibold">Product Description</h1>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
-          temporibus!...{" "}
+          {data.description}
           <span className="text-[#43A1F0] cursor-pointer">Read more</span>
         </p>
       </div>
