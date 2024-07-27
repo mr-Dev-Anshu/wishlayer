@@ -26,7 +26,7 @@ const CakeProductInfo = ({ data }) => {
         <p className="text-center md:text-left">Like this</p>
       </div>
       <div>
-        <span className="text-xl md:text-2xl mr-2">
+        <span className=" md:text-2xl mr-2">
           4.5/5 <span className="text-xl md:text-2xl text-yellow-500">★</span>{" "}
           (245)
         </span>
@@ -42,35 +42,42 @@ const CakeProductInfo = ({ data }) => {
         <span className="text-green-500 ml-2">({data.discount}% OFF)</span>
         <span className="text-sm ml-2">(inclusive of GST)</span>
       </div>
-      <div className="flex flex-wrap gap-2 md:gap-4 font-semibold">
-        {data.weightPrice.map((item) => (
-          <span
-            onClick={() => {
-              setWeight(item.weight);
-              handleMainPrice(item.mainPrice);
-              handleDiscountedPrice(item.discountedPrice);
-            }}
-            className={`p-2 cursor-pointer rounded-md border-gray-400 border w-20 text-center ${
-              weight === item.weight
-                ? "border-red-500 text-black"
-                : "text-gray-400"
-            }`}
-            key={item.weight}
-          >
-            {item.weight}KG
-          </span>
-        ))}
-      </div>
+      {data.weightPrice.length > 1 ? (
+        <div className="flex flex-wrap gap-2 md:gap-4 font-semibold">
+          {data.weightPrice.map((item) => (
+            <span
+              onClick={() => {
+                setWeight(item.weight);
+                handleMainPrice(item.mainPrice);
+                handleDiscountedPrice(item.discountedPrice);
+              }}
+              className={`p-2 cursor-pointer rounded-md border-gray-400 border w-20 text-center ${
+                weight === item.weight
+                  ? "border-red-500 text-black"
+                  : "text-gray-400"
+              }`}
+              key={item.weight}
+            >
+              {item.weight}KG
+            </span>
+          ))}
+        </div>
+      ) : null}
       <div>
-        <p className="flex justify-between font-semibold items-center">
-          <span>Cake Message</span>
-          <span className="text-gray-500">0/25</span>
-        </p>
-        <input
-          className="w-full p-3 rounded-md focus:outline-none border border-gray-400 focus:border-green-600"
-          type="text"
-          placeholder="Enter Message on Cake"
-        />
+        {data.weightPrice.length > 1 ? (
+          <div>
+            <p className="flex justify-between font-semibold items-center">
+              <span>Cake Message</span>
+              <span className="text-gray-500">0/25</span>
+            </p>
+            <input
+              className="w-full p-3 rounded-md focus:outline-none border border-gray-400 focus:border-green-600"
+              type="text"
+              placeholder="Enter Message on Cake"
+            />
+          </div>
+        ) : null}
+
         <div className="mt-4 md:mt-9">
           <p className="font-semibold">Delivery Location</p>
           <div className="grid md:grid-cols-3 gap-4 items-center">

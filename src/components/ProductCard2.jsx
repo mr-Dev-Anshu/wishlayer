@@ -6,9 +6,9 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
   const totalStars = 5; // Total number of stars in the rating system
   const filledStars = Math.round(rating); // Round rating to nearest whole number
   return (
-    <div className="relative w-full max-w-sm rounded-lg overflow-hidden shadow-lg">
+    <div className="relative w-full min-h-[260px] md:min-h-[400px] rounded-lg  overflow-hidden shadow-lg">
       {/* Background Image */}
-      <div className="relative w-full h-[250px] md:w-[400px] md:h-[350px]">
+      <div className="relative w-full h-[150px]  md:w-[250px] md:h-[250px]">
         <Image
           src={img}
           alt="Product Image"
@@ -25,8 +25,8 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
       </div>
 
       {/* Card Content */}
-      <div className="p-2 md:p-4">
-        <p className="text-center  md:text-xl font-medium my-1 md:my-2">
+      <div className="p-1 md:p-4">
+        <p className="text-center  text-sm md:text-xl  font-semibold  my-1 md:my-2">
           {title}
         </p>
         <p className="text-yellow-500 text-lg md:text-xl flex justify-center">
@@ -34,10 +34,10 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
             <span key={index}>{index < filledStars ? "★" : "☆"}</span>
           ))}
         </p>
-        <div className="mt-2 md:mt-4 flex justify-center">
-          <span className="text-base md:text-lg font-bold text-gray-900">
-            ₹{price}
-          </span>
+        <div className="mt-1 md:mt-4 flex justify-center">
+          {price &&   <span className="text-sm font-semibold md:text-lg md:font-bold text-gray-900">
+             ₹{price}
+          </span>}
         </div>
       </div>
     </div>

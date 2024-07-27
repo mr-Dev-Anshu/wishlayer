@@ -15,30 +15,14 @@ import AuthPage from "@/components/auth/AuthPage";
 import LoginPage from "@/components/auth/login";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
+import VenueInfo from "@/components/Productpage/VenueInfo";
+import ProductSuggestionCard from "@/components/Productpage/SuggestProducts";
+import { CakeData } from "@/constant/CakeData";
 const page = () => {
-  const getData = async () => {
-    const q = query(
-      collection(db, "images"),
-      where("news_id", "==", "tOidLf0XYZ2QrOWR4L26")
-    );
-
-    const dataSnap = await getDocs(q);
-    const img = [];
-    dataSnap.forEach((doc) => {
-      img.push(doc.data());
-    });
-
-    console.log(img);
-  };
-
-  useEffect(() => {
-     getData() ; 
-  } , []);
   return (
     <div className="flex justify-between">
-      this is test 
+     <ProductSuggestionCard product={CakeData} />
     </div>
   );
 };
-
 export default page;
