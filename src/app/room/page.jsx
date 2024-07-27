@@ -30,7 +30,6 @@ const MyComponent = () => {
     const productSnap = await getDoc(docRef);
 
     const allImages = [];
-    const product = [];
 
     imgDataSnap.forEach((doc) => {
       allImages.push({ id: doc.id, ...doc.data() });
@@ -39,6 +38,7 @@ const MyComponent = () => {
     console.log(allImages);
     setImages(allImages);
     console.log(productSnap.data());
+    setProductData(productSnap.data());
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const MyComponent = () => {
           <Products img={images} />
         </div>
         <div className="md:col-span-3">
-          <RoomInfo />
+          <RoomInfo data={productData} />
           <RatingAndReview />
         </div>
         <div className="md:h-20"></div>

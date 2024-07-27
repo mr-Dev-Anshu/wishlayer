@@ -5,7 +5,6 @@ import EventsDecoration from "@/components/EventsDecoration";
 import Ads from "@/components/Ads";
 import Party from "@/components/Explore/Party";
 import Room from "@/components/Explore/Room";
-import Footer from "@/components/Footer/Footer";
 export default function Home() {
   return (
     <div>

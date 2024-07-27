@@ -10,11 +10,7 @@ const AddRoomPage = () => {
   const [pincode, setPincode] = useState("");
   const [state, setState] = useState("");
   const [address, setAddress] = useState("");
-  const [price3h, setPrice3h] = useState("");
-  const [price6h, setPrice6h] = useState("");
-  const [price12h, setPrice12h] = useState("");
-  const [price2Guest1Room, setPrice2Guest1Room] = useState("");
-  const [price1Guest1Room, setPrice1Guest1Room] = useState("");
+  const [price, setPrice] = useState();
   const [imgs, setImgs] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,14 +41,10 @@ const AddRoomPage = () => {
       pincode,
       state,
       address,
-      price_3h: price3h,
-      price_6h: price6h,
-      price_12h: price12h,
-      price_2guest_1room: price2Guest1Room,
-      price_1guest_1room: price1Guest1Room,
+      price,
+      type: "room",
       cover_img: coverImageUrl,
     };
-
     try {
       const docRef = await addDoc(collection(db, "cakes"), roomData);
       setMessage("Room has been added successfully");
@@ -126,61 +118,18 @@ const AddRoomPage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span>3h Price</span> <span className="text-red-600">*</span>
-          </p>
-          <input
-            onChange={(e) => setPrice3h(e.target.value)}
-            placeholder="Enter Price for 3 hours"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
-        </div>
-        <div className="">
-          <p className="md:text-xl font-bold flex">
-            <span>6h Price</span> <span className="text-red-600">*</span>
-          </p>
-          <input
-            onChange={(e) => setPrice6h(e.target.value)}
-            placeholder="Enter Price for 6 hours"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
-        </div>
-        <div className="">
-          <p className="md:text-xl font-bold flex">
-            <span>12h Price</span> <span className="text-red-600">*</span>
-          </p>
-          <input
-            onChange={(e) => setPrice12h(e.target.value)}
-            placeholder="Enter Price for 12 hours"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
-        </div>
-        <div className="">
-          <p className="md:text-xl font-bold flex">
-            <span>2 Guests 1 Room Price</span>{" "}
+            <span>Price of One Room </span>{" "}
             <span className="text-red-600">*</span>
           </p>
           <input
-            onChange={(e) => setPrice2Guest1Room(e.target.value)}
-            placeholder="Enter Price for 2 Guests 1 Room"
-            type="number"
+            type="Number"
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Enter Address"
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+            rows="2"
           />
         </div>
-        <div className="">
-          <p className="md:text-xl font-bold flex">
-            <span>1 Guest 1 Room Price</span>{" "}
-            <span className="text-red-600">*</span>
-          </p>
-          <input
-            onChange={(e) => setPrice1Guest1Room(e.target.value)}
-            placeholder="Enter Price for 1 Guest 1 Room"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
-        </div>
+
         <div className="">
           <p className="md:text-xl font-bold flex">
             <span>Cover Image</span> <span className="text-red-600">*</span>

@@ -30,7 +30,7 @@ const List = ({ data, handleDelete, add }) => {
               <tr key={item.id} className="border-b">
                 <td className="p-4">{item.title}</td>
                 <td className="p-4">{item.description}</td>
-                <td className="p-4">₹{item.price}</td>
+                <td className="p-4">₹{item.discountedPrice}</td>
                 <td className="p-4">{item.discount}%</td>
                 <td className="p-4 space-y-2">
                   <Link href={`/${add}?id=${item.id}`}>
