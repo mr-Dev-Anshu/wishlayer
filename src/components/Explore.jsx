@@ -23,11 +23,12 @@ const Explore = ({ headingImage, data, title }) => {
         src={headingImage}
       />
       <Link href={"/allproducts"}>
-        <div className="flex justify-end mr-6 text-red-600 py-8  ">More</div>
+        <div className="flex justify-end mr-6 text-red-600 py-2  ">More</div>
       </Link>
-      <div className="grid grid-cols-2 md:grid-cols-8 gap-4 px-4 md:px-12 md:py-12">
+      <div className="grid grid-cols-2 md:grid-cols-8 gap-4 px-4 md:px-12 md:py-2">
         {data.map((item, index) => (
           <div key={index} className="col-span-1 md:col-span-2">
+            <Link href={`/${item.type}?id=${item.id}`}>
             <ProductCard2
               img={item.cover_img}
               discount={item.discount}
@@ -35,6 +36,7 @@ const Explore = ({ headingImage, data, title }) => {
               price={item.mainPrice}
               rating={item.rating}
             />
+          </Link>
           </div>
         ))}
       </div>

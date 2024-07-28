@@ -35,9 +35,11 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
           ))}
         </p>
         <div className="mt-1 md:mt-4 flex justify-center">
-          {price &&   <span className="text-sm font-semibold md:text-lg md:font-bold text-gray-900">
-             ₹{price}
-          </span>}
+          {price && (
+            <span className="text-sm font-semibold md:text-lg md:font-bold text-gray-900">
+              ₹{price}
+            </span>
+          )}
         </div>
       </div>
     </div>

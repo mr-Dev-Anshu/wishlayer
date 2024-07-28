@@ -30,7 +30,7 @@ const Cake = () => {
   return (
     <div>
         
-      <Explore headingImage={headingimg} title={"Explore Rooms  "} data={roomData} />
+      <Explore headingImage={headingimg} title={"Explore Rooms"} data={roomData} />
 
       {/* <div>
         <Category data={offerData} title={"Choose by Event Location"} />
