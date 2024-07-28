@@ -5,10 +5,11 @@ import Image from "next/image";
 const ProductCard2 = ({ img, discount, title, price, rating }) => {
   const totalStars = 5; // Total number of stars in the rating system
   const filledStars = Math.round(rating); // Round rating to nearest whole number
+
   return (
-    <div className="relative w-full min-h-[260px] px-2 md:px-2  md:min-h-[400px] rounded-lg  overflow-hidden shadow-lg">
+    <div className="relative w-full min-h-[260px] px-2 md:px-2 md:min-h-[400px] rounded-lg overflow-hidden shadow-lg">
       {/* Background Image */}
-      <div className="relative w-full h-[150px]  md:w-[250px] md:h-[250px]">
+      <div className="relative w-full h-[150px] md:h-[250px]">
         <Image
           src={img}
           alt="Product Image"
@@ -26,7 +27,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
 
       {/* Card Content */}
       <div className="p-1 md:p-4">
-        <p className="text-center   text-sm md:text-sm  font-semibold  my-1 md:my-2">
+        <p className="text-center text-sm md:text-sm font-semibold my-1 md:my-2">
           {title}
         </p>
         <p className="text-yellow-500 text-lg md:text-xl flex justify-center">

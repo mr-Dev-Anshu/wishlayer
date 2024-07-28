@@ -72,7 +72,7 @@ const ProductList = () => {
 
   return (
     <div className="md:flex md:justify-center ">
-      <div className="grid grid-cols-2 border px-4 border-gray-200 md:grid-cols-2 lg:grid-cols-4 py-4 gap-6 scroll-hidden">
+      <div className="grid grid-cols-2 w-full  border px-4  border-gray-200 md:grid-cols-2 lg:grid-cols-3 py-4 gap-6 scroll-hidden">
         {filteredData?.map((item, index) => (
           <Link href={`/${item.type}?id=${item.id}`} key={index}>
             <div className="md:col-span-1">

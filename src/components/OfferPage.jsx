@@ -26,16 +26,16 @@ const OfferPage = () => {
           Our Offerings
         </p>
         <div className="flex justify-center mt-2">
-          <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
+          <div className="w-10 h-1 md:w-20 md:h-2 bg-[#F0642966] rounded-lg"></div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:pl-10 md:grid-cols-4 items-center space-y-4 mt-12">
+      <div className="grid grid-cols-1 justify-center  md:pl-10 md:grid-cols-4 items-center space-y-4 mt-12">
         {offerData.map((item, index) => (
           <div
             onClick={() => handleClick(item.to)}
             key={index}
-            className="col-span-1 cursor-pointer  md:col-span-2"
+            className="col-span-1 cursor-pointer   md:col-span-2"
           >
             <ImageCard img={item.img} heading={item.heading} />
           </div>

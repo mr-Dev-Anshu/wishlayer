@@ -27,16 +27,16 @@ const Explore = ({ headingImage, data, title }) => {
       </Link>
       <div className="grid grid-cols-2 md:grid-cols-8 gap-4 px-4 md:px-12 md:py-2">
         {data.map((item, index) => (
-          <div key={index} className="col-span-1 md:col-span-2">
+          <div key={index} className="col-span-1 md:col-span-2  ">
             <Link href={`/${item.type}?id=${item.id}`}>
-            <ProductCard2
-              img={item.cover_img}
-              discount={item.discount}
-              title={item.title}
-              price={item.mainPrice || item.price }
-              rating={item.rating}
-            />
-          </Link>
+              <ProductCard2
+                img={item.cover_img}
+                discount={item.discount}
+                title={item.title}
+                price={item.mainPrice || item.price}
+                rating={item.rating}
+              />
+            </Link>
           </div>
         ))}
       </div>
