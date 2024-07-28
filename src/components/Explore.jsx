@@ -33,7 +33,7 @@ const Explore = ({ headingImage, data, title }) => {
               img={item.cover_img}
               discount={item.discount}
               title={item.title}
-              price={item.mainPrice}
+              price={item.mainPrice || item.price }
               rating={item.rating}
             />
           </Link>
