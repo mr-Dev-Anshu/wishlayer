@@ -26,7 +26,7 @@ const ProductCard2 = ({ img, discount, title, price, rating }) => {
 
       {/* Card Content */}
       <div className="p-1 md:p-4">
-        <p className="text-center  text-sm md:text-xl  font-semibold  my-1 md:my-2">
+        <p className="text-center   text-sm md:text-sm  font-semibold  my-1 md:my-2">
           {title}
         </p>
         <p className="text-yellow-500 text-lg md:text-xl flex justify-center">

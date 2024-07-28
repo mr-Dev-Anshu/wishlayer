@@ -5,16 +5,18 @@ import EventsDecoration from "@/components/EventsDecoration";
 import Ads from "@/components/Ads";
 import Party from "@/components/Explore/Party";
 import Room from "@/components/Explore/Room";
+import Cake from "@/components/Explore/Cake";
 export default function Home() {
   return (
     <div>
       <Hero />
       <OfferPage />
-      <CakeExplore />
-      <EventsDecoration />
+      <Cake />
       <Ads />
       <Party />
       <Room />
+      {/* <EventsDecoration />
+       */}
     </div>
   );
 }

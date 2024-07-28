@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LiaGreaterThanSolid } from "react-icons/lia";
 import { FaRegCheckSquare, FaRegSquare } from "react-icons/fa";
+import { filterContext } from "@/context/FilterContext";
 
 const Filter = () => {
   const [selectFilter, setSelectFilter] = useState([]);
-  const filter = ["Cake", "Party Venues", "Room Stays", "Decoration"];
+  const filter = ["cake", "venue", "room"];
   const ratings = [
     "4★ & above",
     "3★ & above",
@@ -14,13 +15,14 @@ const Filter = () => {
     "0★ & above",
   ];
 
+  const { filterData, setFilterData } = useContext(filterContext);
+ 
   const handleFilterClick = (item) => {
-    setSelectFilter((prev) =>
-      prev.includes(item)
-        ? prev.filter((ele) => ele !== item)
-        : [...prev, item]
+    setFilterData((prev) =>
+      prev.includes(item) ? prev.filter((ele) => ele !== item) : [...prev, item]
     );
-  }; 
+    console.log(filterData);
+  };
 
   return (
     <div className="space-y-6 px-1 md:px-2">
@@ -28,14 +30,19 @@ const Filter = () => {
 
       <div className="space-y-4">
         {filter.map((item) => (
-          <div key={item} className="flex items-center text-sm md:text-base lg:text-lg font-semibold">
+          <div
+            key={item}
+            className="flex items-center text-sm md:text-base lg:text-lg font-semibold"
+          >
             <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
               <LiaGreaterThanSolid size={16} className="text-gray-500" />
               <span>{item}</span>
             </div>
-
-            <div className="ml-auto cursor-pointer" onClick={() => handleFilterClick(item)}>
-              {selectFilter.includes(item) ? (
+            <div
+              className="ml-auto cursor-pointer"
+              onClick={() => handleFilterClick(item)}
+            >
+              {filterData.includes(item) ? (
                 <FaRegCheckSquare size={20} className="text-green-500" />
               ) : (
                 <FaRegSquare size={20} className="text-gray-500" />
@@ -65,7 +72,10 @@ const Filter = () => {
           </select>
         </div>
         {ratings.map((item) => (
-          <div key={item} className="flex items-center text-sm md:text-base lg:text-lg gap-4 font-semibold">
+          <div
+            key={item}
+            className="flex items-center text-sm md:text-base lg:text-lg gap-4 font-semibold"
+          >
             <div
               className="cursor-pointer"
               onClick={() => handleFilterClick(item)}

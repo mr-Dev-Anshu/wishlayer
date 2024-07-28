@@ -13,9 +13,9 @@ const EventsDecoration = () => {
         data={EventsData}
       />
 
-      <div>
+      {/* <div>
         <Category data={offerData} title={'Choose by Event Category'} />
-      </div>
+      </div> */}
     </div>
   );
 };

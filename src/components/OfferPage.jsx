@@ -1,9 +1,21 @@
+"use client";
 import { offerData } from "@/constant/offerData";
-import React from "react";
+import React, { useContext } from "react";
 import ImageCard from "./ImageCard";
-import Link from "next/link";
+import { filterContext } from "@/context/FilterContext";
+import { useRouter } from "next/navigation";
 
 const OfferPage = () => {
+  const { setFilterData } = useContext(filterContext);
+  const router = useRouter();
+  
+  const handleClick = (item) => {
+    setFilterData((prev) =>
+      prev.includes(item) ? prev.filter((ele) => ele !== item) : [...prev, item]
+    );
+    router.push("/allproducts");
+  };
+
   return (
     <div className="px-4 py-6 md:px-48 md:py-10">
       <div className="">
@@ -20,10 +32,12 @@ const OfferPage = () => {
 
       <div className="grid grid-cols-1 md:pl-10 md:grid-cols-4 items-center space-y-4 mt-12">
         {offerData.map((item, index) => (
-          <div key={index} className="col-span-1 md:col-span-2">
-            <Link href={item.to}>
-              <ImageCard img={item.img} heading={item.heading} />
-            </Link>
+          <div
+            onClick={() => handleClick(item.to)}
+            key={index}
+            className="col-span-1 cursor-pointer  md:col-span-2"
+          >
+            <ImageCard img={item.img} heading={item.heading} />
           </div>
         ))}
       </div>
