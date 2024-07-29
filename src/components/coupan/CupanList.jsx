@@ -12,7 +12,7 @@ const CoupanList = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "coupons"));
+        const querySnapshot = await getDocs(collection(db, "coupons") );
         const couponsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),

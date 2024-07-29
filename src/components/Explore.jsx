@@ -3,25 +3,14 @@ import ProductCard2 from "./ProductCard2";
 import Image from "next/image";
 import Link from "next/link";
 
-const Explore = ({ headingImage, data, title }) => {
+const Explore = ({ headingImage, data, title , suggetion }) => {
   const isLoading = !data;
   if (isLoading) {
     return <div className="text-green-500">Loading...</div>;
   }
   return (
     <div className="">
-      <div className="my-6 md:my-12">
-        <div className="text-2xl md:text-3xl font-bold text-center">
-          {title}
-        </div>
-        <div className="flex justify-center mt-2">
-          <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
-        </div>
-      </div>
-      <Image
-        className="w-full h-[150px] md:h-[250px] object-cover"
-        src={headingImage}
-      />
+     
       <Link href={"/allproducts"}>
         <div className="flex justify-end mr-6 text-red-600 py-2  ">More</div>
       </Link>

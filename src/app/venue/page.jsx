@@ -1,4 +1,5 @@
 "use client";
+import Venue from "@/components/Explore/Party";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
 import RoomInfo from "@/components/Productpage/RoomInfo";
@@ -66,6 +67,12 @@ const MyComponent = () => {
           <RatingAndReview />
         </div>
         <div className="md:h-20"></div>
+      </div>
+      <div>
+        <p className="px-12 md:text-xl font-semibold">
+          You may also like this{" "}
+        </p>
+        <Venue show={true} />
       </div>
     </div>
   );

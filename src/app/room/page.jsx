@@ -1,4 +1,5 @@
 "use client";
+import Room from "@/components/Explore/Room";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
 import RoomInfo from "@/components/Productpage/RoomInfo";
@@ -65,6 +66,11 @@ const MyComponent = () => {
           <RatingAndReview />
         </div>
         <div className="md:h-20"></div>
+      </div>
+      <div>
+      <p className="px-12 md:text-xl font-semibold">You may also like  this </p>
+
+        <Room show={true}/>
       </div>
     </div>
   );

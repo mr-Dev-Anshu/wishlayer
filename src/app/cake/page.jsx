@@ -1,8 +1,10 @@
 "use client";
+import Cake from "@/components/Explore/Cake";
 import CakeProductInfo from "@/components/Productpage/CakeProductInfo";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
 import RoomInfo from "@/components/Productpage/RoomInfo";
+import UploadCake from "@/components/UploadCake";
 import { db } from "@/config/firebase.config";
 import {
   collection,
@@ -40,7 +42,7 @@ const MyComponent = () => {
     console.log(allImages);
     setImages(allImages);
     console.log(productSnap.data());
-    setProductData(productSnap.data()) ; 
+    setProductData(productSnap.data());
   };
 
   useEffect(() => {
@@ -66,7 +68,11 @@ const MyComponent = () => {
           <CakeProductInfo data={productData} />
           <RatingAndReview />
         </div>
-        <div className="md:h-20"></div>
+      </div>
+      <UploadCake />
+      <div>
+        <p className="px-12 md:text-xl font-semibold">You may also like  this </p>
+        <Cake show={true}/>
       </div>
     </div>
   );

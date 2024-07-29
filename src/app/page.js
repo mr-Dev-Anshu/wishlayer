@@ -9,6 +9,7 @@ import Cake from "@/components/Explore/Cake";
 import CoupanList from "@/components/coupan/CupanList";
 import CardSlider from "@/components/location/CardSlider";
 import { LocationData } from "@/constant/Location";
+import UploadCake from "@/components/UploadCake";
 export default function Home() {
   return (
     <div>
@@ -22,6 +23,7 @@ export default function Home() {
       />
       <OfferPage />
       <Cake />
+      <UploadCake/>
       <Ads />
       <Party />
       <Room />
