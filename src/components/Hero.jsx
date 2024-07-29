@@ -2,21 +2,19 @@
 import Image from "next/image";
 import React from "react";
 import Slider from "react-slick";
-import hero1 from "@/assets/hero.png";
-import hero2 from "@/assets/hero.png";
-import hero3 from "@/assets/hero.png";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-export default function SimpleSlider() {
+export default function SimpleSlider({image , height , weight , autoPlay}) {
     const settings = {
       dots: true,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      autoplay: true,
+      autoplay: autoPlay,
       autoplaySpeed: 3000,
       arrows: true, 
     };
@@ -25,13 +23,13 @@ export default function SimpleSlider() {
       <>
         <Slider {...settings} className="slider-container">
           <div>
-            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero1" layout="responsive" width={800} height={400} />
+            <Image src={image} alt="hero1" layout="responsive" width={weight} height={height} />
           </div>
           <div>
-            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero2" layout="responsive" width={800} height={400} />
+            <Image src={image} alt="hero2" layout="responsive" width={weight} height={height} />
           </div>
           <div>
-            <Image src={'https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a'} alt="hero3" layout="responsive" width={800} height={400} />
+            <Image src={image} alt="hero3" layout="responsive" width={weight} height={height} />
           </div>
         </Slider>
   

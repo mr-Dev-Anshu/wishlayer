@@ -35,7 +35,9 @@ const ProductList = () => {
 
   useEffect(() => {
     if (filterData.length > 0) {
-      const newFilteredData = originalData.filter((d) => filterData.includes(d.type));
+      const newFilteredData = originalData.filter((d) =>
+        filterData.includes(d.type)
+      );
       setFilteredData(newFilteredData);
     } else {
       setFilteredData(originalData);
@@ -69,7 +71,6 @@ const ProductList = () => {
       </div>
     );
   }
-
   return (
     <div className="md:flex md:justify-center ">
       <div className="grid grid-cols-2 w-full  border px-4  border-gray-200 md:grid-cols-2 lg:grid-cols-3 py-4 gap-6 scroll-hidden">
