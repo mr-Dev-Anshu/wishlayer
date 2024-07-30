@@ -2,18 +2,73 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import img1 from "@/assets/cakeIcons.png";
-
-const CakeProductInfo = ({ data }) => {
+import flag from "@/assets/flag.webp";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/config/firebase.config";
+const CakeProductInfo = ({ data, id }) => {
+  console.log(data.type);
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
-
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [loading, setLoading] = useState();
   const [mainPrice, setMainPrice] = useState();
+  const [fullName, setFullName] = useState();
+  const [phone, setPhone] = useState();
+  const [message, setMessage] = useState();
   const handleMainPrice = (value) => {
     setMainPrice(value);
   };
+
+  const isNullOrWhitespace = (input) => {
+    return !input || input.trim().length === 0;
+  };
+
+  const handleOrder = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    console.log(mainPrice);
+    console.log(fullName);
+    console.log(message);
+    console.log(id);
+
+    const orderData = {
+      mainPrice,
+      fullName,
+      message,
+      id,
+      weight,
+      type: data.type,
+      phone,
+    };
+
+    if (
+      isNullOrWhitespace(orderData.mainPrice) ||
+      isNullOrWhitespace(orderData.fullName) ||
+      isNullOrWhitespace(orderData.message) ||
+      isNullOrWhitespace(orderData.id) ||
+      isNullOrWhitespace(orderData.weight) ||
+      isNullOrWhitespace(orderData.type) ||
+      isNullOrWhitespace(phone)
+    ) {
+      alert(" Please fill in all the fields correctly.");
+      return;
+    }
+
+    console.log(orderData);
+    try {
+      const docRef = await addDoc(collection(db, "orders"), orderData);
+      console.log("Order Added Here ");
+      alert("Order Successfully Done ");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleDiscountedPrice = (value) => {
     setDiscountedPrice(value);
   };
+
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
@@ -64,20 +119,6 @@ const CakeProductInfo = ({ data }) => {
         </div>
       ) : null}
       <div>
-        {data.weightPrice.length > 1 ? (
-          <div>
-            <p className="flex justify-between font-semibold items-center">
-              <span>Cake Message</span>
-              <span className="text-gray-500">0/25</span>
-            </p>
-            <input
-              className="w-full p-3 rounded-md focus:outline-none border border-gray-400 focus:border-green-600"
-              type="text"
-              placeholder="Enter Message on Cake"
-            />
-          </div>
-        ) : null}
-
         <div className="mt-4 md:mt-9">
           <p className="font-semibold">Delivery Location</p>
           <div className="grid md:grid-cols-3 gap-4 items-center">
@@ -110,13 +151,86 @@ const CakeProductInfo = ({ data }) => {
         <div className="border border-[#F06429] text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white">
           Add to cart
         </div>
-        <div className="bg-[#F06429] text-white flex justify-center items-center py-2 rounded-md cursor-pointer hover:bg-[#853513]">
+        <div
+          onClick={() => setIsFormOpen(!isFormOpen)}
+          className="bg-[#F06429] text-white flex justify-center items-center py-2 rounded-md cursor-pointer hover:bg-[#853513]"
+        >
           Buy Now | ₹400
         </div>
       </div>
       <div className="flex justify-center md:justify-start md:gap-24">
         <Image src={img1} alt="Cake Icon" />
       </div>
+      {isFormOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 className="text-xl  mb-4">For Order Please Fill this form </h2>
+            <form>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Full Name
+                </label>
+                <input
+                  onChange={(e) => setFullName(e.target.value)}
+                  type="text"
+                  placeholder="Enter your full Name "
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Phone Number
+                </label>
+                <div className="grid grid-cols-5 items-center">
+                  <div className="col-span-1 border  border-gray-400 md:py-3 py-2 px-1  flex gap-2">
+                    <Image
+                      className="rounded-md"
+                      src={flag}
+                      width={20}
+                      height={20}
+                    />
+                    <span>+91</span>
+                  </div>
+                  <div className="col-span-4">
+                    <input
+                      onChange={(e) => setPhone(e.target.value)}
+                      name="phone"
+                      placeholder="Enter Phone Number"
+                      type="number"
+                      className="w-full md:p-3 p-2 focus:outline-none rounded-md border border-gray-400"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Message
+                </label>
+                <textarea
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                  rows="4"
+                  placeholder="Enter Message Here "
+                ></textarea>
+              </div>
+              <button
+                onClick={handleOrder}
+                type="submit"
+                className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                {loading ? "Loading..." : "Submit"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsFormOpen(!isFormOpen)}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

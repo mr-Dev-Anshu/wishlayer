@@ -2,7 +2,6 @@
 import Venue from "@/components/Explore/Party";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
-import RoomInfo from "@/components/Productpage/RoomInfo";
 import VenueInfo from "@/components/Productpage/VenueInfo";
 import { db } from "@/config/firebase.config";
 import {

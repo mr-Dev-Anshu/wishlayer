@@ -1,10 +1,49 @@
+"use client";
 import { FaStar } from "react-icons/fa";
 import { TbHearts } from "react-icons/tb";
 import { FaWallet } from "react-icons/fa6";
 import { FaAddressCard } from "react-icons/fa";
 import { AboutContent } from "@/constant/AboutContent";
+import flag from "@/assets/flag.webp";
+import { useState } from "react";
+import Image from "next/image";
+const RoomInfo = ({ data }) => {
+  const [fullName, setFullName] = useState();
+  const [phone, setPhone] = useState();
+  const [message, setMessage] = useState();
+  const [isFormOpen, setIsFormOpen] = useState();
+  const [checkInDate, setCheckInDate] = useState();
+  const [checkOutDate, setCheckOutDate] = useState();
+  const [loading, setLoading] = useState();
+  const isNullOrWhitespace = (input) => {
+    return !input || input.trim().length === 0;
+  };
 
-const RoomInfo = ({data}) => {
+  const handleOrder = (e) => {
+    e.preventDefault();
+
+    const roomData = {
+      checkInDate,
+      checkOutDate,
+      phone,
+      fullName,
+      message,
+      id,
+      price: data.price,
+    };
+
+    if (
+      isNullOrWhitespace(roomData.mainPrice) ||
+      isNullOrWhitespace(roomData.fullName) ||
+      isNullOrWhitespace(roomData.message) ||
+      isNullOrWhitespace(roomData.id) ||
+      isNullOrWhitespace(roomData.type)
+    ) {
+      alert(
+        "One or more fields are either empty or contain only spaces. Please fill in all the fields correctly."
+      );
+    }
+  };
   return (
     <div className="flex flex-col md:flex-row p-4 md:p-10 md:mr-20">
       <div className="w-full md:w-[620px] mb-6 md:mb-0">
@@ -28,6 +67,7 @@ const RoomInfo = ({data}) => {
               Check-in Date
             </label>
             <input
+              onChange={(e) => setCheckInDate(e.target.value)}
               type="date"
               id="event_date"
               className="px-4 focus:outline-none"
@@ -35,19 +75,25 @@ const RoomInfo = ({data}) => {
           </div>
           <div className="flex flex-col border-2 p-2 w-full md:w-[280px] border-[#F06429]  md:border-l-0 border-t-0 md:border-t-2 rounded-b-md md:rounded-e-md md:rounded-s-none">
             <label htmlFor="event_type" className="text-[#F06429] px-4">
-              Check-out  Date
+              Check-out Date
             </label>
-            <input type="date" className="px-4 focus:outline-none" />
+            <input
+              onChange={(e) => setCheckOutDate(e.target.value)}
+              type="date"
+              className="px-4 focus:outline-none"
+            />
           </div>
         </div>
-       
-       
+
         <div className="flex md:mt-4   md:flex-row justify-between items-center md:justify-end">
           <div className="mt-6 md:mt-0 md:mr-4">
             <p className="text-[#F06429] text-xs px-1 pr-6">Total Price</p>
             <p className="font-semibold px-1">{data.price}</p>
           </div>
-          <button className="bg-[#F06429] rounded-md text-white p-2 mt-6 md:mt-0">
+          <button
+            onClick={() => setIsFormOpen(!isFormOpen)}
+            className="bg-[#F06429] rounded-md text-white p-2 mt-6 md:mt-0"
+          >
             Reserve Now
           </button>
         </div>
@@ -107,6 +153,77 @@ const RoomInfo = ({data}) => {
           })}
         </div>
       </div>
+
+      {isFormOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 className="text-xl  mb-4">For Order Please Fill this form </h2>
+            <form>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Full Name
+                </label>
+                <input
+                  onChange={(e) => setFullName(e.target.value)}
+                  type="text"
+                  placeholder="Enter your full Name "
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Phone Number
+                </label>
+                <div className="grid grid-cols-5 items-center">
+                  <div className="col-span-1 border  border-gray-400 md:py-3 py-2 px-1  flex gap-2">
+                    <Image
+                      className="rounded-md"
+                      src={flag}
+                      width={20}
+                      height={20}
+                    />
+                    <span>+91</span>
+                  </div>
+                  <div className="col-span-4">
+                    <input
+                      onChange={(e) => setPhone(e.target.value)}
+                      name="phone"
+                      placeholder="Enter Phone Number"
+                      type="number"
+                      className="w-full md:p-3 p-2 focus:outline-none rounded-md border border-gray-400"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Message
+                </label>
+                <textarea
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                  rows="4"
+                  placeholder="Enter Message Here "
+                ></textarea>
+              </div>
+              <button
+                onClick={handleOrder}
+                type="submit"
+                className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                {loading ? "Loading..." : "Submit"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsFormOpen(!isFormOpen)}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

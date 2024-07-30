@@ -65,7 +65,7 @@ const MyComponent = () => {
           <Products img={images} />
         </div>
         <div className="md:col-span-3">
-          <CakeProductInfo data={productData} />
+          <CakeProductInfo data={productData} id={id} />
           <RatingAndReview />
         </div>
       </div>
