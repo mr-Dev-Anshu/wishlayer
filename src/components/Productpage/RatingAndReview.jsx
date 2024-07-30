@@ -33,8 +33,8 @@ const RatingAndReview = () => {
   ];
 
   return (
-    <div className="p-6">
-      <p className="text-2xl font-medium my-2">Ratings & Reviews </p>
+    <div className="md:pl-12 md:mt-12 my-6 px-10">
+      <p className="md:text-xl  md:font-medium font-semibold  my-2">Ratings & Reviews </p>
       <div className="flex items-center mb-6">
         <span className="text-2xl mr-2">
           <span className={`text-2xl text-yellow-500`}>★</span>
@@ -65,17 +65,17 @@ const RatingAndReview = () => {
         {reviews.map((review, index) => (
           <div key={index} className="border-b pb-4 border-gray-300 space-y-2">
             <div className=" mb-2 flex gap-4 ">
-              <span className="font-bold">{review.name}</span>
+              <span className="font-medium md:font-semibold ">{review.name}</span>
             </div>
             <div className="flex gap-6  items-center ">
               <span className="text-2xl mr-2">
                 <span
-                  className={`text-xl text-[#1C9550] bg-gray-200 p-1 rounded-md font-medium  `}
+                  className={`text-sm text-[#1C9550] bg-gray-200 p-1 rounded-md font-medium  `}
                 >
                   ★ {rating}
                 </span>
               </span>
-              <span className="text-gray-500 font-medium flex items-center gap-2 ">
+              <span className="text-gray-500  flex items-center gap-2 ">
                 <span
                   className="text-white bg-[#42A5F5] rounded-full"
                 >
@@ -84,7 +84,7 @@ const RatingAndReview = () => {
                 <span>Verified User</span>{" "}
               </span>
             </div>
-            <div className="text-gray-400 font-bold flex  gap-12">
+            <div className="text-gray-400  flex  gap-12">
               <span>Posted on 2/2/2024</span>
               <ul>
                 <li className="list-disc">Noida</li>
@@ -94,7 +94,7 @@ const RatingAndReview = () => {
               </ul>
             </div>
             <div className="flex justify-between">
-              <span className="max-w-xl font-bold">{review.review}</span>
+              <span className="max-w-xl ">{review.review}</span>
             </div>
           </div>
         ))}

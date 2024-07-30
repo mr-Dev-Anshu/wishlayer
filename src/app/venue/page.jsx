@@ -19,57 +19,58 @@ import Skeleton from "react-loading-skeleton";
 const MyComponent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const [images, setImages] = useState();
-  const [productData, setProductData] = useState();
-
-  console.log(id);
+  const [images, setImages] = useState(null);
+  const [productData, setProductData] = useState(null);
 
   const getData = async () => {
-    const imgQ = query(collection(db, "images"), where("data_id", "==", id));
-    const imgDataSnap = await getDocs(imgQ);
-    const docRef = doc(db, "cakes", id);
-    const productSnap = await getDoc(docRef);
+    try {
+      const imgQ = query(collection(db, "images"), where("data_id", "==", id));
+      const imgDataSnap = await getDocs(imgQ);
+      const docRef = doc(db, "cakes", id);
+      const productSnap = await getDoc(docRef);
 
-    const allImages = [];
+      const allImages = [];
+      imgDataSnap.forEach((doc) => {
+        allImages.push({ id: doc.id, ...doc.data() });
+      });
 
-    imgDataSnap.forEach((doc) => {
-      allImages.push({ id: doc.id, ...doc.data() });
-    });
-
-    console.log(allImages);
-    setImages(allImages);
-    console.log(productSnap.data());
-    setProductData(productSnap.data());
+      setImages(allImages);
+      setProductData(productSnap.data());
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (id) {
+      getData();
+    }
+  }, [id]);
 
-  const isLoading = !images;
-  if (isLoading) {
+  if (!images || !productData) {
     return (
-      <div>
+      <div className="px-10">
         <Skeleton count={60} />
       </div>
     );
   }
 
   return (
-    <div className="">
-      <div className=" grid md:grid-cols-5 ">
+    <div className="px-4 md:px-10">
+      <div className="grid md:grid-cols-5 gap-4">
         <div className="md:col-span-2">
           <Products img={images} />
         </div>
-        <div className="md:col-span-3">
-          <VenueInfo data={productData} />
-          <RatingAndReview />
+        <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden">
+          <VenueInfo id={id} data={productData} />
+          <div className="md:pl-20">
+            <RatingAndReview />
+          </div>
         </div>
-        <div className="md:h-20"></div>
       </div>
-      <div>
-        <p className="px-12 md:text-xl font-semibold">
-          You may also like this{" "}
+      <div className="my-8">
+        <p className="px-4 md:px-12 md:text-xl font-semibold">
+          You may also like this
         </p>
         <Venue show={true} />
       </div>
@@ -77,12 +78,14 @@ const MyComponent = () => {
   );
 };
 
-const page = () => {
-  const [shownConponent, setShownComponent] = useState(false);
+const Page = () => {
+  const [shownComponent, setShownComponent] = useState(false);
 
   useEffect(() => {
     setShownComponent(true);
   }, []);
-  return <div>{shownConponent && <MyComponent />}</div>;
+
+  return <div>{shownComponent && <MyComponent />}</div>;
 };
-export default page;
+
+export default Page;

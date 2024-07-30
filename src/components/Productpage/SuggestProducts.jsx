@@ -1,9 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductSuggestionCard = ({ product }) => {
   return (
     <div className="max-w-xs bg-white border rounded-lg shadow-md overflow-hidden">
+      {" "}
       <div className="flex justify-center items-center p-4">
         <Image
           src={product[0].img}

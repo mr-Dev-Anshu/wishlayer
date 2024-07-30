@@ -64,7 +64,7 @@ const MyComponent = () => {
         <div className="md:col-span-2">
           <Products img={images} />
         </div>
-        <div className="md:col-span-3">
+        <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden">
           <CakeProductInfo data={productData} id={id} />
           <RatingAndReview />
         </div>

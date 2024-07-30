@@ -5,6 +5,7 @@ import img1 from "@/assets/cakeIcons.png";
 import flag from "@/assets/flag.webp";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
+import Swal from "sweetalert2";
 const CakeProductInfo = ({ data, id }) => {
   console.log(data.type);
   const [weight, setWeight] = useState();
@@ -15,6 +16,8 @@ const CakeProductInfo = ({ data, id }) => {
   const [fullName, setFullName] = useState();
   const [phone, setPhone] = useState();
   const [message, setMessage] = useState();
+  const [city, setCity] = useState();
+  const [address, setAddress] = useState();
   const handleMainPrice = (value) => {
     setMainPrice(value);
   };
@@ -26,10 +29,15 @@ const CakeProductInfo = ({ data, id }) => {
   const handleOrder = async (e) => {
     setLoading(true);
     e.preventDefault();
-    console.log(mainPrice);
-    console.log(fullName);
-    console.log(message);
-    console.log(id);
+
+    Swal.fire({
+      title: "Loading...",
+      text: "Please wait while we process your request.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
     const orderData = {
       mainPrice,
@@ -39,6 +47,8 @@ const CakeProductInfo = ({ data, id }) => {
       weight,
       type: data.type,
       phone,
+      city,
+      address,
     };
 
     if (
@@ -48,9 +58,15 @@ const CakeProductInfo = ({ data, id }) => {
       isNullOrWhitespace(orderData.id) ||
       isNullOrWhitespace(orderData.weight) ||
       isNullOrWhitespace(orderData.type) ||
-      isNullOrWhitespace(phone)
+      isNullOrWhitespace(phone) ||
+      isNullOrWhitespace(orderData.city) ||
+      isNullOrWhitespace(orderData.address)
     ) {
-      alert(" Please fill in all the fields correctly.");
+      Swal.fire({
+        title: "Error!",
+        text: "All fields are required.",
+        icon: "error",
+      });
       return;
     }
 
@@ -58,10 +74,16 @@ const CakeProductInfo = ({ data, id }) => {
     try {
       const docRef = await addDoc(collection(db, "orders"), orderData);
       console.log("Order Added Here ");
-      alert("Order Successfully Done ");
+      Swal.fire({
+        title: "Good job!",
+        text: "You have orderd Successfully  !",
+        icon: "success",
+      });
+      setIsFormOpen(!isFormOpen);
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false) ; 
     }
   };
 
@@ -155,7 +177,7 @@ const CakeProductInfo = ({ data, id }) => {
           onClick={() => setIsFormOpen(!isFormOpen)}
           className="bg-[#F06429] text-white flex justify-center items-center py-2 rounded-md cursor-pointer hover:bg-[#853513]"
         >
-          Buy Now | ₹400
+          Buy Now {mainPrice}
         </div>
       </div>
       <div className="flex justify-center md:justify-start md:gap-24">
@@ -174,6 +196,34 @@ const CakeProductInfo = ({ data, id }) => {
                   onChange={(e) => setFullName(e.target.value)}
                   type="text"
                   placeholder="Enter your full Name "
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  City
+                </label>
+                <select
+                  onChange={(e) => setCity(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                  name=""
+                  id=""
+                >
+                  <option value="">Select your City </option>
+                  <option value="Noida">Noida</option>
+                  <option value="Lucknow">Lucknow </option>
+                  <option value="Banarash">Banarash</option>
+                  <option value="Prayagraj">Prayagraj </option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Address
+                </label>
+                <input
+                  onChange={(e) => setAddress(e.target.value)}
+                  type="text"
+                  placeholder="Enter Address Here "
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                 />
               </div>

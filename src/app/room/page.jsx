@@ -59,18 +59,20 @@ const MyComponent = () => {
     <div className="">
       <div className=" grid md:grid-cols-5 ">
         <div className="md:col-span-2">
-          <Products img={images} />
+          <Products img={images} location={productData.address} />
         </div>
-        <div className="md:col-span-3">
-          <RoomInfo data={productData} />
+        <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden">
+          <RoomInfo data={productData} id={id} />
           <RatingAndReview />
         </div>
         <div className="md:h-20"></div>
       </div>
       <div>
-      <p className="px-12 md:text-xl font-semibold">You may also like  this </p>
+        <p className="px-12 md:text-xl font-semibold">
+          You may also like this{" "}
+        </p>
 
-        <Room show={true}/>
+        <Room show={true} />
       </div>
     </div>
   );

@@ -21,17 +21,20 @@ export default function Home() {
         weight={800}
         autoPlay={true}
       />
-      <OfferPage />
-      <Cake />
-      <UploadCake/>
-      <Ads />
-      <Party />
-      <Room />
-      <div className="bg-[#FFE7DD] py-10 ">
-        <p className="md:text-xl font-semibold text-center">
+      <div className="space-y-12">
+        <OfferPage />
+        <Cake />
+        <UploadCake />
+        <Ads />
+        <Party />
+        <Room />
+      </div>
+
+      <div className="bg-[#FFE7DD] py-10 my-12">
+        <p className="md:text-xl font-semibold text-center pb-4">
           {" "}
           Create Experience with{" "}
-          <span className="text-[#F06429] pb-2">Top Lucknow nawabi's</span>{" "}
+          <span className="text-[#F06429]">Top Lucknow nawabi's</span>{" "}
           Activities{" "}
         </p>
         <CardSlider images={LocationData} />
