@@ -77,10 +77,10 @@ const WishlistPage = () => {
       {wishlistItems.length === 0 ? (
         <p>Your wishlist is empty.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-1  gap-4">
           {wishlistItems.map((item) => (
            <Link href={`/${item.type}?id=${item.id}`}>
-            <div key={item.id} className="p-4 flex  gap-4  bg-white rounded-lg shadow-md">
+            <div key={item.id} className="p-4 flex items-center   gap-4  bg-white rounded-lg shadow-md">
               <Image
                 src={item.cover_img}
                 alt={item.title}
