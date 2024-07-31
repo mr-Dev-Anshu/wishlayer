@@ -10,17 +10,22 @@ import CoupanList from "@/components/coupan/CupanList";
 import CardSlider from "@/components/location/CardSlider";
 import { LocationData } from "@/constant/Location";
 import UploadCake from "@/components/UploadCake";
+import AboutUsPage from "@/components/About";
+import Link from "next/link";
 export default function Home() {
   return (
-    <div>
-      <Hero
-        image={
-          "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a"
-        }
-        height={400}
-        weight={800}
-        autoPlay={true}
-      />
+    <>
+      <Link href={"allproducts"}>
+        <Hero
+          image={
+            "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a"
+          }
+          height={400}
+          weight={800}
+          autoPlay={true}
+        />
+      </Link>
+
       <div className="space-y-12">
         <OfferPage />
         <Cake />
@@ -41,8 +46,10 @@ export default function Home() {
       </div>
       <CoupanList />
 
+      <AboutUsPage />
+
       {/* <EventsDecoration />
        */}
-    </div>
+    </>
   );
 }

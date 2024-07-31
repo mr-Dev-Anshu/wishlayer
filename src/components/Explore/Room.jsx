@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import headingimg from "@/assets/eventsheading.png";
+import headingimg from "@/assets/roomBanner.png";
 import Explore from "../Explore";
 import { db } from "@/config/firebase.config";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";

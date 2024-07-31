@@ -9,11 +9,11 @@ export const NavList = [
     to: "/allproducts",
   },
   {
-    title: "Services",
-    to: "/services",
+    title: "Wishlist",
+    to: "/wishlist",
   },
   {
-    title: "Blog",
-    to: "/shop",
+    title: "Admin",
+    to: "/admin",
   },
 ];

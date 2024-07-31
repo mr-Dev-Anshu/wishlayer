@@ -3,7 +3,6 @@ import Cake from "@/components/Explore/Cake";
 import CakeProductInfo from "@/components/Productpage/CakeProductInfo";
 import Products from "@/components/Productpage/Products";
 import RatingAndReview from "@/components/Productpage/RatingAndReview";
-import RoomInfo from "@/components/Productpage/RoomInfo";
 import UploadCake from "@/components/UploadCake";
 import { db } from "@/config/firebase.config";
 import {
@@ -80,7 +79,6 @@ const MyComponent = () => {
 
 const page = () => {
   const [shownConponent, setShownComponent] = useState(false);
-
   useEffect(() => {
     setShownComponent(true);
   }, []);

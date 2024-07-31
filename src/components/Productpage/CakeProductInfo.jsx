@@ -17,8 +17,9 @@ import { db } from "@/config/firebase.config";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { getSession } from "@/authThing/action";
+import Spinner from "../Spinner";
 const CakeProductInfo = ({ data, id }) => {
-  console.log(data.type);
+  // console.log(data.type);
   const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
@@ -42,7 +43,7 @@ const CakeProductInfo = ({ data, id }) => {
 
   useEffect(() => {
     const getWishListData = async () => {
-      const session = await getSession() ; 
+      const session = await getSession();
       const q = query(
         collection(db, "wishlists"),
         where("ProductId", "==", id),
@@ -119,12 +120,13 @@ const CakeProductInfo = ({ data, id }) => {
   };
 
   const handleWishlist = async () => {
-
+    setLoading(true);
     try {
       const session = await getSession();
       console.log(session);
       if (!session || !session.phone) {
         router.push("/login");
+        setLoading(false);
         return;
       }
 
@@ -140,6 +142,7 @@ const CakeProductInfo = ({ data, id }) => {
         await deleteDoc(docRef);
         setWishlisted(false);
         console.log("Removed from wishlist");
+        setLoading(false);
       } else {
         const data = {
           ProductId: id,
@@ -148,9 +151,11 @@ const CakeProductInfo = ({ data, id }) => {
         await addDoc(collection(db, "wishlists"), data);
         setWishlisted(true);
         console.log("Added into wishlist");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -165,19 +170,23 @@ const CakeProductInfo = ({ data, id }) => {
           <Image alt="eggless" src={img1} height={40} width={40} />
         </span>
         <h1 className="text-xl md:text-2xl font-semibold text-center md:text-left">
-          {data.title}
+          {data?.title}
         </h1>
         <p className="text-center md:text-left">
-          <Image
-            alt="wishlistimage"
-            className={`cursor-pointer ${
-              wishlisted ? "bg-red-600 rounded-md" : null
-            }`}
-            onClick={handleWishlist}
-            src={img2}
-            height={40}
-            width={40}
-          />
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Image
+              alt="wishlistimage"
+              className={`cursor-pointer ${
+                wishlisted ? "bg-red-600 rounded-full" : null
+              }`}
+              onClick={handleWishlist}
+              src={img2}
+              height={30}
+              width={30}
+            />
+          )}
         </p>
       </div>
       <div>
@@ -189,15 +198,15 @@ const CakeProductInfo = ({ data, id }) => {
       <div className="border-b border-gray-600 border-dotted"></div>
       <div className="md:flex   flex-col md:flex-row gap-2 md:gap-4 text-lg md:text-xl font-semibold items-center">
         <span className="line-through text-gray-500 ml-2">
-          ₹{mainPrice || data.mainPrice}
+          ₹{mainPrice || data?.mainPrice}
         </span>
         <span className="text-red-500 ml-2">
-          ₹{discountedPrice || data.discountedPrice}
+          ₹{discountedPrice || data?.discountedPrice}
         </span>
-        <span className="text-green-500 ml-2">({data.discount}% OFF)</span>
+        <span className="text-green-500 ml-2">({data?.discount}% OFF)</span>
         <span className="text-sm ml-2">(inclusive of GST)</span>
       </div>
-      {data.weightPrice.length > 1 ? (
+      {data?.weightPrice.length > 1 ? (
         <div className="flex flex-wrap gap-2 md:gap-4 font-semibold">
           {data.weightPrice.map((item) => (
             <span
@@ -243,7 +252,7 @@ const CakeProductInfo = ({ data, id }) => {
       <div>
         <h1 className="text-lg font-semibold">Product Description</h1>
         <p>
-          {data.description}
+          {data?.description}
           <span className="text-[#43A1F0] cursor-pointer">Read more</span>
         </p>
       </div>

@@ -17,13 +17,9 @@ const CoupanCard = ({ img, description, title, code, lastDate }) => {
     <div className="relative w-[300px] px-2 md:px-2 rounded-lg overflow-hidden shadow-lg">
       {/* Background Image */}
       <div className="relative w-full h-[150px] md:h-[150px]">
-        <Image
-          src={img}
-          alt="Product Image"
-          layout="fill"
-          objectFit="cover"
-          className="absolute inset-0 rounded-lg"
-        />
+        <div className="h-[200px] w-[300px] flex justify-center items-center text-white  px-8 font-semibold bg-[#F06429]">
+         {description}
+        </div>
       </div>
 
       {/* Card Content */}

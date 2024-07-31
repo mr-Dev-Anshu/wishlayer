@@ -1,15 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import { NavList } from "@/constant/NavList";
 import Link from "next/link";
-import { CiHeart } from "react-icons/ci";
-import { GiCupcake } from "react-icons/gi";
+
 import { userContext } from "@/context/AuthContext";
-import { logout } from "@/authThing/action";
+import { getSession, logout } from "@/authThing/action";
+import { FaUserCircle } from "react-icons/fa";
 const Header = () => {
   const { userPhone } = React.useContext(userContext);
+  const [phone, setPhone] = useState();
+
+ 
   const handleLogOut = async () => {
     await logout();
   };
@@ -38,21 +41,23 @@ const Header = () => {
               <p className="cursor-pointer">Login/Register</p>
             </Link>
           ) : (
-            <p className="cursor-pointer" onClick={handleLogOut}>
+            <p
+              className="cursor-pointer text-red-600 font-semibold"
+              onClick={handleLogOut}
+            >
               {" "}
-              Log Out{" "}
+              Logout{" "}
             </p>
           )}
-          <p className="text-red-500 flex  items-center text-2xl gap-2">
-            <Link href={"/wishlist"}>
-              <span>
-                <CiHeart />
-              </span>
-            </Link>
-            <span>
-              <GiCupcake />
-            </span>
-          </p>
+          {userPhone  && (
+            <p className="text-gray-500 flex  items-center text-2xl gap-2">
+              <Link href={"/previous_orders"}>
+                <span>
+                  <FaUserCircle />
+                </span>
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>

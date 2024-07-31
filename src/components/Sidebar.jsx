@@ -10,10 +10,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { NavList } from "@/constant/NavList";
 import Link from "next/link";
-import { GiCupcake, GiHamburgerMenu } from "react-icons/gi";
-import { CiHeart } from "react-icons/ci";
+import { GiHamburgerMenu } from "react-icons/gi";
+
 import { userContext } from "@/context/AuthContext";
-import { logout } from "@/authThing/action";
+import { getSession, logout } from "@/authThing/action";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
@@ -26,6 +27,15 @@ export default function TemporaryDrawer() {
   const handleLogOut = async () => {
     await logout();
   };
+  const [phone, setPhone] = React.useState();
+
+  React.useEffect(() => {
+    const getPhone = async () => {
+      const session = await getSession();
+      setPhone(session?.phone);
+    };
+    getPhone();
+  }, []);
 
   React.useEffect(() => {
     console.log(userPhone, "this is from Sidebar ");
@@ -40,7 +50,7 @@ export default function TemporaryDrawer() {
     >
       <List>
         {NavList.map((item, index) => (
-          <ListItem key={index} disablePadding>
+          <ListItem  key={index} disablePadding>
             <Link href={item.to}>
               {" "}
               <ListItemButton>
@@ -51,23 +61,27 @@ export default function TemporaryDrawer() {
         ))}
       </List>
       {!userPhone ? (
-        <Link href={'/login'}>
-        <p className="cursor-pointer">Login/Register</p>
-      </Link>
+        <Link href={"/login"}>
+          <p className="cursor-pointer px-4 font-semibold">Login/Register</p>
+        </Link>
       ) : (
-        <p onClick={handleLogOut} className="mx-2 w-fit">
-          Log Out{" "}
+        <p
+          onClick={handleLogOut}
+          className="mx-2 w-fit text-red-600 font-bold "
+        >
+          logout{" "}
         </p>
       )}
       <div className="flex gap-3 mt-2 items-center">
-        <p className="text-red-500 flex  px-2 items-center text-2xl gap-2">
-          <span>
-            <CiHeart />
-          </span>
-          <span>
-            <GiCupcake />
-          </span>
-        </p>
+        {phone && (
+          <p className="text-blue-500 flex px-4  items-center text-2xl gap-2">
+            <Link href={"/previous_orders"}>
+              <span>
+                <FaUserCircle />
+              </span>
+            </Link>
+          </p>
+        )}
       </div>
     </Box>
   );
@@ -83,3 +97,5 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
+
+
