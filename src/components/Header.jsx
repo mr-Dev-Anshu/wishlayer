@@ -25,9 +25,9 @@ const Header = () => {
         </div>
         <div>
           <ul className="flex gap-12">
-            {NavList.map((item , index) => (
+            {NavList.map((item, index) => (
               <li key={index}>
-                <Link  href={item.to}>{item.title}</Link>
+                <Link href={item.to}>{item.title}</Link>
               </li>
             ))}
           </ul>
@@ -44,9 +44,11 @@ const Header = () => {
             </p>
           )}
           <p className="text-red-500 flex  items-center text-2xl gap-2">
-            <span>
-              <CiHeart />
-            </span>
+            <Link href={"/wishlist"}>
+              <span>
+                <CiHeart />
+              </span>
+            </Link>
             <span>
               <GiCupcake />
             </span>

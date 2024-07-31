@@ -7,7 +7,7 @@ const Products = ({ img, location }) => {
   const [bigImage, setBigImage] = useState(img[0].url);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   const openModal = (index) => {
     setCurrentIndex(index);
     setBigImage(img[index].url);
@@ -84,10 +84,12 @@ const Products = ({ img, location }) => {
           </div>
         )}
       </div>
-      <div className="mt-3  md:px-10 px-5">
-        <p className="text-xl font-medium text-[#F06429] ">Address</p>
-        <div className="">{location}</div>
-      </div>
+      {location && (
+        <div className="mt-3  md:px-10 px-5">
+          <p className="text-xl font-medium text-[#F06429] ">Address</p>
+          <div className="">{location}</div>
+        </div>
+      )}
     </>
   );
 };

@@ -1,13 +1,25 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
-import img1 from "@/assets/cakeIcons.png";
+import React, { useEffect, useState } from "react";
+import img1 from "@/assets/eggless.png";
+import img2 from "@/assets/wishlist.png";
 import flag from "@/assets/flag.webp";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { getSession } from "@/authThing/action";
 const CakeProductInfo = ({ data, id }) => {
   console.log(data.type);
+  const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -18,6 +30,8 @@ const CakeProductInfo = ({ data, id }) => {
   const [message, setMessage] = useState();
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
+  const [wishlisted, setWishlisted] = useState();
+
   const handleMainPrice = (value) => {
     setMainPrice(value);
   };
@@ -25,6 +39,23 @@ const CakeProductInfo = ({ data, id }) => {
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
+
+  useEffect(() => {
+    const getWishListData = async () => {
+      const session = await getSession() ; 
+      const q = query(
+        collection(db, "wishlists"),
+        where("ProductId", "==", id),
+        where("user", "==", session.phone)
+      );
+      const dataSnap = await getDocs(q);
+      if (!dataSnap.empty) {
+        setWishlisted(dataSnap.docs[0].data());
+        console.log(dataSnap.docs[0].data());
+      }
+    };
+    getWishListData();
+  }, []);
 
   const handleOrder = async (e) => {
     setLoading(true);
@@ -83,7 +114,43 @@ const CakeProductInfo = ({ data, id }) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false) ; 
+      setLoading(false);
+    }
+  };
+
+  const handleWishlist = async () => {
+
+    try {
+      const session = await getSession();
+      console.log(session);
+      if (!session || !session.phone) {
+        router.push("/login");
+        return;
+      }
+
+      const q = query(
+        collection(db, "wishlists"),
+        where("ProductId", "==", id),
+        where("user", "==", session.phone)
+      );
+      const dataSnap = await getDocs(q);
+
+      if (!dataSnap.empty) {
+        const docRef = doc(db, "wishlists", dataSnap.docs[0].id);
+        await deleteDoc(docRef);
+        setWishlisted(false);
+        console.log("Removed from wishlist");
+      } else {
+        const data = {
+          ProductId: id,
+          user: session.phone,
+        };
+        await addDoc(collection(db, "wishlists"), data);
+        setWishlisted(true);
+        console.log("Added into wishlist");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -95,12 +162,23 @@ const CakeProductInfo = ({ data, id }) => {
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
         <span className="mb-2 md:mb-0">
-          <Image src={img1} height={40} width={40} />
+          <Image alt="eggless" src={img1} height={40} width={40} />
         </span>
         <h1 className="text-xl md:text-2xl font-semibold text-center md:text-left">
           {data.title}
         </h1>
-        <p className="text-center md:text-left">Like this</p>
+        <p className="text-center md:text-left">
+          <Image
+            alt="wishlistimage"
+            className={`cursor-pointer ${
+              wishlisted ? "bg-red-600 rounded-md" : null
+            }`}
+            onClick={handleWishlist}
+            src={img2}
+            height={40}
+            width={40}
+          />
+        </p>
       </div>
       <div>
         <span className=" md:text-2xl mr-2">

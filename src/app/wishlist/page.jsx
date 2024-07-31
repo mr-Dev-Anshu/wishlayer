@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-
 import { collection, getDocs, query, where, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { getSession } from "@/authThing/action";
