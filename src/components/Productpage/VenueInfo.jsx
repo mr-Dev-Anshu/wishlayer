@@ -51,12 +51,13 @@ const VenueInfo = ({ id }) => {
     };
 
     if (
-      isNullOrWhitespace(venueData.checkInDate) ||
-      isNullOrWhitespace(venueData.checkOutDate) ||
+      isNullOrWhitespace(venueData.eventDate) ||
+      isNullOrWhitespace(venueData.eventType) ||
       isNullOrWhitespace(venueData.phone) ||
       isNullOrWhitespace(venueData.fullName) ||
       isNullOrWhitespace(venueData.message) ||
       isNullOrWhitespace(venueData.id) ||
+      isNullOrWhitespace(venueData.numberOfGuest) ||
       isNullOrWhitespace(venueData.type)
     ) {
       Swal.fire({
@@ -65,7 +66,7 @@ const VenueInfo = ({ id }) => {
         icon: "error",
       });
 
-      return ; 
+      return;
     }
 
     console.log(venueData);
@@ -78,6 +79,7 @@ const VenueInfo = ({ id }) => {
         text: "Your Room is Booked now ! ",
         icon: "success",
       });
+      setIsFormOpen(!isFormOpen);
     } catch (error) {
       console.log(error);
     }
@@ -125,11 +127,11 @@ const VenueInfo = ({ id }) => {
                 <option value="" disabled>
                   Select an option
                 </option>
-                <option value="Birthday Celebration">
-                  Birthday Celebration
-                </option>
-                <option value="Wedding Ceremony">Wedding Ceremony</option>
-                <option value="Party Hosting">Party Hosting</option>
+                {
+                  ["Birtheday Party" , "Corporate Party" , "Bachelor Party" , "Farewell Party" , "Candle light Dinner-Couples"].map((item , index )=> (
+                     <option key={index} value={item}>{item}</option>
+                  ))
+                }
               </select>
             </div>
           </div>

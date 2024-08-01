@@ -51,7 +51,7 @@ const Filter = () => {
           </div>
         ))}
 
-        <div className="flex flex-col md:flex-row gap-4 mt-6">
+        {/* <div className="flex flex-col md:flex-row gap-4 mt-6">
           <select
             className="w-full md:w-36 lg:w-44 font-semibold focus:outline-none px-4 py-2 border border-gray-300 rounded-sm"
             name=""
@@ -70,7 +70,7 @@ const Filter = () => {
             <option value="500+">500+</option>
             <option value="1000+">1000+</option>
           </select>
-        </div>
+        </div> */}
         {ratings.map((item) => (
           <div
             key={item}

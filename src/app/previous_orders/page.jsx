@@ -58,6 +58,7 @@ const page = () => {
 
   useEffect(() => {
     getData();
+    console.log(allOrders) ; 
   }, [router]);
   return (
     <div className="p-4 md:p-10">
@@ -94,7 +95,7 @@ const page = () => {
                 <p>Message: {order.message}</p>
               </div>
               <div>
-                status: {order.delivered && <span className="text-green-600 font-bold  mt-4">Delivered</span> } {order.decline && <span className="text-red-600 mt-4 font-bold">Decline</span> } {!order.delivered && !order.decline && <span className="text-blue-600 mt-4 font-bold">Pending</span> }
+                status: {order.Confirmed && <span className="text-green-600 font-bold  mt-4">Confirmed</span> } {order.decline && <span className="text-red-600 mt-4 font-bold">Decline</span> } {(!order.Confirmed && !order.decline) ? <span className="text-blue-600 mt-4 font-bold">Pending</span>:null }
               </div>
             </div>
            </Link>

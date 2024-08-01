@@ -81,6 +81,7 @@ const CakeProductInfo = ({ data, id }) => {
       phone,
       city,
       address,
+      
     };
 
     if (

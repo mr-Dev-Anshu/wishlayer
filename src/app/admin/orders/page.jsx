@@ -26,7 +26,7 @@ const OrdersPage = () => {
     const ordersList = await Promise.all(
       ordersSnapshot.docs.map(async (doc1) => {
         const order = { orderId: doc1.id, ...doc1.data() };
-        if (order.delivered || order.declined) return null; // Skip delivered or declined orders
+        if (order.Confirmed || order.declined) return null; 
 
         let productDetails = null;
         let productRef = null;
@@ -49,7 +49,7 @@ const OrdersPage = () => {
         return { ...order, productDetails };
       })
     );
-    setOrders(ordersList.filter((order) => order !== null)); // Remove null values
+    setOrders(ordersList.filter((order) => order !== null)); 
     setLoading(false);
   };
 
@@ -176,9 +176,9 @@ const OrdersPage = () => {
               <div className="flex justify-between mt-4">
                 <button
                   className="px-4 py-2 bg-green-500 text-white rounded"
-                  onClick={() => handleStatusUpdate(order.orderId, "delivered")}
+                  onClick={() => handleStatusUpdate(order.orderId, "Confirmed")}
                 >
-                  Delivered
+                  Confirm
                 </button>
                 <button
                   className="px-4 py-2 bg-red-500 text-white rounded"
