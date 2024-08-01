@@ -26,7 +26,7 @@ const OrdersPage = () => {
     const ordersList = await Promise.all(
       ordersSnapshot.docs.map(async (doc1) => {
         const order = { orderId: doc1.id, ...doc1.data() };
-        if (order.Confirmed || order.declined) return null; 
+        if (order.Confirmed || order.declined) return null;
 
         let productDetails = null;
         let productRef = null;
@@ -49,7 +49,7 @@ const OrdersPage = () => {
         return { ...order, productDetails };
       })
     );
-    setOrders(ordersList.filter((order) => order !== null)); 
+    setOrders(ordersList.filter((order) => order !== null));
     setLoading(false);
   };
 
@@ -103,12 +103,22 @@ const OrdersPage = () => {
         >
           Cake Orders
         </button>
+        <button
+          className={`mx-2 px-4 py-2 rounded ${
+            orderType !== "decoration"
+              ? "bg-white text-[#F06429]"
+              : "bg-[#F06429] text-white"
+          }`}
+          onClick={() => setOrderType("decoration")}
+        >
+          Decoration Orders
+        </button>
       </div>
 
       {loading ? (
         <Skeleton count={10} height={100} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {orders.map((order) => (
             <div
               key={order.id}
@@ -159,7 +169,26 @@ const OrdersPage = () => {
                   <p className="font-bold text-lg">Cake Order</p>
                   <img
                     src={order.productDetails.cover_img}
-                    alt={order.productDetails.title}
+                    alt={order.title}
+                    className="w-full h-48 object-cover rounded-lg mb-2"
+                  />
+                  <p className="font-semibold ">{order.productDetails.title}</p>
+                  <p>Description: {order.productDetails.description}</p>
+                  <p>Address: {order.address}</p>
+                  <p>City: {order.city}</p>
+                  <p>Name: {order.fullName}</p>
+                  <p>Weight: {order.weight} KG </p>
+                  <p>Phone: {order.phone}</p>
+                  <p>Price: ₹{order.mainPrice}</p>
+                  <p>Message: {order.message}</p>
+                </div>
+              )}
+              {order.type === "decoration" && order.productDetails && (
+                <div>
+                  <p className="font-bold text-lg">Decoration  Order</p>
+                  <img
+                    src={order.productDetails.cover_img}
+                    alt={order.title}
                     className="w-full h-48 object-cover rounded-lg mb-2"
                   />
                   <p className="font-semibold ">{order.productDetails.title}</p>

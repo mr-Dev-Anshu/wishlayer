@@ -12,6 +12,7 @@ import { LocationData } from "@/constant/Location";
 import UploadCake from "@/components/UploadCake";
 import AboutUsPage from "@/components/About";
 import Link from "next/link";
+import Decoration from "@/components/Explore/Decoration";
 export default function Home() {
   return (
     <>
@@ -29,6 +30,7 @@ export default function Home() {
       <div className="space-y-12">
         <OfferPage />
         <Cake />
+        <Decoration/>
         <UploadCake />
         <Ads />
         <Party />

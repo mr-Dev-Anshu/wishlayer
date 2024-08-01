@@ -86,7 +86,7 @@ const WishlistPage = () => {
           {wishlistItems.map((item) => (
             <div
               key={item.id}
-              className="p-4 flex items-center   gap-4  bg-white rounded-lg shadow-md"
+              className="p-4 flex items-center  border border-gray-300 md:h-[100px] gap-4  bg-white rounded-lg shadow-md"
             >
               <Link href={`/${item.type}?id=${item.id}`}>
                 <Image
@@ -94,11 +94,11 @@ const WishlistPage = () => {
                   alt={item.title}
                   width={100}
                   height={100}
-                  className="rounded-lg"
+                  className="rounded-lg h-[80px]"
                 />
               </Link>
               <div className="flex items-center justify-between w-full ">
-                <h2 className="md:text-xl font-semibold  mt-2">{item.title}</h2>
+                <h2 className="md:text-xl font-semibold text-sm  mt-2">{item.title}</h2>
 
                 <button
                   onClick={() => handleRemoveFromWishlist(item.id)}

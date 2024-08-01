@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { getSession } from "@/authThing/action";
 import Spinner from "../Spinner";
 const CakeProductInfo = ({ data, id }) => {
-  // console.log(data.type);
+ 
   const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
@@ -81,7 +81,6 @@ const CakeProductInfo = ({ data, id }) => {
       phone,
       city,
       address,
-      
     };
 
     if (
@@ -167,9 +166,11 @@ const CakeProductInfo = ({ data, id }) => {
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
-        <span className="mb-2 md:mb-0">
-          <Image alt="eggless" src={img1} height={40} width={40} />
-        </span>
+        {data.type === "cake" && (
+          <span className="mb-2 md:mb-0">
+            <Image alt="eggless" src={img1} height={40} width={40} />
+          </span>
+        )}
         <h1 className="text-xl md:text-2xl font-semibold text-center md:text-left">
           {data?.title}
         </h1>
@@ -207,7 +208,7 @@ const CakeProductInfo = ({ data, id }) => {
         <span className="text-green-500 ml-2">({data?.discount}% OFF)</span>
         <span className="text-sm ml-2">(inclusive of GST)</span>
       </div>
-      {data?.weightPrice.length > 1 ? (
+      {data?.weightPrice?.length > 1 ? (
         <div className="flex flex-wrap gap-2 md:gap-4 font-semibold">
           {data.weightPrice.map((item) => (
             <span

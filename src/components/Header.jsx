@@ -11,14 +11,18 @@ import { FaUserCircle } from "react-icons/fa";
 const Header = () => {
   const { userPhone } = React.useContext(userContext);
   const [phone, setPhone] = useState();
+  const [toggle, setToggle] = useState(false);
 
- 
   const handleLogOut = async () => {
     await logout();
   };
   return (
     <div>
-      <div className="h-[100px] flex justify-between items-center px-16">
+      <div onClick={()=> {
+          if(toggle){
+             setToggle(!toggle) ; 
+          }
+      }} className="h-[100px] flex justify-between items-center px-16">
         <div className="">
           <Image className="w-14" src={logo} alt="logo" />
           <p className="text-[8px] font-black flex justify-center ">
@@ -40,25 +44,27 @@ const Header = () => {
             <Link href={"login"}>
               <p className="cursor-pointer">Login/Register</p>
             </Link>
-          ) : (
-            <p
-              className="cursor-pointer text-red-600 font-semibold"
-              onClick={handleLogOut}
-            >
-              {" "}
-              Logout{" "}
-            </p>
-          )}
-          {userPhone  && (
-            <p className="text-gray-500 flex  items-center text-2xl gap-2">
-              <Link href={"/previous_orders"}>
-                <span>
-                  <FaUserCircle />
-                </span>
-              </Link>
+          ) : null}
+          {userPhone && (
+            <p className="text-gray-500 flex relative  items-center text-2xl gap-2">
+              <span className="cursor-pointer text-[#F06429]" onClick={()=> setToggle(!toggle) }>
+                <FaUserCircle />
+              </span>
             </p>
           )}
         </div>
+
+        {toggle && (
+          <div className="absolute  text-sm z-50 w-[140px] text-white   rounded-md  bg-[#F06429]  right-0 mx-10  top-8 bg-">
+            <ul className="p-4 font-semibold space-y-4">
+              <Link href={"/previous_orders"}>
+                <li> View Orders </li>
+              </Link>
+
+              <li className="cursor-pointer" onClick={handleLogOut}>Logout </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
