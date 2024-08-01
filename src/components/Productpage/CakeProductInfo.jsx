@@ -269,9 +269,9 @@ const CakeProductInfo = ({ data, id }) => {
           Buy Now {mainPrice}
         </div>
       </div>
-      <div className="flex justify-center md:justify-start md:gap-24">
+      {/* <div className="flex justify-center md:justify-start md:gap-24">
         <Image src={img1} alt="Cake Icon" />
-      </div>
+      </div> */}
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -280,7 +280,7 @@ const CakeProductInfo = ({ data, id }) => {
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Full Name
-                </label>
+                </label> 
                 <input
                   onChange={(e) => setFullName(e.target.value)}
                   type="text"
