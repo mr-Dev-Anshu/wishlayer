@@ -6,7 +6,7 @@ import { filterContext } from "@/context/FilterContext";
 
 const Filter = () => {
   const [selectFilter, setSelectFilter] = useState([]);
-  const filter = ["cake", "venue", "room"];
+  const filter = ["cake", "venue", "room" , "decoration"];
   const ratings = [
     "4★ & above",
     "3★ & above",

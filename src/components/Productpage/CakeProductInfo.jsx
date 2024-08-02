@@ -19,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { getSession } from "@/authThing/action";
 import Spinner from "../Spinner";
 const CakeProductInfo = ({ data, id }) => {
- 
   const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
@@ -280,7 +279,7 @@ const CakeProductInfo = ({ data, id }) => {
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Full Name
-                </label> 
+                </label>
                 <input
                   onChange={(e) => setFullName(e.target.value)}
                   type="text"
@@ -373,5 +372,4 @@ const CakeProductInfo = ({ data, id }) => {
     </div>
   );
 };
-
 export default CakeProductInfo;
