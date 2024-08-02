@@ -44,7 +44,7 @@ const VenueInfo = ({ id, data }) => {
       eventType,
       phone,
       fullName,
-      message,
+      message : message ||  "No Message Provided " ,
       id,
       eventArrivalTime,
 

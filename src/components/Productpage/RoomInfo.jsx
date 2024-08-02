@@ -41,7 +41,7 @@ const RoomInfo = ({ data, id }) => {
       checkOutDate,
       phone,
       fullName,
-      message,
+      message : message ||  "No Message Provided " ,
       id,
       price: data.price,
       numberOfRoom,

@@ -76,7 +76,7 @@ const CakeProductInfo = ({ data, id }) => {
     const orderData = {
       mainPrice,
       fullName,
-      message,
+      message : message ||  "No Message Provided " ,
       id,
       weight,
       type: data.type,
