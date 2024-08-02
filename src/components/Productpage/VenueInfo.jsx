@@ -77,12 +77,12 @@ const VenueInfo = ({ id, data }) => {
       console.log(docRef);
       Swal.fire({
         title: "Good job!",
-        text: "Your Room is Booked now ! ",
+        text: "Your Party Venue  is Booked now ! ",
         icon: "success",
       });
       setIsFormOpen(!isFormOpen);
     } catch (error) {
-      
+
       console.log(error);
     }
   };
