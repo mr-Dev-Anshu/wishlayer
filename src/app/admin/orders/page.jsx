@@ -137,7 +137,8 @@ const OrdersPage = () => {
                   <p>Address: {order.productDetails.address}</p>
                   <p>State: {order.productDetails.state}</p>
                   <p>Pincode: {order.productDetails.pincode}</p>
-                  <p>Date: {order.eventDate}</p>
+                  <p>EventDate: {order.eventDate}</p>
+                  <p>EventArrivalTime: {order.eventArrivalTime}</p>
                   <p>Type: {order.eventType}</p>
                   <p>Name: {order.fullName}</p>
                   <p>Guests: {order.numberOfGuest}</p>

@@ -89,7 +89,7 @@ const page = () => {
                 <p>Address: {order.address}</p>
                 <p>City: {order.city}</p>
                 <p>Name: {order.fullName}</p>
-                <p>Weight: {order.weight}</p>
+                 {order.weight ? <p>Weight: {order.weight} KG </p>:null }
                 <p>Phone: {order.phone}</p>
                 {order.price || order.mainPrice ? <p>Price: ₹{order.mainPrice || order.price}</p> : null}
                 <p>Message: {order.message}</p>

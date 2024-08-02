@@ -76,7 +76,7 @@ const CakeProductInfo = ({ data, id }) => {
     const orderData = {
       mainPrice,
       fullName,
-      message : message ||  "No Message Provided " ,
+      message: message || "No Message Provided ",
       id,
       weight,
       type: data.type,
@@ -85,27 +85,63 @@ const CakeProductInfo = ({ data, id }) => {
       address,
     };
 
-    if (
-      isNullOrWhitespace(orderData.mainPrice) ||
-      isNullOrWhitespace(orderData.fullName) ||
-      isNullOrWhitespace(orderData.id) ||
-      isNullOrWhitespace(orderData.weight) ||
-      isNullOrWhitespace(orderData.type) ||
-      isNullOrWhitespace(phone) ||
-      isNullOrWhitespace(orderData.city) ||
-      isNullOrWhitespace(orderData.address)
-    ) {
-      Swal.fire({
-        title: "Error!",
-        text: "All fields are required.",
-        icon: "error",
-      });
-      return;
+    const orderData2 = {
+      price: data.discountedPrice,
+      fullName,
+      message: message || "No Message Provided ",
+      id,
+      type: data.type,
+      phone,
+      city,
+      address,
+    };
+
+    const finalOrderData = data.type==="cake"?orderData:orderData2 ; 
+    
+
+    console.log(finalOrderData , data.type  )
+
+    if (data.type === "cake") {
+
+      if (
+        isNullOrWhitespace(orderData.fullName) ||
+        isNullOrWhitespace(orderData.mainPrice) ||
+        isNullOrWhitespace(orderData.weight) ||
+        isNullOrWhitespace(orderData.id) ||
+        isNullOrWhitespace(orderData.type) ||
+        isNullOrWhitespace(orderData.phone) ||
+        isNullOrWhitespace(orderData.city) ||
+        isNullOrWhitespace(orderData.address)
+      ) {
+        Swal.fire({
+          title: "Error!",
+          text: "All fields are required.",
+          icon: "error",
+        });
+        return;
+      }
+    } else {
+      if (
+        isNullOrWhitespace(orderData2.fullName) ||
+        isNullOrWhitespace(orderData2.id) ||
+        isNullOrWhitespace(orderData2.type) ||
+        isNullOrWhitespace(orderData2.phone) ||
+        isNullOrWhitespace(orderData2.city) ||
+        isNullOrWhitespace(orderData2.price) ||
+        isNullOrWhitespace(orderData2.address)
+      ) {
+        Swal.fire({
+          title: "Error!",
+          text: "All fields are required.",
+          icon: "error",
+        });
+        return;
+      }
     }
 
-    console.log(orderData);
+   
     try {
-      const docRef = await addDoc(collection(db, "orders"), orderData);
+      const docRef = await addDoc(collection(db, "orders"), finalOrderData);
       console.log("Order Added Here ");
       Swal.fire({
         title: "Good job!",
