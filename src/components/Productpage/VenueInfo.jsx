@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 
-const VenueInfo = ({ id }) => {
+const VenueInfo = ({ id , data}) => {
   const [menuImage, setMenuImage] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [eventDate, setEventDate] = useState("");
@@ -18,6 +18,7 @@ const VenueInfo = ({ id }) => {
   const [message, setMessage] = useState("");
   const [numberOfGuest, setNumberOfGuest] = useState("");
   const [fullName, setFullName] = useState("");
+  const [eventArrivalTime, setEventArrivalTime] = useState();
 
   const handleMenuImage = (img) => {
     setMenuImage(img);
@@ -45,6 +46,7 @@ const VenueInfo = ({ id }) => {
       fullName,
       message,
       id,
+      eventArrivalTime,
 
       numberOfGuest,
       type: "venue",
@@ -58,6 +60,7 @@ const VenueInfo = ({ id }) => {
       isNullOrWhitespace(venueData.message) ||
       isNullOrWhitespace(venueData.id) ||
       isNullOrWhitespace(venueData.numberOfGuest) ||
+      isNullOrWhitespace(venueData.eventArrivalTime) ||
       isNullOrWhitespace(venueData.type)
     ) {
       Swal.fire({
@@ -93,7 +96,7 @@ const VenueInfo = ({ id }) => {
         </div>
         <div className="p-2 w-full lg:w-auto">
           <div>
-            <p className="text-xl font-medium">Party Hall Comfort Inn</p>
+            <p className="text-xl font-medium">{data?.title}</p>
             <p className="flex text-xs pb-2">
               4.9{" "}
               <span className="px-2 text-yellow-500 py-0.5">
@@ -115,6 +118,8 @@ const VenueInfo = ({ id }) => {
                 className="px-2 focus:outline-none"
               />
             </div>
+            
+
             <div className="flex flex-col border-2 p-2 w-full lg:w-[280px] border-[#F06429] lg:border-t-none lg:border-l-0 rounded-b-md lg:rounded-e-md lg:rounded-b-none">
               <label htmlFor="event_type" className="text-[#F06429] px-2">
                 Choose Event Type
@@ -127,14 +132,32 @@ const VenueInfo = ({ id }) => {
                 <option value="" disabled>
                   Select an option
                 </option>
-                {
-                  ["Birtheday Party" , "Corporate Party" , "Bachelor Party" , "Farewell Party" , "Candle light Dinner-Couples"].map((item , index )=> (
-                     <option key={index} value={item}>{item}</option>
-                  ))
-                }
+                {[
+                  "Birtheday Party",
+                  "Corporate Party",
+                  "Bachelor Party",
+                  "Farewell Party",
+                  "Candle light Dinner-Couples",
+                ].map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
+            
           </div>
+          <div className="flex flex-col border-2 p-2 w-full mb-4 lg:w-[280px] border-[#F06429] rounded-t-md lg:rounded-s-md lg:rounded-t-none">
+              <label htmlFor="event_date" className="text-[#F06429] px-2">
+                Choose Event Arrival time 
+              </label>
+              <input
+                onChange={(e) => setEventArrivalTime(e.target.value)}
+                type="time"
+                id="event_date"
+                className="px-2 focus:outline-none"
+              />
+            </div>
           <div>
             <div
               onClick={() => setIsFormOpen(!isFormOpen)}

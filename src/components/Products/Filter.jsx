@@ -8,11 +8,7 @@ const Filter = () => {
   const [selectFilter, setSelectFilter] = useState([]);
   const filter = ["cake", "venue", "room" , "decoration"];
   const ratings = [
-    "4★ & above",
-    "3★ & above",
-    "2★ & above",
-    "1★ & above",
-    "0★ & above",
+   
   ];
 
   const { filterData, setFilterData } = useContext(filterContext);
