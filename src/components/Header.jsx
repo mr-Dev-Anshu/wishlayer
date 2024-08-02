@@ -18,18 +18,23 @@ const Header = () => {
   };
   return (
     <div>
-      <div onClick={()=> {
-          if(toggle){
-             setToggle(!toggle) ; 
+      <div
+        onClick={() => {
+          if (toggle) {
+            setToggle(!toggle);
           }
-      }} className="h-[100px] flex justify-between items-center px-16">
-        <div className="">
-          <Image className="w-14" src={logo} alt="logo" />
-          <p className="text-[8px] font-black flex justify-center ">
-            <span className="  ">WISH </span>
-            <span className="text-red-600  ">LAYER</span>
-          </p>
-        </div>
+        }}
+        className="h-[100px] flex justify-between items-center px-16"
+      >
+        <Link href={'/'}>
+          <div className="">
+            <Image className="w-14" src={logo} alt="logo" />
+            <p className="text-[8px] font-black flex justify-center ">
+              <span className="  ">WISH </span>
+              <span className="text-red-600  ">LAYER</span>
+            </p>
+          </div>
+        </Link>
         <div>
           <ul className="flex gap-12">
             {NavList.map((item, index) => (
@@ -47,7 +52,10 @@ const Header = () => {
           ) : null}
           {userPhone && (
             <p className="text-gray-500 flex relative  items-center text-2xl gap-2">
-              <span className="cursor-pointer text-[#F06429]" onClick={()=> setToggle(!toggle) }>
+              <span
+                className="cursor-pointer text-[#F06429]"
+                onClick={() => setToggle(!toggle)}
+              >
                 <FaUserCircle />
               </span>
             </p>
@@ -61,7 +69,9 @@ const Header = () => {
                 <li> View Orders </li>
               </Link>
 
-              <li className="cursor-pointer" onClick={handleLogOut}>Logout </li>
+              <li className="cursor-pointer" onClick={handleLogOut}>
+                Logout{" "}
+              </li>
             </ul>
           </div>
         )}

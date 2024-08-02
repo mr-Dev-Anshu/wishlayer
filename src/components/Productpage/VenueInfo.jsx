@@ -82,6 +82,7 @@ const VenueInfo = ({ id, data }) => {
       });
       setIsFormOpen(!isFormOpen);
     } catch (error) {
+      
       console.log(error);
     }
   };
