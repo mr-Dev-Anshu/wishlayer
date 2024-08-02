@@ -70,8 +70,10 @@ const MyComponent = () => {
       </div>
       <UploadCake />
       <div>
-        <p className="px-12 md:text-xl font-semibold">You may also like  this </p>
-        <Cake show={true}/>
+        <p className="px-12 md:text-xl font-semibold">
+          You may also like this{" "}
+        </p>
+        <Cake  show={true} type="decoration" />
       </div>
     </div>
   );

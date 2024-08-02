@@ -11,7 +11,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import Swal from "sweetalert2";
 const RoomInfo = ({ data, id }) => {
-  // console.log(  'this is from Room '  , data.type, id);
+  console.log("this is from Room ", data.type, id);
   const [fullName, setFullName] = useState();
   const [phone, setPhone] = useState();
   const [message, setMessage] = useState();
@@ -54,7 +54,6 @@ const RoomInfo = ({ data, id }) => {
       isNullOrWhitespace(roomData.phone) ||
       isNullOrWhitespace(roomData.price) ||
       isNullOrWhitespace(roomData.fullName) ||
-      isNullOrWhitespace(roomData.message) ||
       isNullOrWhitespace(roomData.id) ||
       isNullOrWhitespace(roomData.type)
     ) {

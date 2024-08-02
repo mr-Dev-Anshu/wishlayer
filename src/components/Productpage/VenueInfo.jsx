@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 
-const VenueInfo = ({ id , data}) => {
+const VenueInfo = ({ id, data }) => {
   const [menuImage, setMenuImage] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [eventDate, setEventDate] = useState("");
@@ -57,7 +57,6 @@ const VenueInfo = ({ id , data}) => {
       isNullOrWhitespace(venueData.eventType) ||
       isNullOrWhitespace(venueData.phone) ||
       isNullOrWhitespace(venueData.fullName) ||
-      isNullOrWhitespace(venueData.message) ||
       isNullOrWhitespace(venueData.id) ||
       isNullOrWhitespace(venueData.numberOfGuest) ||
       isNullOrWhitespace(venueData.eventArrivalTime) ||
@@ -68,7 +67,6 @@ const VenueInfo = ({ id , data}) => {
         text: "All fields are required.",
         icon: "error",
       });
-
       return;
     }
 
@@ -118,7 +116,6 @@ const VenueInfo = ({ id , data}) => {
                 className="px-2 focus:outline-none"
               />
             </div>
-            
 
             <div className="flex flex-col border-2 p-2 w-full lg:w-[280px] border-[#F06429] lg:border-t-none lg:border-l-0 rounded-b-md lg:rounded-e-md lg:rounded-b-none">
               <label htmlFor="event_type" className="text-[#F06429] px-2">
@@ -145,19 +142,18 @@ const VenueInfo = ({ id , data}) => {
                 ))}
               </select>
             </div>
-            
           </div>
           <div className="flex flex-col border-2 p-2 w-full mb-4 lg:w-[280px] border-[#F06429] rounded-t-md lg:rounded-s-md lg:rounded-t-none">
-              <label htmlFor="event_date" className="text-[#F06429] px-2">
-                Choose Event Arrival time 
-              </label>
-              <input
-                onChange={(e) => setEventArrivalTime(e.target.value)}
-                type="time"
-                id="event_date"
-                className="px-2 focus:outline-none"
-              />
-            </div>
+            <label htmlFor="event_date" className="text-[#F06429] px-2">
+              Choose Event Arrival time
+            </label>
+            <input
+              onChange={(e) => setEventArrivalTime(e.target.value)}
+              type="time"
+              id="event_date"
+              className="px-2 focus:outline-none"
+            />
+          </div>
           <div>
             <div
               onClick={() => setIsFormOpen(!isFormOpen)}

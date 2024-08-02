@@ -11,10 +11,12 @@ import Image from "next/image";
 
 const Cake = (props) => {
   const [cakeData, setCakeData] = useState();
+   const type =  props?.type || "cake"  ; 
+   console.log( "this is type of the " ,  props) ; 
   const getData = async () => {
     try {
       const docRef = collection(db, "cakes");
-      const q = query(docRef, where("type", "==", "cake"), limit(4)); // Apply where and limit
+      const q = query(docRef, where("type", "==", type ), limit(4)); // Apply where and limit
       const dataSnap = await getDocs(q);
       const allCake = [];
       dataSnap.forEach((doc) => {

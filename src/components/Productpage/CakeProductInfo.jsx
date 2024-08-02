@@ -43,15 +43,18 @@ const CakeProductInfo = ({ data, id }) => {
   useEffect(() => {
     const getWishListData = async () => {
       const session = await getSession();
-      const q = query(
-        collection(db, "wishlists"),
-        where("ProductId", "==", id),
-        where("user", "==", session.phone)
-      );
-      const dataSnap = await getDocs(q);
-      if (!dataSnap.empty) {
-        setWishlisted(dataSnap.docs[0].data());
-        console.log(dataSnap.docs[0].data());
+      console.log(id);
+      if (session.phone) {
+        const q = query(
+          collection(db, "wishlists"),
+          where("ProductId", "==", id),
+          where("user", "==", session.phone)
+        );
+        const dataSnap = await getDocs(q);
+        if (!dataSnap.empty) {
+          setWishlisted(dataSnap.docs[0].data());
+          console.log(dataSnap.docs[0].data());
+        }
       }
     };
     getWishListData();
@@ -85,7 +88,6 @@ const CakeProductInfo = ({ data, id }) => {
     if (
       isNullOrWhitespace(orderData.mainPrice) ||
       isNullOrWhitespace(orderData.fullName) ||
-      isNullOrWhitespace(orderData.message) ||
       isNullOrWhitespace(orderData.id) ||
       isNullOrWhitespace(orderData.weight) ||
       isNullOrWhitespace(orderData.type) ||
