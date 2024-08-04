@@ -12,6 +12,7 @@ const UploadCake = () => {
   const [weight, setWeight] = useState();
   const [image, setImage] = useState();
   const [loading, setLoading] = useState();
+  const [address, setAddress] = useState();
 
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
@@ -32,6 +33,7 @@ const UploadCake = () => {
       message,
       image: cakeImage,
       weight,
+      address
     };
 
     console.log(cakeData);
@@ -97,6 +99,16 @@ const UploadCake = () => {
                   onChange={(e) => setWeight(e.target.value)}
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                   type="Number"
+                ></input>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Address 
+                </label>
+                <input
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                  type="text"
                 ></input>
               </div>
               <div className="mb-4">

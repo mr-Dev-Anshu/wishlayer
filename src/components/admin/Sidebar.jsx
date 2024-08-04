@@ -59,6 +59,16 @@ const Sidebar = () => {
             icon: <MdAddBox />,
             label: "Decoration",
           },
+          {
+            to: "/admin/reels",
+            icon: <MdAddBox />,
+            label: "Reels",
+          },
+          {
+            to: "/admin/uploadedcakeorder",
+            icon: <MdAddBox />,
+            label: "Cake Order ",
+          },
         ].map((item) => (
           <Link
             key={item.to}
