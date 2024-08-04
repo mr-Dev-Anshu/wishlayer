@@ -44,7 +44,7 @@ const VenueInfo = ({ id, data }) => {
       eventType,
       phone,
       fullName,
-      message : message ||  "No Message Provided " ,
+      message: message || "No Message Provided ",
       id,
       eventArrivalTime,
 
@@ -72,6 +72,8 @@ const VenueInfo = ({ id, data }) => {
 
     console.log(venueData);
 
+    venueData.time = getCurrentTime();
+
     try {
       const docRef = await addDoc(collection(db, "orders"), venueData);
       console.log(docRef);
@@ -82,9 +84,16 @@ const VenueInfo = ({ id, data }) => {
       });
       setIsFormOpen(!isFormOpen);
     } catch (error) {
-
       console.log(error);
     }
+  };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -115,6 +124,7 @@ const VenueInfo = ({ id, data }) => {
                 type="date"
                 id="event_date"
                 className="px-2 focus:outline-none"
+                min={getTodayDate()}
               />
             </div>
 

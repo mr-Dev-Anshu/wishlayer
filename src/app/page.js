@@ -13,6 +13,7 @@ import UploadCake from "@/components/UploadCake";
 import AboutUsPage from "@/components/About";
 import Link from "next/link";
 import Decoration from "@/components/Explore/Decoration";
+import Reels from "@/components/Reels";
 export default function Home() {
   return (
     <>
@@ -46,6 +47,8 @@ export default function Home() {
         </p>
         <CardSlider images={LocationData} />
       </div>
+
+       <Reels /> 
       <CoupanList />
 
       <AboutUsPage />

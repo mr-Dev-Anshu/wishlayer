@@ -96,13 +96,11 @@ const CakeProductInfo = ({ data, id }) => {
       address,
     };
 
-    const finalOrderData = data.type==="cake"?orderData:orderData2 ; 
-    
+    const finalOrderData = data.type === "cake" ? orderData : orderData2;
 
-    console.log(finalOrderData , data.type  )
+    console.log(finalOrderData, data.type);
 
     if (data.type === "cake") {
-
       if (
         isNullOrWhitespace(orderData.fullName) ||
         isNullOrWhitespace(orderData.mainPrice) ||
@@ -138,8 +136,7 @@ const CakeProductInfo = ({ data, id }) => {
         return;
       }
     }
-
-   
+    finalOrderData.time = getCurrentTime();
     try {
       const docRef = await addDoc(collection(db, "orders"), finalOrderData);
       console.log("Order Added Here ");

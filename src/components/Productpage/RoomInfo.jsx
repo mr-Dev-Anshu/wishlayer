@@ -41,7 +41,7 @@ const RoomInfo = ({ data, id }) => {
       checkOutDate,
       phone,
       fullName,
-      message : message ||  "No Message Provided " ,
+      message: message || "No Message Provided ",
       id,
       price: data.price,
       numberOfRoom,
@@ -64,6 +64,8 @@ const RoomInfo = ({ data, id }) => {
       });
     }
 
+    roomData.time = getCurrentTime();
+
     try {
       const docRef = await addDoc(collection(db, "orders"), roomData);
       console.log(docRef);
@@ -72,11 +74,20 @@ const RoomInfo = ({ data, id }) => {
         text: "Your Room is Booked now ! ",
         icon: "success",
       });
-      setIsFormOpen(!isFormOpen)  ; 
+      setIsFormOpen(!isFormOpen);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <>
       {" "}
@@ -106,6 +117,7 @@ const RoomInfo = ({ data, id }) => {
                 type="date"
                 id="event_date"
                 className="px-4 focus:outline-none"
+                min={getTodayDate()}
               />
             </div>
             <div className="flex flex-col border-2 p-2 w-full md:w-[280px] border-[#F06429]  md:border-l-0 border-t-0 md:border-t-2 rounded-b-md md:rounded-e-md md:rounded-s-none">
@@ -116,6 +128,7 @@ const RoomInfo = ({ data, id }) => {
                 onChange={(e) => setCheckOutDate(e.target.value)}
                 type="date"
                 className="px-4 focus:outline-none"
+                min={getTodayDate()}
               />
             </div>
           </div>

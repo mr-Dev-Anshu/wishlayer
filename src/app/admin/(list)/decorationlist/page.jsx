@@ -24,6 +24,8 @@ const page = () => {
     cakesSnap.forEach((doc) => {
       cakesData.push({ id: doc.id, ...doc.data() });
     });
+    console.log( " this is cake data " , cakesData)
+
     setCakes(cakesData);
   };
 

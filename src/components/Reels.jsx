@@ -1,19 +1,37 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Page = () => {
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/config/firebase.config';
+
+const Reels = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const videoUrls = [
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/reels%2Fvideoplayback.mp4?alt=media&token=93fe006a-2fd6-4a85-8365-80fec0d354bb",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/reels%2Fvideoplayback.mp4?alt=media&token=93fe006a-2fd6-4a85-8365-80fec0d354bb",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/reels%2Fvideoplayback.mp4?alt=media&token=93fe006a-2fd6-4a85-8365-80fec0d354bb",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/reels%2Fvideoplayback.mp4?alt=media&token=93fe006a-2fd6-4a85-8365-80fec0d354bb",
-    "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/reels%2Fvideoplayback.mp4?alt=media&token=93fe006a-2fd6-4a85-8365-80fec0d354bb",
-  ];
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "reels"));
+        const urls = querySnapshot.docs.map(doc => doc.data().imageUrl);
+        setVideoUrls(urls);
+      } catch (error) {
+        console.error("Error fetching videos: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-4">
+        <div className='text-xl md:text-2xl md:font-medium font-bold  my-4 '>See Some Videos </div>
       <div className="flex overflow-x-auto space-x-4">
         {videoUrls.map((url, index) => (
           <div
@@ -47,7 +65,7 @@ const Page = () => {
               className="absolute top-0 left-0 w-full h-full"
               src={selectedVideo}
               frameBorder="0"
-              allow="accelerometer;  clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="Selected Reel Video"
             ></iframe>
@@ -58,4 +76,5 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Reels;
+

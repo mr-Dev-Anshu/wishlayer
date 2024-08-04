@@ -34,7 +34,8 @@ const OrdersPage = () => {
         if (
           order.type === "venue" ||
           order.type === "room" ||
-          order.type === "cake"
+          order.type === "cake" ||
+          order.type ==="decoration"
         ) {
           productRef = doc(db, "cakes", order.id);
           if (order.type !== "cake") {
@@ -45,6 +46,8 @@ const OrdersPage = () => {
             productDetails = productSnapshot.data();
           }
         }
+
+        console.log(productDetails) ; 
 
         return { ...order, productDetails };
       })
@@ -199,7 +202,7 @@ const OrdersPage = () => {
                   <p>Name: {order.fullName}</p>
                   <p>Weight: {order.weight} KG </p>
                   <p>Phone: {order.phone}</p>
-                  <p>Price: ₹{order.mainPrice}</p>
+                  <p>Price: ₹{order.productDetails.mainPrice}</p>
                   <p>Message: {order.message}</p>
                 </div>
               )}
