@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { getSession } from "@/authThing/action";
 import Spinner from "../Spinner";
 import { getCurrentTime } from "@/controller/Time";
-
+import { handleAvailablity } from "@/controller/handleAvailablelity";
 
 const CakeProductInfo = ({ data, id }) => {
   const router = useRouter();
@@ -34,6 +34,10 @@ const CakeProductInfo = ({ data, id }) => {
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
   const [wishlisted, setWishlisted] = useState();
+  const [checkedLocation, setCheckLoacaion] = useState();
+  const [locationMessage, setLocationMessage] = useState();
+  const [loadingLocation, setLoadingLocaion] = useState();
+  const [inputPinCode, setInputPinCode] = useState();
 
   const handleMainPrice = (value) => {
     setMainPrice(value);
@@ -200,6 +204,23 @@ const CakeProductInfo = ({ data, id }) => {
     setDiscountedPrice(value);
   };
 
+  const handleCheckLocation = async (pin) => {
+    setLocationMessage(null);
+    setLoadingLocaion(true);
+    const check = await handleAvailablity(pin);
+
+    if (check.length >= 1) {
+      setLocationMessage({
+        success: true,
+        message: "This Location is Available , You can Order . ",
+      });
+    }else {
+       setLocationMessage({success:false , message:"Not Available on this Pincode"})
+    }
+
+    setLoadingLocaion(false);
+  };
+
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
@@ -272,20 +293,33 @@ const CakeProductInfo = ({ data, id }) => {
           <div className="grid md:grid-cols-3 gap-4 items-center">
             <div className="col-span-2">
               <input
-                placeholder="Enter Your City"
+                onChange={(e) => setInputPinCode(e.target.value)}
+                placeholder="Enter Your Pincode "
                 className="w-full p-3 rounded-md focus:outline-none border border-gray-400 focus:border-green-600"
-                type="text"
+                type="number"
               />
               <p className="text-sm text-[#F5A623]">
                 Available in limited city*
               </p>
             </div>
             <div className="col-span-1">
-              <button className="bg-[#251D34] p-3 md:mb-4 text-white font-semibold rounded-lg w-full">
-                Check Availability
+              <button
+                onClick={() => handleCheckLocation(inputPinCode)}
+                className="bg-[#251D34] p-3 md:mb-4 text-white font-semibold rounded-lg w-full"
+              >
+                {loadingLocation ? <Spinner /> : " Check Availability"}
               </button>
             </div>
           </div>
+            {locationMessage && (
+              <p
+                className={` font-bold ${
+                  locationMessage?.success ? "text-green-600" : "text-red-600"
+                } w-full`}
+              >
+                {locationMessage?.message}
+              </p>
+            )}
         </div>
       </div>
       <div>
