@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 const OfferPage = () => {
   const { setFilterData } = useContext(filterContext);
   const router = useRouter();
-  
+
   const handleClick = (item) => {
-    setFilterData(item);
+    setFilterData((prev) =>
+      prev.includes(item) ? prev.filter((ele) => ele !== item) : [item]
+    );
     router.push("/allproducts");
   };
 
