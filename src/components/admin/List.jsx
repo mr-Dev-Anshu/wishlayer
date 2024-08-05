@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 const List = ({ data, handleDelete, add }) => {
-  console.log(data) ; 
+  console.log(add);
   const router = useRouter();
   return (
     <div className="space-y-6 p-4">
@@ -27,7 +27,7 @@ const List = ({ data, handleDelete, add }) => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((item  , index ) => (
+            {data?.map((item, index) => (
               <tr key={index} className="border-b">
                 <td className="p-4">{item.title}</td>
                 <td className="p-4">{item.description}</td>
@@ -45,6 +45,11 @@ const List = ({ data, handleDelete, add }) => {
                   >
                     Delete
                   </button>
+                  <Link href={`/admin/edit/${add}?id=${item.id}`}>
+                    <button className="bg-green-500 text-white px-4 py-1 rounded">
+                      Edit
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}

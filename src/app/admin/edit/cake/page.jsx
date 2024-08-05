@@ -1,11 +1,15 @@
 "use client";
 import { db } from "@/config/firebase.config";
 import { uploadFiles, uploadImage } from "@/controller/upload";
-import { addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
-const AddCakePage = () => {
-  
+const EditCakePage = () => {
+    
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [discount, setDiscount] = useState("");
@@ -19,6 +23,29 @@ const AddCakePage = () => {
   const [weightPrice, setWeightPrice] = useState([
     { weight: "", mainPrice: "", discountedPrice: "" },
   ]);
+
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        const docRef = doc(db, "cakes", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setTitle(data.title);
+          setDescription(data.description);
+          setMainPrice(data.mainPrice);
+          setDiscountedPrice(data.discountedPrice);
+          setWeightPrice(data.weightPrice);
+          setDiscount(data.discount);
+          setCoverImage(data.cover_img); 
+        } else {
+          console.log("No such document!");
+        }
+      };
+      fetchData();
+    }
+  }, [id]);
+
   const handleFile = (e) => {
     setImgs(e.target.files);
   };
@@ -33,12 +60,14 @@ const AddCakePage = () => {
     setWeightPrice(newWeightPrice);
     console.log(weightPrice);
   };
+
   const handleDiscountedPrice = (index, value) => {
     const newWeightPrice = [...weightPrice];
     newWeightPrice[index].discountedPrice = value;
     setWeightPrice(newWeightPrice);
     console.log(weightPrice);
   };
+
   const handleMainPriceChange = (index, value) => {
     const newWeightPrice = [...weightPrice];
     newWeightPrice[index].mainPrice = value;
@@ -57,13 +86,10 @@ const AddCakePage = () => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-    if (!imgs || !coverImage) {
-      setMessage("Please select an image");
-      setLoading(false);
-      return;
+    let coverImageUrl = coverImage;
+    if (coverImage instanceof File) {
+      coverImageUrl = await uploadImage(coverImage);
     }
-
-    const coverImageUrl = await uploadImage(coverImage);
     const cakeData = {
       title,
       description,
@@ -76,13 +102,15 @@ const AddCakePage = () => {
     };
     console.log(cakeData);
     try {
-      const docRef = await addDoc(collection(db, "cakes"), cakeData);
-      setMessage("Cake has been added successfully");
-      console.log(docRef.id);
-      uploadFiles(imgs, docRef.id);
+      const docRef = doc(db, "cakes", id);
+      await updateDoc(docRef, cakeData);
+      setMessage("Cake has been updated successfully");
+      if (imgs) {
+        uploadFiles(imgs, docRef.id);
+      }
     } catch (error) {
-      console.error("Error adding cake: ", error);
-      setMessage("Error adding cake");
+      console.error("Error updating cake: ", error);
+      setMessage("Error updating cake");
     } finally {
       setLoading(false);
     }
@@ -90,8 +118,8 @@ const AddCakePage = () => {
 
   return (
     <div className="space-y-6 p-6">
-      <div className="  md:text-2xl text-xl font-medium  py-1">
-        Add Cake Here
+      <div className="md:text-2xl text-xl font-medium py-1">
+        Edit Cake Here
       </div>
       <div className="grid md:grid-cols-1 gap-4">
         <div className="">
@@ -99,6 +127,7 @@ const AddCakePage = () => {
             <span>Title</span> <span className="text-red-600">*</span>
           </p>
           <input
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter Cake Title"
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
@@ -109,6 +138,7 @@ const AddCakePage = () => {
             <span>Description</span> <span className="text-red-600">*</span>
           </p>
           <textarea
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter Cake Description"
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
@@ -117,9 +147,10 @@ const AddCakePage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span> Main Price</span> <span className="text-red-600">*</span>
+            <span>Main Price</span> <span className="text-red-600">*</span>
           </p>
           <input
+            value={mainPrice}
             onChange={(e) => setMainPrice(e.target.value)}
             placeholder="Enter Cake Price"
             type="number"
@@ -128,10 +159,11 @@ const AddCakePage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span> Discounted Price</span>{" "}
+            <span>Discounted Price</span>{" "}
             <span className="text-red-600">*</span>
           </p>
           <input
+            value={discountedPrice}
             onChange={(e) => setDiscountedPrice(e.target.value)}
             placeholder="Enter Cake Price"
             type="number"
@@ -143,9 +175,10 @@ const AddCakePage = () => {
             <span>Weight Prices</span> <span className="text-red-600">*</span>
           </p>
           {weightPrice.map((item, index) => (
-            <div className="grid grid-cols-3 space-y-2 items-center  gap-12 ">
+            <div key={index} className="grid grid-cols-3 space-y-2 items-center gap-12">
               <div className="col-span-1">
                 <select
+                  value={item.weight}
                   onChange={(e) => handleWeightChange(index, e.target.value)}
                   className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
                 >
@@ -158,18 +191,20 @@ const AddCakePage = () => {
               </div>
               <div className="col-span-1">
                 <input
+                  value={item.mainPrice}
                   onChange={(e) => handleMainPriceChange(index, e.target.value)}
-                  placeholder="Enter Cake Main  Price"
+                  placeholder="Enter Cake Main Price"
                   type="number"
-                  className="border mb-1  border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+                  className="border mb-1 border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
                 />
               </div>
               <div className="col-span-1">
                 <input
+                  value={item.discountedPrice}
                   onChange={(e) => handleDiscountedPrice(index, e.target.value)}
-                  placeholder="Enter Cake Discounted  Price"
+                  placeholder="Enter Cake Discounted Price"
                   type="number"
-                  className="border mb-1  border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+                  className="border mb-1 border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
                 />
               </div>
             </div>
@@ -177,7 +212,7 @@ const AddCakePage = () => {
           <div className="flex justify-end py-2">
             <button
               onClick={addWeightPrice}
-              className="bg-blue-500  px-4 py-1 rounded-md text-white font-semibold cursor-pointer   "
+              className="bg-blue-500 px-4 py-1 rounded-md text-white font-semibold cursor-pointer"
             >
               Add
             </button>
@@ -188,6 +223,7 @@ const AddCakePage = () => {
             <span>Discount</span> <span className="text-red-600">*</span>
           </p>
           <input
+            value={discount}
             onChange={(e) => setDiscount(e.target.value)}
             placeholder="Enter Discount"
             type="number"
@@ -196,7 +232,7 @@ const AddCakePage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span> Cover Image</span> <span className="text-red-600">*</span>
+            <span>Cover Image</span> <span className="text-red-600">*</span>
           </p>
           <input
             onChange={handleCoverImage}
@@ -229,4 +265,4 @@ const AddCakePage = () => {
     </div>
   );
 };
-export default AddCakePage;
+export default EditCakePage;

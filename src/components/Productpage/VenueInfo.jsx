@@ -20,7 +20,6 @@ const VenueInfo = ({ id, data }) => {
   const [numberOfGuest, setNumberOfGuest] = useState("");
   const [fullName, setFullName] = useState("");
   const [eventArrivalTime, setEventArrivalTime] = useState();
-
   const handleMenuImage = (img) => {
     setMenuImage(img);
   };
@@ -28,8 +27,6 @@ const VenueInfo = ({ id, data }) => {
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
-
-
 
   const handleOrder = async (e) => {
     e.preventDefault();
@@ -54,7 +51,6 @@ const VenueInfo = ({ id, data }) => {
       numberOfGuest,
       type: "venue",
     };
-
     if (
       isNullOrWhitespace(venueData.eventDate) ||
       isNullOrWhitespace(venueData.eventType) ||
@@ -72,11 +68,8 @@ const VenueInfo = ({ id, data }) => {
       });
       return;
     }
-
     console.log(venueData);
-
     venueData.time = getCurrentTime();
-
     try {
       const docRef = await addDoc(collection(db, "orders"), venueData);
       console.log(docRef);
@@ -90,11 +83,10 @@ const VenueInfo = ({ id, data }) => {
       console.log(error);
     }
   };
-
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
@@ -130,7 +122,6 @@ const VenueInfo = ({ id, data }) => {
                 min={getTodayDate()}
               />
             </div>
-
             <div className="flex flex-col border-2 p-2 w-full lg:w-[280px] border-[#F06429] lg:border-t-none lg:border-l-0 rounded-b-md lg:rounded-e-md lg:rounded-b-none">
               <label htmlFor="event_type" className="text-[#F06429] px-2">
                 Choose Event Type
@@ -321,5 +312,4 @@ const VenueInfo = ({ id, data }) => {
     </>
   );
 };
-
 export default VenueInfo;
