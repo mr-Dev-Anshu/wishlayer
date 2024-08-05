@@ -10,9 +10,7 @@ const OfferPage = () => {
   const router = useRouter();
   
   const handleClick = (item) => {
-    setFilterData((prev) =>
-      prev.includes(item) ? prev.filter((ele) => ele !== item) : [...prev, item]
-    );
+    setFilterData(item);
     router.push("/allproducts");
   };
 
