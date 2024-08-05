@@ -1,4 +1,4 @@
-const getCurrentTime = () => {
+export const getCurrentTime = () => {
     const currentDateTime = new Date();
     const formattedDateTime = currentDateTime.toLocaleString(); 
     

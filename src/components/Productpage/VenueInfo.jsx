@@ -8,6 +8,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
+import { getCurrentTime } from "@/controller/Time";
 
 const VenueInfo = ({ id, data }) => {
   const [menuImage, setMenuImage] = useState(null);
@@ -27,6 +28,8 @@ const VenueInfo = ({ id, data }) => {
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
+
+
 
   const handleOrder = async (e) => {
     e.preventDefault();

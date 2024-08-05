@@ -10,6 +10,7 @@ import Image from "next/image";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import Swal from "sweetalert2";
+import { getCurrentTime } from "@/controller/Time";
 const RoomInfo = ({ data, id }) => {
   console.log("this is from Room ", data.type, id);
   const [fullName, setFullName] = useState();
