@@ -131,7 +131,7 @@ const VenueInfo = ({ id, data }) => {
                 id="event_type"
                 className="px-2 focus:outline-none"
               >
-                <option value="" disabled>
+                <option value="" >
                   Select an option
                 </option>
                 {[
