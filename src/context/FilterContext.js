@@ -6,9 +6,11 @@ export const filterContext = createContext();
 
 const FilterContextProvider = ({ children }) => {
   const [filterData, setFilterData] = useState([]);
-
+  const [paymentToggle, setPaymentToggle] = useState();
   return (
-    <filterContext.Provider value={{ filterData, setFilterData }}>
+    <filterContext.Provider
+      value={{ filterData, setFilterData, paymentToggle, setPaymentToggle }}
+    >
       {children}
     </filterContext.Provider>
   );

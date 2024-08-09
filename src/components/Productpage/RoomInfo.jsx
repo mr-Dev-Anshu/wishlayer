@@ -5,12 +5,14 @@ import { FaWallet } from "react-icons/fa6";
 import { FaAddressCard } from "react-icons/fa";
 import { AboutContent } from "@/constant/AboutContent";
 import flag from "@/assets/flag.webp";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import Swal from "sweetalert2";
 import { getCurrentTime } from "@/controller/Time";
+import { filterContext } from "@/context/FilterContext";
+import PaymentQRCode from "../Payment";
 const RoomInfo = ({ data, id }) => {
   console.log("this is from Room ", data.type, id);
   const [fullName, setFullName] = useState();
@@ -21,6 +23,9 @@ const RoomInfo = ({ data, id }) => {
   const [checkOutDate, setCheckOutDate] = useState();
   const [loading, setLoading] = useState();
   const [numberOfRoom, setNumberOfRoom] = useState();
+  const [orderData, setOrderData] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { paymentToggle, setPaymentToggle } = useContext(filterContext);
 
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
@@ -87,6 +92,46 @@ const RoomInfo = ({ data, id }) => {
     const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
+  };
+
+  const handlePayment = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      setErrorMessage(null);
+      const roomData = {
+        checkInDate,
+        checkOutDate,
+        phone,
+        fullName,
+        message: message || "No Message Provided ",
+        id,
+        price: data.price,
+        numberOfRoom,
+        type: data.type,
+      };
+
+      if (
+        isNullOrWhitespace(roomData.checkInDate) ||
+        isNullOrWhitespace(roomData.checkOutDate) ||
+        isNullOrWhitespace(roomData.phone) ||
+        isNullOrWhitespace(roomData.price) ||
+        isNullOrWhitespace(roomData.fullName) ||
+        isNullOrWhitespace(roomData.id) ||
+        isNullOrWhitespace(roomData.type)
+      ) {
+        setErrorMessage("All Fields are required ");
+        return;
+      }
+
+      roomData.time = getCurrentTime();
+      setOrderData(roomData);
+      setLoading(false);
+      setPaymentToggle(!paymentToggle);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   return (
@@ -276,6 +321,13 @@ const RoomInfo = ({ data, id }) => {
                 {loading ? "Loading..." : "Submit"}
               </button>
               <button
+                onClick={handlePayment}
+                type="submit"
+                className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                {loading ? "Loading..." : "Pay Now"}
+              </button>
+              <button
                 type="button"
                 onClick={() => setIsFormOpen(!isFormOpen)}
                 className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
@@ -284,6 +336,13 @@ const RoomInfo = ({ data, id }) => {
               </button>
             </form>
           </div>
+          {paymentToggle ? (
+            <div className="fixed inset-0  bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div>
+                <PaymentQRCode data={orderData} />
+              </div>
+            </div>
+          ) : null}
         </div>
       )}
     </>

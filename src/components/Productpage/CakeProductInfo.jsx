@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import img1 from "@/assets/eggless.png";
 import img2 from "@/assets/wishlist.png";
 import flag from "@/assets/flag.webp";
@@ -20,6 +20,10 @@ import { getSession } from "@/authThing/action";
 import Spinner from "../Spinner";
 import { getCurrentTime } from "@/controller/Time";
 import { handleAvailablity } from "@/controller/handleAvailablelity";
+import { initializePayment } from "@/controller/payment";
+import PaymentQRCode from "../Payment";
+import { FaTimes } from "react-icons/fa";
+import { filterContext } from "@/context/FilterContext";
 
 const CakeProductInfo = ({ data, id }) => {
   const router = useRouter();
@@ -38,6 +42,9 @@ const CakeProductInfo = ({ data, id }) => {
   const [locationMessage, setLocationMessage] = useState();
   const [loadingLocation, setLoadingLocaion] = useState();
   const [inputPinCode, setInputPinCode] = useState();
+  const { paymentToggle, setPaymentToggle } = useContext(filterContext);
+  const [orderData, setOrderData] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleMainPrice = (value) => {
     setMainPrice(value);
@@ -205,21 +212,104 @@ const CakeProductInfo = ({ data, id }) => {
   };
 
   const handleCheckLocation = async (pin) => {
-    setLocationMessage(null);
-    setLoadingLocaion(true);
-    const check = await handleAvailablity(pin);
+    try {
+      setLocationMessage(null);
+      setLoadingLocaion(true);
+      const check = await handleAvailablity(pin);
 
-    if (check.length >= 1) {
+      if (check.length >= 1) {
+        setLocationMessage({
+          success: true,
+          message: "This Location is Available , You can Order . ",
+        });
+      } else {
+        setLocationMessage({
+          success: false,
+          message: "Not Available on this Pincode",
+        });
+      }
+
+      setLoadingLocaion(false);
+    } catch (error) {
       setLocationMessage({
-        success: true,
-        message: "This Location is Available , You can Order . ",
+        success: false,
+        message: "Please Enter the pincode",
       });
-    }else {
-       setLocationMessage({success:false , message:"Not Available on this Pincode"})
+      setLoadingLocaion(false);
     }
-
-    setLoadingLocaion(false);
   };
+
+  const handlePayment = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    setErrorMessage(null);
+
+    const orderData = {
+      price: mainPrice,
+      fullName,
+      message: message || "No Message Provided ",
+      id,
+      weight,
+      type: data.type,
+      phone,
+      city,
+      address,
+    };
+    const orderData2 = {
+      price: data.discountedPrice,
+      fullName,
+      message: message || "No Message Provided ",
+      id,
+      type: data.type,
+      phone,
+      city,
+      address,
+    };
+    const finalOrderData = data.type === "cake" ? orderData : orderData2;
+
+    console.log(finalOrderData, data.type);
+
+    if (data.type === "cake") {
+      if (
+        isNullOrWhitespace(orderData.fullName) ||
+        isNullOrWhitespace(orderData.price) ||
+        isNullOrWhitespace(orderData.weight) ||
+        isNullOrWhitespace(orderData.id) ||
+        isNullOrWhitespace(orderData.type) ||
+        isNullOrWhitespace(orderData.phone) ||
+        isNullOrWhitespace(orderData.city) ||
+        isNullOrWhitespace(orderData.address)
+      ) {
+        setErrorMessage("Please Fill all the required filed");
+        setLoading(false);
+
+        return;
+      }
+    } else {
+      if (
+        isNullOrWhitespace(orderData2.fullName) ||
+        isNullOrWhitespace(orderData2.id) ||
+        isNullOrWhitespace(orderData2.type) ||
+        isNullOrWhitespace(orderData2.phone) ||
+        isNullOrWhitespace(orderData2.city) ||
+        isNullOrWhitespace(orderData2.price) ||
+        isNullOrWhitespace(orderData2.address)
+      ) {
+        setErrorMessage("Please Fill all the required filed");
+
+        setLoading(false);
+
+        return;
+      }
+    }
+    finalOrderData.time = getCurrentTime();
+    setOrderData(finalOrderData);
+    setPaymentToggle(!paymentToggle);
+    setLoading(false);
+  };
+
+
+   
 
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
@@ -311,15 +401,15 @@ const CakeProductInfo = ({ data, id }) => {
               </button>
             </div>
           </div>
-            {locationMessage && (
-              <p
-                className={` font-bold ${
-                  locationMessage?.success ? "text-green-600" : "text-red-600"
-                } w-full`}
-              >
-                {locationMessage?.message}
-              </p>
-            )}
+          {locationMessage && (
+            <p
+              className={` font-bold ${
+                locationMessage?.success ? "text-green-600" : "text-red-600"
+              } w-full`}
+            >
+              {locationMessage?.message}
+            </p>
+          )}
         </div>
       </div>
       <div>
@@ -428,7 +518,14 @@ const CakeProductInfo = ({ data, id }) => {
                 type="submit"
                 className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded mr-2"
               >
-                {loading ? "Loading..." : "Submit"}
+                {loading ? "Loading..." : "Cash on delivery"}
+              </button>
+              <button
+                onClick={handlePayment}
+                type="submit"
+                className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                {loading ? "Loading..." : "Pay Now"}
               </button>
               <button
                 type="button"
@@ -437,10 +534,18 @@ const CakeProductInfo = ({ data, id }) => {
               >
                 Cancel
               </button>
+              <p className="flex justify-center text-red-600">{errorMessage}</p>
             </form>
           </div>
         </div>
       )}
+      {paymentToggle ? (
+        <div className="fixed inset-0  bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div>
+            <PaymentQRCode data={orderData} />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

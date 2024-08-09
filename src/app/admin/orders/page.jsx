@@ -35,7 +35,7 @@ const OrdersPage = () => {
           order.type === "venue" ||
           order.type === "room" ||
           order.type === "cake" ||
-          order.type ==="decoration"
+          order.type === "decoration"
         ) {
           productRef = doc(db, "cakes", order.id);
           if (order.type !== "cake") {
@@ -47,7 +47,7 @@ const OrdersPage = () => {
           }
         }
 
-        console.log(productDetails) ; 
+        console.log(productDetails);
 
         return { ...order, productDetails };
       })
@@ -166,6 +166,21 @@ const OrdersPage = () => {
                   <p>Phone: {order.phone}</p>
                   <p>Price: ₹{order.price}</p>
                   <p>Message: {order.message}</p>
+                  <p>
+                    Payment Method :{" "}
+                    <span className="text-green-500">
+                      {order.method ? order.method : "Cash on Delivery"}
+                    </span>
+                  </p>
+                  {order.utr && <p> UTR No : {order.utr}</p>}
+                  {order.screenShot && (
+                    <div>
+                      <span>Screen shots : </span>
+                      <a className="text-blue-600" href={`${order.screenShot}`}>
+                        Click to see the payment details{" "}
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
               {order.type === "cake" && order.productDetails && (
@@ -183,13 +198,28 @@ const OrdersPage = () => {
                   <p>Name: {order.fullName}</p>
                   <p>Weight: {order.weight} KG </p>
                   <p>Phone: {order.phone}</p>
-                  <p>Price: ₹{order.mainPrice}</p>
+                  <p>Price: ₹{order.price}</p>
                   <p>Message: {order.message}</p>
+                  <p>
+                    Payment Method :{" "}
+                    <span className="text-green-500">
+                      {order.method ? order.method : "Cash on Delivery"}
+                    </span>
+                  </p>
+                  {order.utr && <p> UTR No : {order.utr}</p>}
+                  {order.screenShot && (
+                    <div>
+                      <span>Screen shots : </span>
+                      <a className="text-blue-600" href={`${order.screenShot}`}>
+                        Click to see the payment details{" "}
+                      </a>
+                    </div>
+                  )}
                 </div>
               )}
               {order.type === "decoration" && order.productDetails && (
                 <div>
-                  <p className="font-bold text-lg">Decoration  Order</p>
+                  <p className="font-bold text-lg">Decoration Order</p>
                   <img
                     src={order.productDetails.cover_img}
                     alt={order.title}
@@ -204,6 +234,19 @@ const OrdersPage = () => {
                   <p>Phone: {order.phone}</p>
                   <p>Price: ₹{order.productDetails.mainPrice}</p>
                   <p>Message: {order.message}</p>
+                  <p>
+                    Payment Method :{" "}
+                    <span className="text-green-500">
+                      {order.method ? "" : "Cash on Delivery"}
+                    </span>
+                  </p>
+                  {order.utr && <p> UTR No : {order.utr}</p>}
+                  {order.screenShot && (
+                    <div>
+                      <span>Screen shots</span>
+                      <a> {order.screenShot}</a>
+                    </div>
+                  )}
                 </div>
               )}
               <div className="flex justify-between mt-4">
