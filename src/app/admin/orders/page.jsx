@@ -166,6 +166,7 @@ const OrdersPage = () => {
                   <p>Phone: {order.phone}</p>
                   <p>Price: ₹{order.price}</p>
                   <p>Message: {order.message}</p>
+                  <p>Number of Guest: {order.numberOfGuest}</p>
                   <p>
                     Payment Method :{" "}
                     <span className="text-green-500">

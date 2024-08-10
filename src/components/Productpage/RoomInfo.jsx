@@ -26,7 +26,7 @@ const RoomInfo = ({ data, id }) => {
   const [orderData, setOrderData] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
   const { paymentToggle, setPaymentToggle } = useContext(filterContext);
-  const [numberOfGuest , setNumberOfGuest] = useState() ; 
+  const [numberOfGuest, setNumberOfGuest] = useState();
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
@@ -52,7 +52,7 @@ const RoomInfo = ({ data, id }) => {
       price: data.price,
       numberOfRoom,
       type: data.type,
-      numberOfGuest
+      numberOfGuest,
     };
 
     if (
@@ -62,6 +62,7 @@ const RoomInfo = ({ data, id }) => {
       isNullOrWhitespace(roomData.price) ||
       isNullOrWhitespace(roomData.fullName) ||
       isNullOrWhitespace(roomData.id) ||
+      isNullOrWhitespace(roomData.numberOfGuest) ||
       isNullOrWhitespace(roomData.type)
     ) {
       Swal.fire({
@@ -110,7 +111,7 @@ const RoomInfo = ({ data, id }) => {
         price: data.price,
         numberOfRoom,
         type: data.type,
-        numberOfGuest
+        numberOfGuest,
       };
 
       if (
@@ -120,12 +121,12 @@ const RoomInfo = ({ data, id }) => {
         isNullOrWhitespace(roomData.price) ||
         isNullOrWhitespace(roomData.fullName) ||
         isNullOrWhitespace(roomData.id) ||
+        isNullOrWhitespace(roomData.numberOfGuest) ||
         isNullOrWhitespace(roomData.type)
       ) {
         setErrorMessage("All Fields are required ");
         return;
       }
-
       roomData.time = getCurrentTime();
       setOrderData(roomData);
       setLoading(false);
@@ -180,7 +181,6 @@ const RoomInfo = ({ data, id }) => {
               />
             </div>
           </div>
-
           <div className="flex md:mt-4 md:flex-row  justify-between items-center md:justify-end">
             <div className="mt-6 md:mt-0 md:mr-4">
               <p className="text-[#F06429] text-xs px-1 pr-6">
@@ -268,7 +268,7 @@ const RoomInfo = ({ data, id }) => {
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Number of room
                 </label>
@@ -278,10 +278,10 @@ const RoomInfo = ({ data, id }) => {
                   placeholder="Enter Number of Room   "
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                 />
-              </div>
+              </div> */}
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Number of Guest 
+                  Number of Guest
                 </label>
                 <input
                   onChange={(e) => setNumberOfGuest(e.target.value)}
