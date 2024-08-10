@@ -116,7 +116,6 @@ const RoomInfo = ({ data, id }) => {
         type: data.type,
         numberOfGuest,
       };
-
       if (
         isNullOrWhitespace(roomData.checkInDate) ||
         isNullOrWhitespace(roomData.checkOutDate) ||
