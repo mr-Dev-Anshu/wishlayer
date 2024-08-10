@@ -308,9 +308,6 @@ const CakeProductInfo = ({ data, id }) => {
     setLoading(false);
   };
 
-
-   
-
   return (
     <div className="px-4 md:px-12 space-y-8 md:mr-20">
       <div className="flex flex-col md:flex-row md:gap-6 items-center">
@@ -420,14 +417,14 @@ const CakeProductInfo = ({ data, id }) => {
         </p>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className="border border-[#F06429] text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white">
+        {/* <div className="border border-[#F06429] text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white">
           Add to cart
-        </div>
+        </div> */}
         <div
           onClick={() => setIsFormOpen(!isFormOpen)}
           className="bg-[#F06429] text-white flex justify-center items-center py-2 rounded-md cursor-pointer hover:bg-[#853513]"
         >
-          Buy Now {mainPrice}
+          Buy Now {discountedPrice}
         </div>
       </div>
       {/* <div className="flex justify-center md:justify-start md:gap-24">

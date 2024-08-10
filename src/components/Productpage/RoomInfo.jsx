@@ -26,7 +26,7 @@ const RoomInfo = ({ data, id }) => {
   const [orderData, setOrderData] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
   const { paymentToggle, setPaymentToggle } = useContext(filterContext);
-
+  const [numberOfGuest , setNumberOfGuest] = useState() ; 
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
@@ -52,6 +52,7 @@ const RoomInfo = ({ data, id }) => {
       price: data.price,
       numberOfRoom,
       type: data.type,
+      numberOfGuest
     };
 
     if (
@@ -109,6 +110,7 @@ const RoomInfo = ({ data, id }) => {
         price: data.price,
         numberOfRoom,
         type: data.type,
+        numberOfGuest
       };
 
       if (
@@ -274,6 +276,17 @@ const RoomInfo = ({ data, id }) => {
                   onChange={(e) => setNumberOfRoom(e.target.value)}
                   type="Number"
                   placeholder="Enter Number of Room   "
+                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Number of Guest 
+                </label>
+                <input
+                  onChange={(e) => setNumberOfGuest(e.target.value)}
+                  type="Number"
+                  placeholder="Enter Number of Guest"
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                 />
               </div>
