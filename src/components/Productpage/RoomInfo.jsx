@@ -125,6 +125,7 @@ const RoomInfo = ({ data, id }) => {
         isNullOrWhitespace(roomData.type)
       ) {
         setErrorMessage("All Fields are required ");
+        setLoading(false);
         return;
       }
       roomData.time = getCurrentTime();
@@ -348,6 +349,7 @@ const RoomInfo = ({ data, id }) => {
                 Cancel
               </button>
             </form>
+            <p className="flex justify-center text-red-600">{errorMessage}</p>
           </div>
           {paymentToggle ? (
             <div className="fixed inset-0  bg-black bg-opacity-50 flex items-center justify-center z-50">
