@@ -49,7 +49,7 @@ const PaymentQRCode = ({ data }) => {
   };
 
   useEffect(() => {
-    const upiLink = `upi://pay?pa=anshur9608837@okhdfcbank&pn=Anshu Pandey&am=${data.price}.00&cu=INR&tn=Order_${data.type}`;
+    const upiLink = `upi://pay?pa=wishlayer@ybl&pn=wishlayer.com&am=${data.price}.00&cu=INR&tn=Order_${data.type}`;
     QRCode.toDataURL(upiLink)
       .then((url) => {
         setQrCodeUrl(url);

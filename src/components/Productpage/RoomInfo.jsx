@@ -179,7 +179,7 @@ const RoomInfo = ({ data, id }) => {
             </div>
           </div>
 
-          <div className="flex md:mt-4   md:flex-row justify-between items-center md:justify-end">
+          <div className="flex md:mt-4 md:flex-row  justify-between items-center md:justify-end">
             <div className="mt-6 md:mt-0 md:mr-4">
               <p className="text-[#F06429] text-xs px-1 pr-6">
                 For One Room Price
