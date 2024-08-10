@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { getCurrentTime } from "@/controller/Time";
 import { filterContext } from "@/context/FilterContext";
 import PaymentQRCode from "../Payment";
+import { Send_Email } from "@/controller/sendEmail";
 const RoomInfo = ({ data, id }) => {
   console.log("this is from Room ", data.type, id);
   const [fullName, setFullName] = useState();
@@ -50,7 +51,7 @@ const RoomInfo = ({ data, id }) => {
       message: message || "No Message Provided ",
       id,
       price: data.price,
-      numberOfRoom,
+
       type: data.type,
       numberOfGuest,
     };
@@ -70,9 +71,11 @@ const RoomInfo = ({ data, id }) => {
         text: "All fields are required.",
         icon: "error",
       });
+      return;
     }
 
     roomData.time = getCurrentTime();
+    console.log(roomData);
 
     try {
       const docRef = await addDoc(collection(db, "orders"), roomData);
@@ -82,6 +85,7 @@ const RoomInfo = ({ data, id }) => {
         text: "Your Room is Booked now ! ",
         icon: "success",
       });
+      await Send_Email(roomData);
       setIsFormOpen(!isFormOpen);
     } catch (error) {
       console.log(error);
@@ -109,7 +113,6 @@ const RoomInfo = ({ data, id }) => {
         message: message || "No Message Provided ",
         id,
         price: data.price,
-        numberOfRoom,
         type: data.type,
         numberOfGuest,
       };

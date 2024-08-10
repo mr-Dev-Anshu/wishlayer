@@ -4,6 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import img1 from "@/assets/eggless.png";
 import img2 from "@/assets/wishlist.png";
 import flag from "@/assets/flag.webp";
+import emailjs from "emailjs-com";
+
 import {
   addDoc,
   collection,
@@ -24,6 +26,7 @@ import { initializePayment } from "@/controller/payment";
 import PaymentQRCode from "../Payment";
 import { FaTimes } from "react-icons/fa";
 import { filterContext } from "@/context/FilterContext";
+import { Send_Email } from "@/controller/sendEmail";
 
 const CakeProductInfo = ({ data, id }) => {
   const router = useRouter();
@@ -88,7 +91,7 @@ const CakeProductInfo = ({ data, id }) => {
     });
 
     const orderData = {
-      mainPrice,
+      price: data.discountedPrice,
       fullName,
       message: message || "No Message Provided ",
       id,
@@ -117,7 +120,7 @@ const CakeProductInfo = ({ data, id }) => {
     if (data.type === "cake") {
       if (
         isNullOrWhitespace(orderData.fullName) ||
-        isNullOrWhitespace(orderData.mainPrice) ||
+        isNullOrWhitespace(orderData.price) ||
         isNullOrWhitespace(orderData.weight) ||
         isNullOrWhitespace(orderData.id) ||
         isNullOrWhitespace(orderData.type) ||
@@ -153,12 +156,14 @@ const CakeProductInfo = ({ data, id }) => {
     finalOrderData.time = getCurrentTime();
     try {
       const docRef = await addDoc(collection(db, "orders"), finalOrderData);
+      await Send_Email(finalOrderData);
       console.log("Order Added Here ");
       Swal.fire({
         title: "Good job!",
         text: "You have orderd Successfully  !",
         icon: "success",
       });
+
       setIsFormOpen(!isFormOpen);
       setLoading(false);
     } catch (error) {
@@ -245,7 +250,7 @@ const CakeProductInfo = ({ data, id }) => {
     setErrorMessage(null);
 
     const orderData = {
-      price: mainPrice,
+      price: discountedPrice,
       fullName,
       message: message || "No Message Provided ",
       id,

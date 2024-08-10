@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { getCurrentTime } from "@/controller/Time";
+import { Send_Email } from "@/controller/sendEmail";
 
 const VenueInfo = ({ id, data }) => {
   const [menuImage, setMenuImage] = useState(null);
@@ -47,7 +48,6 @@ const VenueInfo = ({ id, data }) => {
       message: message || "No Message Provided ",
       id,
       eventArrivalTime,
-
       numberOfGuest,
       type: "venue",
     };
@@ -78,6 +78,8 @@ const VenueInfo = ({ id, data }) => {
         text: "Your Party Venue  is Booked now ! ",
         icon: "success",
       });
+      await Send_Email(venueData);
+
       setIsFormOpen(!isFormOpen);
     } catch (error) {
       console.log(error);
@@ -131,9 +133,7 @@ const VenueInfo = ({ id, data }) => {
                 id="event_type"
                 className="px-2 focus:outline-none"
               >
-                <option value="" >
-                  Select an option
-                </option>
+                <option value="">Select an option</option>
                 {[
                   "Birtheday Party",
                   "Corporate Party",

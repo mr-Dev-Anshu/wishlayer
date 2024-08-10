@@ -8,6 +8,7 @@ import { uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { useRouter } from "next/navigation";
+import { Send_Email } from "@/controller/sendEmail";
 
 const PaymentQRCode = ({ data }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
@@ -15,7 +16,7 @@ const PaymentQRCode = ({ data }) => {
   const [ss, setSs] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const router = useRouter() ; 
+  const router = useRouter();
 
   const { setPaymentToggle, paymentToggle } = useContext(filterContext);
 
@@ -27,21 +28,26 @@ const PaymentQRCode = ({ data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage(null);
-   setLoading(true)
+    setLoading(true);
     try {
       if (!utr) {
         setErrorMessage("Please Fill the Utr Number ");
-        setLoading(false) ; 
+        setLoading(false);
         return;
       }
       data.utr = utr;
-      const url = await uploadImage(ss);
+      let url;
+      if (ss) {
+        url = await uploadImage(ss);
+      }
       data.screenShot = url;
       data.method = "Paid";
       setLoading(true);
       addDoc(collection(db, "orders"), data);
+      await Send_Email(data);
+
       setLoading(false);
-      router.push("/success")
+      router.push("/success");
     } catch (error) {
       console.error("Submission error:", error);
       setLoading(false);
@@ -83,7 +89,7 @@ const PaymentQRCode = ({ data }) => {
           <p className="text-lg text-center">Generating QR Code...</p>
         )}
 
-        <form  className="space-y-4">
+        <form className="space-y-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Please Enter The UTR Number or Transaction{" "}
@@ -109,7 +115,7 @@ const PaymentQRCode = ({ data }) => {
           </div>
 
           <button
-          onClick={handleSubmit}
+            onClick={handleSubmit}
             type="submit"
             className="bg-[#F06429] hover:bg-[#d9551d] text-white font-bold py-2 px-4 rounded w-full transition"
           >
