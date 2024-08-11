@@ -5,7 +5,7 @@ import { FaWallet } from "react-icons/fa6";
 import { FaAddressCard } from "react-icons/fa";
 import { AboutContent } from "@/constant/AboutContent";
 import flag from "@/assets/flag.webp";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
@@ -14,8 +14,12 @@ import { getCurrentTime } from "@/controller/Time";
 import { filterContext } from "@/context/FilterContext";
 import PaymentQRCode from "../Payment";
 import { Send_Email } from "@/controller/sendEmail";
+import { handleAddToCart } from "@/controller/handleAddToCart";
+import { getSession } from "@/authThing/action";
+import Spinner from "../Spinner";
+import { notify } from "@/controller/notify";
+import { ToastContainer } from "react-toastify";
 const RoomInfo = ({ data, id }) => {
-  console.log("this is from Room ", data.type, id);
   const [fullName, setFullName] = useState();
   const [phone, setPhone] = useState();
   const [message, setMessage] = useState();
@@ -28,20 +32,23 @@ const RoomInfo = ({ data, id }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const { paymentToggle, setPaymentToggle } = useContext(filterContext);
   const [numberOfGuest, setNumberOfGuest] = useState();
+  const [cartLoading, setCartLoading] = useState();
+  const [days, setDays] = useState(1);
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
+  useEffect(() => {
+    if (checkInDate && checkOutDate) {
+      const checkinDate = new Date(checkInDate);
+      const checkoutDate = new Date(checkOutDate);
+      const timeDifference = checkoutDate - checkinDate;
+      const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+      setDays(daysDifference);
+    }
+  }, [checkInDate, checkOutDate]);
 
   const handleOrder = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      text: "Please wait while we process your request.",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
 
     const roomData = {
       checkInDate,
@@ -50,7 +57,7 @@ const RoomInfo = ({ data, id }) => {
       fullName,
       message: message || "No Message Provided ",
       id,
-      price: data.price,
+      price: +data.price * days,
 
       type: data.type,
       numberOfGuest,
@@ -66,18 +73,22 @@ const RoomInfo = ({ data, id }) => {
       isNullOrWhitespace(roomData.numberOfGuest) ||
       isNullOrWhitespace(roomData.type)
     ) {
-      Swal.fire({
-        title: "Error!",
-        text: "All fields are required.",
-        icon: "error",
-      });
+      notify(0, "Plese fill the reqired field");
+      setLoading(false);
       return;
     }
 
     roomData.time = getCurrentTime();
     console.log(roomData);
-
     try {
+      Swal.fire({
+        title: "Loading...",
+        text: "Please wait while we process your request.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const docRef = await addDoc(collection(db, "orders"), roomData);
       console.log(docRef);
       Swal.fire({
@@ -112,7 +123,7 @@ const RoomInfo = ({ data, id }) => {
         fullName,
         message: message || "No Message Provided ",
         id,
-        price: data.price,
+        price: +data.price * days,
         type: data.type,
         numberOfGuest,
       };
@@ -127,10 +138,12 @@ const RoomInfo = ({ data, id }) => {
         isNullOrWhitespace(roomData.type)
       ) {
         setErrorMessage("All Fields are required ");
+        notify(0, "Plese fill the reqired field");
         setLoading(false);
         return;
       }
       roomData.time = getCurrentTime();
+
       setOrderData(roomData);
       setLoading(false);
       setPaymentToggle(!paymentToggle);
@@ -141,7 +154,7 @@ const RoomInfo = ({ data, id }) => {
   };
 
   return (
-    <>
+    <div>
       {" "}
       <div className="flex flex-col md:flex-row p-4 md:p-10 md:mr-20">
         <div className="w-full md:w-[620px] mb-6 md:mb-0">
@@ -149,7 +162,7 @@ const RoomInfo = ({ data, id }) => {
         </div>
         <div className="w-full md:w-auto p-2">
           <div>
-            <p className="text-lg md:text-xl font-medium">Hotel Comfort Inn</p>
+            <p className="text-lg md:text-xl font-medium">{data?.title}</p>
             <p className="flex text-xs pb-2 items-center">
               4.9
               <span className="px-2 text-yellow-500 py-0.5">
@@ -189,14 +202,42 @@ const RoomInfo = ({ data, id }) => {
               <p className="text-[#F06429] text-xs px-1 pr-6">
                 For One Room Price
               </p>
-              <p className="font-semibold px-1">{data.price}</p>
+              <p className="font-semibold px-1">₹{+data.price * days}</p>
             </div>
-            <button
-              onClick={() => setIsFormOpen(!isFormOpen)}
-              className="bg-[#F06429] rounded-md text-white p-2 mt-6 md:mt-0"
-            >
-              Reserve Now
-            </button>
+            <div className="md:flex gap-10 ">
+              <button
+                onClick={async () => {
+                  setCartLoading(true);
+                  const session = await getSession();
+                  console.log(session);
+                  if (!session || !session.phone) {
+                    router.push("/login");
+                    setCartLoading(false);
+                    return;
+                  }
+
+                  const cartData = {
+                    title: data?.title,
+                    cover: data?.cover_img,
+                    price: data.price,
+                    phone: session.phone,
+                    id: id,
+                  };
+                  await handleAddToCart(cartData);
+                  notify(1, "Product add into Cart");
+                  setCartLoading(false);
+                }}
+                className="border border-[#F06429] px-4 text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white"
+              >
+                {cartLoading ? <Spinner /> : "Add to Cart"}
+              </button>
+              <button
+                onClick={() => setIsFormOpen(!isFormOpen)}
+                className="bg-[#F06429] rounded-md text-white p-2 mt-6 md:mt-0"
+              >
+                Reserve Now
+              </button>
+            </div>
           </div>
           <div className="flex justify-end pt-4">
             <p className="text-xs font-extralight text-center md:text-right">
@@ -362,7 +403,8 @@ const RoomInfo = ({ data, id }) => {
           ) : null}
         </div>
       )}
-    </>
+      <ToastContainer />
+    </div>
   );
 };
 

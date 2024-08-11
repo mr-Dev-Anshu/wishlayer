@@ -27,6 +27,9 @@ import PaymentQRCode from "../Payment";
 import { FaTimes } from "react-icons/fa";
 import { filterContext } from "@/context/FilterContext";
 import { Send_Email } from "@/controller/sendEmail";
+import { handleAddToCart } from "@/controller/handleAddToCart";
+import { ToastContainer } from "react-toastify";
+import { notify } from "@/controller/notify";
 
 const CakeProductInfo = ({ data, id }) => {
   const router = useRouter();
@@ -48,6 +51,7 @@ const CakeProductInfo = ({ data, id }) => {
   const { paymentToggle, setPaymentToggle } = useContext(filterContext);
   const [orderData, setOrderData] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
+  const [cartLoading, setCartLoading] = useState(false);
 
   const handleMainPrice = (value) => {
     setMainPrice(value);
@@ -80,15 +84,6 @@ const CakeProductInfo = ({ data, id }) => {
   const handleOrder = async (e) => {
     setLoading(true);
     e.preventDefault();
-
-    Swal.fire({
-      title: "Loading...",
-      text: "Please wait while we process your request.",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
 
     const orderData = {
       price: data.discountedPrice,
@@ -128,11 +123,8 @@ const CakeProductInfo = ({ data, id }) => {
         isNullOrWhitespace(orderData.city) ||
         isNullOrWhitespace(orderData.address)
       ) {
-        Swal.fire({
-          title: "Error!",
-          text: "All fields are required.",
-          icon: "error",
-        });
+        notify(0, "Plese fill the reqired field");
+        setLoading(false);
         return;
       }
     } else {
@@ -145,16 +137,21 @@ const CakeProductInfo = ({ data, id }) => {
         isNullOrWhitespace(orderData2.price) ||
         isNullOrWhitespace(orderData2.address)
       ) {
-        Swal.fire({
-          title: "Error!",
-          text: "All fields are required.",
-          icon: "error",
-        });
+        setLoading(false);
+        notify(0, "Plese fill the reqired field");
         return;
       }
     }
     finalOrderData.time = getCurrentTime();
     try {
+      Swal.fire({
+        title: "Loading...",
+        text: "Please wait while we process your request.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const docRef = await addDoc(collection(db, "orders"), finalOrderData);
       await Send_Email(finalOrderData);
       console.log("Order Added Here ");
@@ -163,7 +160,6 @@ const CakeProductInfo = ({ data, id }) => {
         text: "You have orderd Successfully  !",
         icon: "success",
       });
-
       setIsFormOpen(!isFormOpen);
       setLoading(false);
     } catch (error) {
@@ -195,6 +191,7 @@ const CakeProductInfo = ({ data, id }) => {
         await deleteDoc(docRef);
         setWishlisted(false);
         console.log("Removed from wishlist");
+        notify(1, "Product removed from wishlist");
         setLoading(false);
       } else {
         const data = {
@@ -202,6 +199,7 @@ const CakeProductInfo = ({ data, id }) => {
           user: session.phone,
         };
         await addDoc(collection(db, "wishlists"), data);
+        notify(1, "Product Added into wishlist");
         setWishlisted(true);
         console.log("Added into wishlist");
         setLoading(false);
@@ -287,7 +285,7 @@ const CakeProductInfo = ({ data, id }) => {
       ) {
         setErrorMessage("Please Fill all the required filed");
         setLoading(false);
-
+        notify(0, "Plese fill the reqired field");
         return;
       }
     } else {
@@ -300,10 +298,9 @@ const CakeProductInfo = ({ data, id }) => {
         isNullOrWhitespace(orderData2.price) ||
         isNullOrWhitespace(orderData2.address)
       ) {
+        notify(0, "Plese fill the reqired field");
         setErrorMessage("Please Fill all the required filed");
-
         setLoading(false);
-
         return;
       }
     }
@@ -422,9 +419,37 @@ const CakeProductInfo = ({ data, id }) => {
         </p>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {/* <div className="border border-[#F06429] text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white">
-          Add to cart
-        </div> */}
+        <div
+          onClick={async () => {
+            setCartLoading(true);
+            const session = await getSession();
+            console.log(session);
+            if (!session || !session.phone) {
+              router.push("/login");
+              setCartLoading(false);
+              return;
+            }
+            if (!discountedPrice) {
+              notify(0, "Please first Select the weight");
+              setCartLoading(false);
+              return;
+            }
+
+            const cartData = {
+              title: data?.title,
+              cover: data?.cover_img,
+              price: discountedPrice,
+              phone: session.phone,
+              id: id,
+            };
+            await handleAddToCart(cartData);
+            notify(1, "Product Added into Cart");
+            setCartLoading(false);
+          }}
+          className="border border-[#F06429] text-[#F06429] flex justify-center items-center py-2 font-bold rounded-md cursor-pointer hover:bg-[#F06429] hover:text-white"
+        >
+          {cartLoading ? <Spinner /> : "Add to cart"}
+        </div>
         <div
           onClick={() => setIsFormOpen(!isFormOpen)}
           className="bg-[#F06429] text-white flex justify-center items-center py-2 rounded-md cursor-pointer hover:bg-[#853513]"
@@ -548,6 +573,7 @@ const CakeProductInfo = ({ data, id }) => {
           </div>
         </div>
       ) : null}
+      <ToastContainer />
     </div>
   );
 };

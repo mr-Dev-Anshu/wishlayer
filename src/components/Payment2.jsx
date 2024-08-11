@@ -10,7 +10,7 @@ import { db } from "@/config/firebase.config";
 import { useRouter } from "next/navigation";
 import { Send_Email } from "@/controller/sendEmail";
 
-const PaymentQRCode = ({ data }) => {
+const PaymentQRCode2 = ({ data }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [utr, setUtr] = useState("");
   const [ss, setSs] = useState(null);
@@ -44,6 +44,7 @@ const PaymentQRCode = ({ data }) => {
       data.method = "Paid";
       setLoading(true);
      const docRef = await  addDoc(collection(db, "orders"), data);
+      data.id = docRef.id ; 
       await Send_Email(data);
 
       setLoading(false);
@@ -127,7 +128,7 @@ const PaymentQRCode = ({ data }) => {
     </div>
   );
 };
-export default PaymentQRCode;
+export default PaymentQRCode2;
 
 // "use client";
 // import { useState } from "react";

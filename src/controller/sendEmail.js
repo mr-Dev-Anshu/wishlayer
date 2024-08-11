@@ -1,7 +1,7 @@
 import emailjs from "emailjs-com";
 
 export const Send_Email = async (data) => {
-  console.log(data); 
+  console.log(data);
   const emailData = {
     to_name: "Admin",
     from_name: "Wishlayer",
