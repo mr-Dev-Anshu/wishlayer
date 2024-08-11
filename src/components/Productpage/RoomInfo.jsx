@@ -19,6 +19,7 @@ import { getSession } from "@/authThing/action";
 import Spinner from "../Spinner";
 import { notify } from "@/controller/notify";
 import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 const RoomInfo = ({ data, id }) => {
   const [fullName, setFullName] = useState();
   const [phone, setPhone] = useState();
@@ -34,6 +35,7 @@ const RoomInfo = ({ data, id }) => {
   const [numberOfGuest, setNumberOfGuest] = useState();
   const [cartLoading, setCartLoading] = useState();
   const [days, setDays] = useState(1);
+  const router = useRouter() ; 
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
@@ -210,6 +212,7 @@ const RoomInfo = ({ data, id }) => {
                   setCartLoading(true);
                   const session = await getSession();
                   console.log(session);
+
                   if (!session || !session.phone) {
                     router.push("/login");
                     setCartLoading(false);

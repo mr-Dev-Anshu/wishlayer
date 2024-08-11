@@ -17,6 +17,10 @@ const NavList = [
     title: "Wishlist",
     to: "/wishlist",
   },
+  {
+    title: "Cart",
+    to: "/cart",
+  },
 ];
  
    

@@ -98,7 +98,9 @@ const WishlistPage = () => {
                 />
               </Link>
               <div className="flex items-center justify-between w-full ">
-                <h2 className="md:text-xl font-semibold text-sm  mt-2">{item.title}</h2>
+                <h2 className="md:text-xl font-semibold text-sm  mt-2">
+                  {item.title}
+                </h2>
 
                 <button
                   onClick={() => handleRemoveFromWishlist(item.id)}

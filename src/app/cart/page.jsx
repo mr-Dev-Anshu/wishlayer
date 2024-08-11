@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import flag from "@/assets/flag.webp";
 
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { getSession } from "@/authThing/action";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,7 @@ const CartPage = () => {
         let Tprice = 0;
         const proId = [];
         dataSnap.forEach((doc) => {
-          items.push({ id: doc.id, ...doc.data() });
+          items.push({ id: doc.id , ...doc.data() });
           let price = +doc.data().price;
           console.log("this is price", price);
           Tprice += price;
@@ -157,6 +157,24 @@ const CartPage = () => {
     setPayToggle(true);
   };
 
+  const handleRemoveFromCart = async (itemId) => {
+    try {
+      await deleteDoc(doc(db, "cart", itemId));
+      setCartItems(cartItems.filter((item) => item.id !== itemId));
+      const updatedTotalPrice = cartItems.reduce((total, item) => {
+        if (item.id !== itemId) {
+          return total + +item.price;
+        }
+        return total;
+      }, 0);
+      setTotalPrice(updatedTotalPrice);
+      notify(1, "Item removed from cart");
+    } catch (error) {
+      console.log("Error removing item from cart: ", error);
+      notify(0, "Failed to remove item from cart");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Your Cart</h2>
@@ -179,9 +197,17 @@ const CartPage = () => {
                   </p>
                 </div>
               </div>
-              <p className="text-lg font-semibold text-gray-700">
+             <div className="md:flex md:gap-10">
+             <p className="text-lg font-semibold text-gray-700">
                 ₹{item.price}
               </p>
+              <button
+                onClick={() => handleRemoveFromCart(item.id)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+              >
+                Remove
+              </button>
+             </div>
             </div>
           ))
         ) : (
