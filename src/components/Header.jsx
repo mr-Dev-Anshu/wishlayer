@@ -13,9 +13,12 @@ const Header = () => {
   const [phone, setPhone] = useState();
   const [toggle, setToggle] = useState(false);
 
+  
+
   const handleLogOut = async () => {
     await logout();
   };
+
   return (
     <div>
       <div
@@ -26,7 +29,7 @@ const Header = () => {
         }}
         className="h-[100px] flex justify-between items-center px-16"
       >
-        <Link href={'/'}>
+        <Link href={"/"}>
           <div className="">
             <Image className="w-14" src={logo} alt="logo" />
             <p className="text-[8px] font-black flex justify-center ">
