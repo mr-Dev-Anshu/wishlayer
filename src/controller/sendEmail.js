@@ -11,6 +11,7 @@ export const Send_Email = async (data) => {
     product_type: data.type || "N/A",
     product_title: data.title || "N/A",
     product_page_url: "www.wishlayer.com/admin/orders" || "N/A",
+    see_product : `www.wishlayer.com/${data.type}?${data.id}`,
     message: `A new order has been placed. You can review it here: www.wishlayer.com/admin/orders`,
     phone_number: data.phone || "N/A",
     address: data.address,
