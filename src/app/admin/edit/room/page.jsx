@@ -1,5 +1,6 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { Nagar } from "@/constant/Nagar";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,6 +20,7 @@ const EditRoomPage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
+  const [nagar, setNagar] = useState();
 
   useEffect(() => {
     if (id) {
@@ -34,6 +36,7 @@ const EditRoomPage = () => {
           setAddress(data.address);
           setPrice(data.price);
           setCoverImage(data.cover_img);
+          setNagar(data?.nagar);
         } else {
           console.log("No such document!");
         }
@@ -67,6 +70,7 @@ const EditRoomPage = () => {
       price,
       cover_img: coverImageUrl,
       type: "room",
+      nagar,
     };
     console.log(roomData);
     try {
@@ -137,6 +141,23 @@ const EditRoomPage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
+            <span>Ngar</span> <span className="text-red-600">*</span>
+          </p>
+          <select
+            value={nagar}
+            onChange={(e) => setNagar(e.target.value)}
+            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+          >
+            <option value="">Select Nagar</option>
+            {Nagar.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="">
+          <p className="md:text-xl font-bold flex">
             <span>Address</span> <span className="text-red-600">*</span>
           </p>
           <textarea
@@ -149,7 +170,8 @@ const EditRoomPage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span>Price of One Room</span> <span className="text-red-600">*</span>
+            <span>Price of One Room</span>{" "}
+            <span className="text-red-600">*</span>
           </p>
           <input
             type="number"

@@ -31,7 +31,7 @@ const AddDecoration = () => {
     setLoading(true);
     setMessage(null);
     if (!imgs || !coverImage) {
-      notify(0, "Please select the images")
+      notify(0, "Please select the images");
       setLoading(false);
       return;
     }
@@ -49,12 +49,12 @@ const AddDecoration = () => {
     console.log(cakeData);
     try {
       const docRef = await addDoc(collection(db, "cakes"), cakeData);
-     notify(1,"Decoration added successfully")
+      notify(1, "Decoration added successfully");
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
     } catch (error) {
-      console.error("Error adding Decoration : ", error);
-      setMessage("Error adding cake");
+      console.log("Error adding Decoration : ", error);
+      setMessage("Error adding Decoration");
     } finally {
       setLoading(false);
     }
@@ -155,7 +155,6 @@ const AddDecoration = () => {
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
       <ToastContainer />
-
     </div>
   );
 };

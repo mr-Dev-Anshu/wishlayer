@@ -1,5 +1,6 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { Nagar } from "@/constant/Nagar";
 import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
@@ -17,6 +18,7 @@ const AddRoomPage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
+  const [nagar, setNagar] = useState();
 
   const handleFile = (e) => {
     setImgs(e.target.files);
@@ -31,7 +33,7 @@ const AddRoomPage = () => {
     setLoading(true);
     setMessage(null);
     if (!imgs || !coverImage) {
-      notify(0, "Please select the images")
+      notify(0, "Please select the images");
 
       setLoading(false);
       return;
@@ -47,10 +49,11 @@ const AddRoomPage = () => {
       price,
       type: "room",
       cover_img: coverImageUrl,
+      nagar,
     };
     try {
       const docRef = await addDoc(collection(db, "cakes"), roomData);
-      notify(1,"Room  added successfully")
+      notify(1, "Room  added successfully");
 
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
@@ -111,6 +114,22 @@ const AddRoomPage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
+            <span>Ngar</span> <span className="text-red-600">*</span>
+          </p>
+          <select
+            onChange={(e) => setNagar(e.target.value)}
+            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+          >
+            <option value="">Select Nagar</option>
+            {Nagar.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="">
+          <p className="md:text-xl font-bold flex">
             <span>Address</span> <span className="text-red-600">*</span>
           </p>
           <textarea
@@ -167,7 +186,6 @@ const AddRoomPage = () => {
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
       <ToastContainer />
-
     </div>
   );
 };

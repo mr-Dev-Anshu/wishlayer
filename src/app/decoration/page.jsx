@@ -26,29 +26,33 @@ const MyComponent = () => {
   console.log(id);
 
   const getData = async () => {
-    const imgQ = query(collection(db, "images"), where("data_id", "==", id));
-    const imgDataSnap = await getDocs(imgQ);
-    const docRef = doc(db, "cakes", id);
-    const productSnap = await getDoc(docRef);
+    try {
+      const imgQ = query(collection(db, "images"), where("data_id", "==", id));
+      const imgDataSnap = await getDocs(imgQ);
+      const docRef = doc(db, "cakes", id);
+      const productSnap = await getDoc(docRef);
 
-    const allImages = [];
-    const product = [];
+      const allImages = [];
+      const product = [];
 
-    imgDataSnap.forEach((doc) => {
-      allImages.push({ id: doc.id, ...doc.data() });
-    });
-
-    console.log( "this is decoration all images" ,  allImages);
-    setImages(allImages);
-    console.log(productSnap.data());
-    setProductData(productSnap.data());
+      imgDataSnap.forEach((doc) => {
+        allImages.push({ id: doc.id, ...doc.data() });
+        console.log("this is doc for image ", doc.data());
+      });
+      console.log("this is decoration all images", allImages);
+      setImages(allImages);
+      console.log(productSnap.data());
+      setProductData(productSnap.data());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const isLoading = !images;
+  const isLoading = images?.length < 1;
   if (isLoading) {
     return (
       <div>
@@ -61,7 +65,7 @@ const MyComponent = () => {
     <div className="">
       <div className=" grid md:grid-cols-5 ">
         <div className="md:col-span-2">
-          <Products img={images} />
+          {images?.length >= 1 && <Products img={images} />}
         </div>
         <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden md:mb-12">
           <CakeProductInfo data={productData} id={id} />
@@ -73,7 +77,7 @@ const MyComponent = () => {
         <p className="px-12 md:text-xl font-semibold">
           You may also like this{" "}
         </p>
-        <Cake  show={true} type="decoration" />
+        <Cake show={true} type="decoration" />
       </div>
     </div>
   );

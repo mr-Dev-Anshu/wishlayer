@@ -32,6 +32,10 @@ import { ToastContainer } from "react-toastify";
 import { notify } from "@/controller/notify";
 
 const CakeProductInfo = ({ data, id }) => {
+  if (!data) {
+    return <Spinner />;
+  }
+  console.log(data)
   const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
@@ -429,7 +433,7 @@ const CakeProductInfo = ({ data, id }) => {
               setCartLoading(false);
               return;
             }
-            if (!discountedPrice) {
+            if (!discountedPrice && data.type === "cake") {
               notify(0, "Please first Select the weight");
               setCartLoading(false);
               return;
@@ -438,10 +442,11 @@ const CakeProductInfo = ({ data, id }) => {
             const cartData = {
               title: data?.title,
               cover: data?.cover_img,
-              price: discountedPrice,
+              price: discountedPrice || data.discountedPrice,
               phone: session.phone,
               id: id,
             };
+            console.log("this is cartData ", cartData);
             await handleAddToCart(cartData);
             notify(1, "Product Added into Cart");
             setCartLoading(false);

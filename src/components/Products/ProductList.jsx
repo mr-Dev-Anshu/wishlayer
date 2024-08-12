@@ -36,8 +36,8 @@ const ProductList = () => {
 
   useEffect(() => {
     if (filterData.length > 0) {
-      const newFilteredData = originalData.filter((d) =>
-        filterData.includes(d.type)
+      const newFilteredData = originalData.filter(
+        (d) => filterData.includes(d.type) || filterData.includes(d?.nagar)
       );
       setFilteredData(newFilteredData);
     } else {
@@ -49,7 +49,7 @@ const ProductList = () => {
     return (
       <div className="mt-[200px]">
         <div className="text-center">
-          <Spinner/>
+          <Spinner />
         </div>
       </div>
     );

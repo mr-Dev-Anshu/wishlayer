@@ -4,14 +4,16 @@ import img2 from "@/assets/menu2.png";
 import flag from "@/assets/flag.webp";
 import { AboutContent } from "@/constant/AboutContent";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { getCurrentTime } from "@/controller/Time";
 import { Send_Email } from "@/controller/sendEmail";
 
 const VenueInfo = ({ id, data }) => {
+  console.log(id);
+  console.log(data);
   const [menuImage, setMenuImage] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [eventDate, setEventDate] = useState("");
@@ -21,6 +23,7 @@ const VenueInfo = ({ id, data }) => {
   const [numberOfGuest, setNumberOfGuest] = useState("");
   const [fullName, setFullName] = useState("");
   const [eventArrivalTime, setEventArrivalTime] = useState();
+  const [menu, setMenu] = useState();
   const handleMenuImage = (img) => {
     setMenuImage(img);
   };
@@ -28,6 +31,22 @@ const VenueInfo = ({ id, data }) => {
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
+
+  useEffect(() => {
+    const getMenuData = async () => {
+      let menuData;
+      if (id) {
+        const q = query(collection(db, "menu"), where("productId", "==", id));
+        const menuDataSnap = await getDocs(q);
+        menuDataSnap.forEach((doc) => {
+          menuData = { id: doc.id, ...doc.data() };
+        });
+      }
+      console.log(menuData?.urls);
+      setMenu(menuData?.urls);
+    };
+    getMenuData();
+  }, []);
 
   const handleOrder = async (e) => {
     e.preventDefault();
@@ -79,7 +98,6 @@ const VenueInfo = ({ id, data }) => {
         icon: "success",
       });
       await Send_Email(venueData);
-
       setIsFormOpen(!isFormOpen);
     } catch (error) {
       console.log(error);
@@ -167,33 +185,25 @@ const VenueInfo = ({ id, data }) => {
               Reserve Now
             </div>
           </div>
-          <div className="border-2 border-[#F06429] rounded-md mt-6">
+          <div className="border-2 border-[#F06429] rounded-md mt-6 ">
             <p className="border-b-2 border-[#F06429] text-[#F06429] px-6 py-2">
               Menu Cards
             </p>
-            <div className="flex gap-3 flex-row p-6">
-              <div className="mb-4 lg:mb-0 lg:mr-6">
-                <Image
-                  onClick={() => handleMenuImage(img1)}
-                  width={120}
-                  src={img1}
-                  alt="Food Menu"
-                  className="cursor-pointer"
-                />
-                <p className="text-white bg-[#F06429] px-2">Food Menu</p>
-              </div>
-              <div>
-                <Image
-                  onClick={() => handleMenuImage(img2)}
-                  width={120}
-                  src={img2}
-                  alt="Bar Menu"
-                  className="cursor-pointer"
-                />
-                <p className="text-white bg-[#F06429] px-2">Bar Menu</p>
-              </div>
+            <div className="flex gap-3 overflow-x-scroll flex-nowrap p-6">
+              {menu?.length > 0 &&
+                menu?.map((item, index) => (
+                  <Image
+                    onClick={() => handleMenuImage(item)}
+                    width={120}
+                    src={item}
+                    alt="Food Menu"
+                    height={120}
+                    className="cursor-pointer"
+                  />
+                ))}
             </div>
           </div>
+
           <div className="border-2 border-[#F06429] rounded-md mt-6">
             <p className="border-b-2 border-[#F06429] px-6 py-2">About</p>
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

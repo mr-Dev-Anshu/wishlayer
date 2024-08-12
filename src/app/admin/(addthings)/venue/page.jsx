@@ -1,5 +1,6 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { Nagar } from "@/constant/Nagar";
 import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
@@ -17,9 +18,14 @@ const AddVenuePage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
+  const [nagar, setNagar] = useState();
+  const [menu, setMenu] = useState();
 
   const handleFile = (e) => {
     setImgs(e.target.files);
+  };
+  const handleMenuImage = (e) => {
+    setMenu(e.target.files);
   };
 
   const handleCoverImage = (e) => {
@@ -28,9 +34,10 @@ const AddVenuePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     setMessage(null);
-    if (!imgs || !coverImage) {
+    if (!imgs || !coverImage || !menu) {
       notify(0, "Please select the images");
 
       setLoading(false);
@@ -46,15 +53,27 @@ const AddVenuePage = () => {
       address,
       type: "venue",
       cover_img: coverImageUrl,
+      nagar,
     };
     try {
       const docRef = await addDoc(collection(db, "cakes"), venueData);
-      notify(1, "Venue added successfully");
-
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
+
+      const menuImageUrls = [];
+      for (let i = 0; i < menu?.length; i++) {
+        const menuUrl = await uploadImage(menu[i]);
+        menuImageUrls.push(menuUrl);
+        console.log(menuUrl) ; 
+      }
+      const menuData = {
+        productId: docRef.id,
+        urls: menuImageUrls,
+      };
+      await addDoc(collection(db, "menu"), menuData);
+      notify(1, "Venue added successfully");
     } catch (error) {
-      console.error("Error adding Venue: ", error);
+      console.log("Error adding Venue: ", error);
       setMessage("Error adding Venue");
     } finally {
       setLoading(false);
@@ -110,6 +129,22 @@ const AddVenuePage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
+            <span>Ngar</span> <span className="text-red-600">*</span>
+          </p>
+          <select
+            onChange={(e) => setNagar(e.target.value)}
+            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+          >
+            <option value="">Select Nagar</option>
+            {Nagar.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="">
+          <p className="md:text-xl font-bold flex">
             <span>Address</span> <span className="text-red-600">*</span>
           </p>
           <textarea
@@ -127,6 +162,18 @@ const AddVenuePage = () => {
           <input
             onChange={handleCoverImage}
             type="file"
+            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+          />
+        </div>
+
+        <div className="">
+          <p className="md:text-xl font-bold flex">
+            <span> Menu Images </span> <span className="text-red-600">*</span>
+          </p>
+          <input
+            onChange={handleMenuImage}
+            type="file"
+            multiple
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
           />
         </div>
@@ -153,7 +200,6 @@ const AddVenuePage = () => {
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
       <ToastContainer />
-
     </div>
   );
 };

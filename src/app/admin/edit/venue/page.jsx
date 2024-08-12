@@ -4,6 +4,7 @@ import { uploadFiles, uploadImage } from "@/controller/upload";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Nagar } from "@/constant/Nagar";
 
 const UpdateVenuePage = () => {
   const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ const UpdateVenuePage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
-
+   const [nagar , setNagar] = useState() ; 
   const router = useRouter();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const UpdateVenuePage = () => {
           setState(venueData.state);
           setAddress(venueData.address);
           setCoverImage(venueData.cover_img);
+          setNagar(venueData?.nagar) ; 
         } else {
           setMessage("Venue not found");
         }
@@ -76,6 +78,7 @@ const UpdateVenuePage = () => {
         address,
         type: "venue",
         cover_img: coverImageUrl,
+        nagar
       };
 
       await updateDoc(docRef, venueData);
@@ -144,6 +147,23 @@ const UpdateVenuePage = () => {
             type="text"
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
           />
+        </div>
+        <div className="">
+          <p className="md:text-xl font-bold flex">
+            <span>Ngar</span> <span className="text-red-600">*</span>
+          </p>
+          <select
+            value={nagar}
+            onChange={(e) => setNagar(e.target.value)}
+            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+          >
+            <option value="">Select Nagar</option>
+            {Nagar.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">

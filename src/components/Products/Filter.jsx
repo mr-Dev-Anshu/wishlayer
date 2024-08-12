@@ -1,18 +1,16 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { LiaGreaterThanSolid } from "react-icons/lia";
 import { FaRegCheckSquare, FaRegSquare } from "react-icons/fa";
 import { filterContext } from "@/context/FilterContext";
+import { Nagar } from "@/constant/Nagar";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 const Filter = () => {
-  const [selectFilter, setSelectFilter] = useState([]);
-  const filter = ["cake", "venue", "room" , "decoration"];
-  const ratings = [
-   
-  ];
-
+  const filter = ["cake", "venue", "room", "decoration"];
   const { filterData, setFilterData } = useContext(filterContext);
- 
+  const [openPlace, setOpenPlace] = useState();
+
   const handleFilterClick = (item) => {
     setFilterData((prev) =>
       prev.includes(item) ? prev.filter((ele) => ele !== item) : [...prev, item]
@@ -47,46 +45,44 @@ const Filter = () => {
           </div>
         ))}
 
-        {/* <div className="flex flex-col md:flex-row gap-4 mt-6">
-          <select
-            className="w-full md:w-36 lg:w-44 font-semibold focus:outline-none px-4 py-2 border border-gray-300 rounded-sm"
-            name=""
-            id=""
-          >
-            <option value="">Select</option>
-            <option value="min">Min</option>
-            <option value="max">Max</option>
-          </select>
-          <select
-            className="w-full md:w-36 lg:w-44 font-semibold focus:outline-none px-4 py-2 border border-gray-300 rounded-sm"
-            name=""
-            id=""
-          >
-            <option value="250+">250+</option>
-            <option value="500+">500+</option>
-            <option value="1000+">1000+</option>
-          </select>
-        </div> */}
-        {ratings.map((item) => (
-          <div
-            key={item}
-            className="flex items-center text-sm md:text-base lg:text-lg gap-4 font-semibold"
-          >
+        <div
+          onClick={() => setOpenPlace(!openPlace)}
+          className="flex justify-between  cursor-pointer   border border-gray-300 py-2 px-6 md:mx-0 md:px-1 items-center"
+        >
+          <p className="font-semibold">Filter by Nagar</p>
+          {!openPlace ? (
+            <span className="text-3xl">
+              {" "}
+              <IoMdArrowDropup />{" "}
+            </span>
+          ) : (
+            <span className="text-3xl">
+              {" "}
+              <IoMdArrowDropdown />
+            </span>
+          )}
+        </div>
+        {openPlace &&
+          Nagar.map((item) => (
             <div
-              className="cursor-pointer"
-              onClick={() => handleFilterClick(item)}
+              key={item}
+              className="flex items-center text-sm md:text-base lg:text-lg gap-4 font-semibold"
             >
-              {selectFilter.includes(item) ? (
-                <FaRegCheckSquare size={20} className="text-green-500" />
-              ) : (
-                <FaRegSquare size={20} className="text-gray-500" />
-              )}
+              <div
+                className="cursor-pointer"
+                onClick={() => handleFilterClick(item)}
+              >
+                {filterData.includes(item) ? (
+                  <FaRegCheckSquare size={20} className="text-green-500" />
+                ) : (
+                  <FaRegSquare size={20} className="text-gray-500" />
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <span>{item}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span>{item}</span>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

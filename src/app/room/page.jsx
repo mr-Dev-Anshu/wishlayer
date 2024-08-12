@@ -59,7 +59,9 @@ const MyComponent = () => {
     <div className="">
       <div className=" grid md:grid-cols-5 ">
         <div className="md:col-span-2">
-          <Products img={images} location={productData.address} />
+          {images?.length >= 1 && (
+            <Products img={images} location={productData.address} />
+          )}
         </div>
         <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden">
           <RoomInfo data={productData} id={id} />

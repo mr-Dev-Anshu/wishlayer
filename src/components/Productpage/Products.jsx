@@ -4,16 +4,10 @@ import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa";
 
 const Products = ({ img, location }) => {
-  console.log(img[0].url);
-
-  img.forEach((im) => {
-    console.log(im.url);
-  });
-
+  console.log(img);
   const [bigImage, setBigImage] = useState(img[0]?.url);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const openModal = (index) => {
     setCurrentIndex(index);
     setBigImage(img[index].url);
@@ -39,7 +33,7 @@ const Products = ({ img, location }) => {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-2 px-4 md:px-10">
-        <div className="flex flex-row gap-2 md:flex-col overflow-x-auto md:overflow-visible">
+        <div className="flex flex-row gap-2 md:flex-col overflow-x-auto  md:h-[400px] scroll-hidden">
           {img.map((item, index) => (
             <Image
               className="rounded-md mt-2 cursor-pointer"
