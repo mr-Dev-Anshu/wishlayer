@@ -38,7 +38,7 @@ const MyComponent = () => {
       allImages.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log(allImages);
+    console.log( "this is decoration all images" ,  allImages);
     setImages(allImages);
     console.log(productSnap.data());
     setProductData(productSnap.data());

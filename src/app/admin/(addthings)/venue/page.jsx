@@ -1,8 +1,10 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const AddVenuePage = () => {
   const [title, setTitle] = useState("");
@@ -29,7 +31,8 @@ const AddVenuePage = () => {
     setLoading(true);
     setMessage(null);
     if (!imgs || !coverImage) {
-      setMessage("Please select an image");
+      notify(0, "Please select the images");
+
       setLoading(false);
       return;
     }
@@ -46,7 +49,8 @@ const AddVenuePage = () => {
     };
     try {
       const docRef = await addDoc(collection(db, "cakes"), venueData);
-      setMessage("Venue has been added successfully");
+      notify(1, "Venue added successfully");
+
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
     } catch (error) {
@@ -119,7 +123,7 @@ const AddVenuePage = () => {
         <div className="">
           <p className="md:text-xl font-bold flex">
             <span>Cover Image</span> <span className="text-red-600">*</span>
-          </p> 
+          </p>
           <input
             onChange={handleCoverImage}
             type="file"
@@ -148,6 +152,8 @@ const AddVenuePage = () => {
         </div>
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
+      <ToastContainer />
+
     </div>
   );
 };

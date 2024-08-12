@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa";
 
 const Products = ({ img, location }) => {
+  console.log(img[0].url);
+
+  img.forEach((im) => {
+    console.log(im.url);
+  });
+
   const [bigImage, setBigImage] = useState(img[0]?.url);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);

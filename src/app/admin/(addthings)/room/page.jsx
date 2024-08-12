@@ -1,8 +1,10 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const AddRoomPage = () => {
   const [title, setTitle] = useState("");
@@ -29,7 +31,8 @@ const AddRoomPage = () => {
     setLoading(true);
     setMessage(null);
     if (!imgs || !coverImage) {
-      setMessage("Please select an image");
+      notify(0, "Please select the images")
+
       setLoading(false);
       return;
     }
@@ -47,7 +50,8 @@ const AddRoomPage = () => {
     };
     try {
       const docRef = await addDoc(collection(db, "cakes"), roomData);
-      setMessage("Room has been added successfully");
+      notify(1,"Room  added successfully")
+
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
     } catch (error) {
@@ -162,6 +166,8 @@ const AddRoomPage = () => {
         </div>
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
+      <ToastContainer />
+
     </div>
   );
 };

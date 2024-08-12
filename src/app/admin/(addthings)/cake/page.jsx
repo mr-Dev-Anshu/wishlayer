@@ -1,5 +1,6 @@
 "use client";
 import { db } from "@/config/firebase.config";
+import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
@@ -59,6 +60,7 @@ const AddCakePage = () => {
     setMessage(null);
     if (!imgs || !coverImage) {
       setMessage("Please select an image");
+      notify(0, "Please select the Image")
       setLoading(false);
       return;
     }
@@ -77,11 +79,12 @@ const AddCakePage = () => {
     console.log(cakeData);
     try {
       const docRef = await addDoc(collection(db, "cakes"), cakeData);
-      setMessage("Cake has been added successfully");
+      notify(1 , "Cake added successfully")
       console.log(docRef.id);
       uploadFiles(imgs, docRef.id);
     } catch (error) {
       console.error("Error adding cake: ", error);
+      notify(0,"Error in adding cake")
       setMessage("Error adding cake");
     } finally {
       setLoading(false);
