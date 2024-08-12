@@ -2,7 +2,15 @@
 import React, { useEffect, useState } from "react";
 import flag from "@/assets/flag.webp";
 
-import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { getSession } from "@/authThing/action";
 import { useRouter } from "next/navigation";
@@ -28,6 +36,7 @@ const CartPage = () => {
   const [phone, setPhone] = useState();
   const [paymentToggle, setPayToggle] = useState();
   const [payOrderData, setPayOrderData] = useState();
+  const [discountMessage, setDiscountMessage] = useState();
 
   useEffect(() => {
     const fetchWishlistItems = async () => {
@@ -47,7 +56,7 @@ const CartPage = () => {
         let Tprice = 0;
         const proId = [];
         dataSnap.forEach((doc) => {
-          items.push({ id: doc.id , ...doc.data() });
+          items.push({ id: doc.id, ...doc.data() });
           let price = +doc.data().price;
           console.log("this is price", price);
           Tprice += price;
@@ -58,6 +67,11 @@ const CartPage = () => {
             product_id: doc.data().id,
           });
         });
+
+        if (Tprice > 6000) {
+          Tprice = Tprice - Tprice * 0.1;
+          setDiscountMessage(true);
+        }
         console.log(items);
         setTotalPrice(Tprice);
         console.log("this is total price ", Tprice);
@@ -197,17 +211,17 @@ const CartPage = () => {
                   </p>
                 </div>
               </div>
-             <div className="md:flex md:gap-10">
-             <p className="text-lg font-semibold text-gray-700">
-                ₹{item.price}
-              </p>
-              <button
-                onClick={() => handleRemoveFromCart(item.id)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-              >
-                Remove
-              </button>
-             </div>
+              <div className="md:flex md:gap-10">
+                <p className="text-lg font-semibold text-gray-700">
+                  ₹{item.price}
+                </p>
+                <button
+                  onClick={() => handleRemoveFromCart(item.id)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))
         ) : (
@@ -310,6 +324,36 @@ const CartPage = () => {
           ) : null}
         </div>
       )}
+      <div>
+        {discountMessage && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center max-w-md w-full">
+              <button
+                onClick={() => setDiscountMessage(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              >
+                ✖️
+              </button>
+              <img
+                src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"
+                alt="Congratulations"
+                className="w-32 h-32 mx-auto mb-4"
+              />
+              <h2 className="text-2xl font-semibold mb-4">Congratulations!</h2>
+              <p className="text-gray-700">
+                You are ordering more than ₹6000, so you got a 10% discount!
+              </p>
+              <button
+                onClick={() => setDiscountMessage(false)}
+                className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <ToastContainer />
     </div>
   );
