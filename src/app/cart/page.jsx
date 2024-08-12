@@ -56,7 +56,7 @@ const CartPage = () => {
         let Tprice = 0;
         const proId = [];
         dataSnap.forEach((doc) => {
-          items.push({ id: doc.id, ...doc.data() });
+          items.push({ id2: doc.id, ...doc.data() });
           let price = +doc.data().price;
           console.log("this is price", price);
           Tprice += price;
@@ -172,11 +172,12 @@ const CartPage = () => {
   };
 
   const handleRemoveFromCart = async (itemId) => {
+    console.log(itemId) ; 
     try {
       await deleteDoc(doc(db, "cart", itemId));
-      setCartItems(cartItems.filter((item) => item.id !== itemId));
+      setCartItems(cartItems.filter((item) => item.id2 !== itemId));
       const updatedTotalPrice = cartItems.reduce((total, item) => {
-        if (item.id !== itemId) {
+        if (item.id2 !== itemId) {
           return total + +item.price;
         }
         return total;
@@ -216,7 +217,7 @@ const CartPage = () => {
                   ₹{item.price}
                 </p>
                 <button
-                  onClick={() => handleRemoveFromCart(item.id)}
+                  onClick={() => handleRemoveFromCart(item.id2)}
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
                 >
                   Remove
