@@ -35,7 +35,7 @@ const RoomInfo = ({ data, id }) => {
   const [numberOfGuest, setNumberOfGuest] = useState();
   const [cartLoading, setCartLoading] = useState();
   const [days, setDays] = useState(1);
-  const router = useRouter() ; 
+  const router = useRouter();
   const isNullOrWhitespace = (input) => {
     return !input || input.trim().length === 0;
   };
@@ -51,7 +51,6 @@ const RoomInfo = ({ data, id }) => {
 
   const handleOrder = async (e) => {
     e.preventDefault();
-
     const roomData = {
       checkInDate,
       checkOutDate,
@@ -60,7 +59,6 @@ const RoomInfo = ({ data, id }) => {
       message: message || "No Message Provided ",
       id,
       price: +data.price * days,
-
       type: data.type,
       numberOfGuest,
     };
@@ -69,7 +67,6 @@ const RoomInfo = ({ data, id }) => {
       isNullOrWhitespace(roomData.checkInDate) ||
       isNullOrWhitespace(roomData.checkOutDate) ||
       isNullOrWhitespace(roomData.phone) ||
-      isNullOrWhitespace(roomData.price) ||
       isNullOrWhitespace(roomData.fullName) ||
       isNullOrWhitespace(roomData.id) ||
       isNullOrWhitespace(roomData.numberOfGuest) ||
