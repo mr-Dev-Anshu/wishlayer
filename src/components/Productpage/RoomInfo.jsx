@@ -37,7 +37,7 @@ const RoomInfo = ({ data, id }) => {
   const [days, setDays] = useState(1);
   const router = useRouter();
   const isNullOrWhitespace = (input) => {
-    return !input || input.trim().length === 0;
+    return !input  === 0;
   };
   useEffect(() => {
     if (checkInDate && checkOutDate) {
