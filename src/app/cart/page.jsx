@@ -68,7 +68,7 @@ const CartPage = () => {
           });
         });
 
-        if (Tprice > 6000) {
+        if (Tprice >= 6000) {
           Tprice = Tprice - Tprice * 0.1;
           setDiscountMessage(true);
         }
