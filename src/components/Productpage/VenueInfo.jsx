@@ -203,7 +203,6 @@ const VenueInfo = ({ id, data }) => {
                 ))}
             </div>
           </div>
-
           <div className="border-2 border-[#F06429] rounded-md mt-6">
             <p className="border-b-2 border-[#F06429] px-6 py-2">About</p>
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
