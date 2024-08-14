@@ -5,6 +5,9 @@ import img from "@/assets/uploadbg2.png";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { uploadImage } from "@/controller/upload";
+import { Send_Email } from "@/controller/sendEmail";
+import flag from "@/assets/flag.webp";
+import { notify } from "@/controller/notify";
 
 const UploadCake = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -13,6 +16,7 @@ const UploadCake = () => {
   const [image, setImage] = useState();
   const [loading, setLoading] = useState();
   const [address, setAddress] = useState();
+  const [phone, setPhone] = useState();
 
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
@@ -33,7 +37,10 @@ const UploadCake = () => {
       message,
       image: cakeImage,
       weight,
-      address
+      address,
+      phone,
+      type: "Customise Cake",
+      price: "not Cleared",
     };
 
     console.log(cakeData);
@@ -41,9 +48,11 @@ const UploadCake = () => {
     try {
       const docRef = await addDoc(collection(db, "uploadedCake"), cakeData);
       setMessage("Cake has been added successfully");
+      await Send_Email(cakeData);
       console.log(docRef.id);
+      notify(1, "Order Place for Customise Cake ");
     } catch (error) {
-      console.error("Error adding cake: ", error);
+      console.log("Error adding cake: ", error);
     } finally {
       setLoading(false);
       setIsFormOpen(!isFormOpen);
@@ -101,9 +110,34 @@ const UploadCake = () => {
                   type="Number"
                 ></input>
               </div>
+              <div>
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Phone Number
+                </label>
+                <div className="grid grid-cols-5 items-center">
+                  <div className="col-span-1 border  border-gray-400 md:py-3 py-2 px-1  flex gap-2">
+                    <Image
+                      className="rounded-md"
+                      src={flag}
+                      width={20}
+                      height={20}
+                    />
+                    <span>+91</span>
+                  </div>
+                  <div className="col-span-4">
+                    <input
+                      onChange={(e) => setPhone(e.target.value)}
+                      name="phone"
+                      placeholder="Enter Phone Number"
+                      type="number"
+                      className="w-full md:p-3 p-2 focus:outline-none rounded-md border border-gray-400"
+                    />
+                  </div>
+                </div>
+              </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Address 
+                  Address
                 </label>
                 <input
                   onChange={(e) => setAddress(e.target.value)}

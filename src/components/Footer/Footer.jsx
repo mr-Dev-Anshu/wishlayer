@@ -35,22 +35,18 @@ const Footer = () => {
               </p>
             </div>
             <div className="">
-              <p className="text-gray-400">Contact: +91 7027463786</p>
-              <p className="text-gray-400">Email: floriwish.in@gmail.com</p>
+              <p className="">Business mail id's</p>
+              <p className="text-gray-400">contactsupport@wishlayer.com</p>
+              <p className="text-gray-400">Career@wishlayer.com</p>
+              <p className="text-gray-400">admin@wishlayer.com</p>
             </div>
           </div>
-          <div className="w-full md:w-auto space-y-2 mb-4 md:mb-0">
+          {/* <div className="w-full md:w-auto space-y-2 mb-4 md:mb-0">
             <h1 className="text-xl font-black">Contact</h1>
             <p className="text-gray-400">About us</p>
             <p className="text-gray-400">Contact us</p>
-          </div>
-          <div className="w-full md:w-auto space-y-2 mb-4 md:mb-0">
-            <h1 className="text-xl font-black">Policy & Security</h1>
-            <p className="text-gray-400">Privacy Policy</p>
-            <p className="text-gray-400">Return Policy</p>
-            <p className="text-gray-400">Delivery Policy</p>
-            <p className="text-gray-400">Terms & Conditions</p>
-          </div>
+          </div> */}
+
           <div className="w-full md:w-auto space-y-2 mb-4 md:mb-0">
             <h1 className="text-xl font-black">Quick Links</h1>
             {[
@@ -92,7 +88,10 @@ const Footer = () => {
               Floriwish 2024 | All Rights Reserved
             </p>
             <p className="text-gray-300 text-sm  md:text-xl">
-              Designed and Developed By DesignxJatin
+              Designed and Developed By{" "}
+              <a href={"https://www.linkedin.com/in/anshu-pandey-b08860258/"}>
+                Anshu Pandey
+              </a>
             </p>
           </div>
         </div>

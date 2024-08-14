@@ -31,7 +31,7 @@ export default function Home() {
       <div className="space-y-12">
         <OfferPage />
         <Cake />
-        <Decoration/>
+        <Decoration />
         <UploadCake />
         <Ads />
         <Party />
@@ -45,10 +45,12 @@ export default function Home() {
           <span className="text-[#F06429]">Top Lucknow nawabi's</span>{" "}
           Activities{" "}
         </p>
-        <CardSlider images={LocationData} />
+        <Link href={"/allproducts"}>
+          <CardSlider images={LocationData} />
+        </Link>
       </div>
 
-       <Reels /> 
+      <Reels />
       <CoupanList />
 
       <AboutUsPage />

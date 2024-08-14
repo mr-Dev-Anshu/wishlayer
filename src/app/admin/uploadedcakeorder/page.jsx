@@ -39,7 +39,7 @@ const Page = () => {
       [statusType]: true,
     });
 
-    fetchData() ; 
+    fetchData();
   };
 
   if (loading) {
@@ -51,33 +51,21 @@ const Page = () => {
   }
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="p-4 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
       {cakeData.map((item, index) => (
-        <div>
+        <div key={index} className="bg-white rounded-lg shadow-lg p-4">
           <img
             src={item.image}
             alt="Cake"
-            className="w-full h-[200px] rounded-lg shadow-lg"
+            className="w-full h-48 object-cover rounded-lg"
           />
           <div className="mt-4">
             <h2 className="text-xl font-semibold">Message</h2>
             <p className="text-gray-700">{item.message}</p>
             <h2 className="mt-2 text-xl font-semibold">Weight</h2>
-            <p className="text-gray-700">{item.weight}</p>
-          </div>
-          <div className="flex justify-between mt-4">
-            <button
-              className="px-4 py-2 bg-green-500 text-white rounded"
-              onClick={() => handleStatusUpdate(order.orderId, "Confirmed")}
-            >
-              Confirm
-            </button>
-            <button
-              className="px-4 py-2 bg-red-500 text-white rounded"
-              onClick={() => handleStatusUpdate(order.orderId, "declined")}
-            >
-              Decline
-            </button>
+            <p className="text-gray-700">{item.weight}Kg</p>
+            <h2 className="mt-2 text-xl font-semibold">Phone</h2>
+            <p className="text-gray-700">{item.phone}</p>
           </div>
         </div>
       ))}

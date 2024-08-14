@@ -16,7 +16,7 @@ const Filter = () => {
       prev.includes(item) ? prev.filter((ele) => ele !== item) : [...prev, item]
     );
     console.log(filterData);
-    setOpenPlace(false) ; 
+    setOpenPlace(false);
   };
 
   return (
