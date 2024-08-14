@@ -64,7 +64,7 @@ const MyComponent = () => {
         <div className="md:col-span-3 md:overflow-y-scroll md:h-screen scroll-hidden">
           <VenueInfo id={id} data={productData} />
           <div className="md:pl-20">
-            <RatingAndReview />
+            <RatingAndReview id={id} />
           </div>
         </div>
       </div>

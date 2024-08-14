@@ -1,7 +1,5 @@
 import { getSession } from "@/authThing/action";
 
-
-
 const NavList = [
   {
     title: "Home",
@@ -21,19 +19,10 @@ const NavList = [
     title: "Cart",
     to: "/cart",
   },
+  {
+    title: "Admin",
+    to: "/admin",
+  },
 ];
- 
-   
-    getSession().then((session)=> {
-      console.log("this is session" , session)
-      console.log(process.env.ADMIN_PHONE) ; 
-        if(session.phone==='1234567890')  {
-            NavList.push({
-              title:"Admin" , 
-              to:"/admin"
-            })
-        }
-    })
- 
 
 export { NavList };

@@ -61,17 +61,19 @@ const MyComponent = () => {
     <div className="">
       <div className=" grid md:grid-cols-5 ">
         <div className="md:col-span-2">
-        {images?.length >= 1 && <Products img={images} />}
+          {images?.length >= 1 && <Products img={images} />}
         </div>
         <div className="md:col-span-3 md:overflow-y-scroll md:h-screen md:scroll-hidden">
           <CakeProductInfo data={productData} id={id} />
-          <RatingAndReview />
+          <RatingAndReview id={id} />
         </div>
       </div>
       <UploadCake />
       <div>
-        <p className="px-12 md:text-xl font-semibold">You may also like  this </p>
-        <Cake show={true}/>
+        <p className="px-12 md:text-xl font-semibold">
+          You may also like this{" "}
+        </p>
+        <Cake show={true} />
       </div>
     </div>
   );
