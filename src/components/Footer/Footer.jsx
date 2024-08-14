@@ -72,12 +72,12 @@ const Footer = () => {
               Our Social Links
             </div>
             <div className="flex gap-2 text-2xl md:pl-8 pl-6 mt-2">
-              <span className="text-white bg-[#365493] p-1 rounded-full">
+              <a href="https://www.facebook.com/profile.php?id=100090485566405&mibextid=ZbWKwL" className="text-white bg-[#365493] p-1 rounded-full">
                 <FaFacebookF />
-              </span>
-              <span className="text-white bg-[#774430] p-1 rounded-full">
+              </a>
+              <a href="https://www.instagram.com/wishlayer?igsh=NnYzMjFlemhrYmNi" className="text-white bg-[#774430] p-1 rounded-full">
                 <FaInstagram />
-              </span>
+              </a>
             </div>
           </div>
         </div>
