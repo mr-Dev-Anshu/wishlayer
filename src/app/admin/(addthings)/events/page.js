@@ -211,7 +211,7 @@ const AddEventPage = () => {
                 <span className="text-xl ">{index + 1}.</span>
                 <input
                   onChange={(e) => handleTerm(index, e.target.value)}
-                  placeholder="Enter Event Location"
+                  placeholder="Enter Terms & Conditions "
                   className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
                 />
               </div>
@@ -233,7 +233,7 @@ const AddEventPage = () => {
             className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
           >
             <option value="general">General</option>
-            <option value="workshop">Workshop</option>
+            <option value="workshop">Music</option>
             <option value="concert">Concert</option>
             {/* Add other event types as needed */}
           </select>
