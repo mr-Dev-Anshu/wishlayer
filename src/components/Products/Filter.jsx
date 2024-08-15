@@ -7,7 +7,7 @@ import { Nagar } from "@/constant/Nagar";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 const Filter = () => {
-  const filter = ["cake", "venue", "room", "decoration"];
+  const filter = ["cake", "venue", "room", "decoration" , "event"];
   const { filterData, setFilterData } = useContext(filterContext);
   const [openPlace, setOpenPlace] = useState();
 

@@ -14,6 +14,7 @@ import AboutUsPage from "@/components/About";
 import Link from "next/link";
 import Decoration from "@/components/Explore/Decoration";
 import Reels from "@/components/Reels";
+import Event from "@/components/Explore/Event";
 export default function Home() {
   return (
     <>
@@ -27,7 +28,6 @@ export default function Home() {
           autoPlay={true}
         />
       </Link>
-
       <div className="space-y-12">
         <OfferPage />
         <Cake />
@@ -36,6 +36,7 @@ export default function Home() {
         <Ads />
         <Party />
         <Room />
+        <Event/>
       </div>
 
       <div className="bg-[#FFE7DD] py-10 my-12">

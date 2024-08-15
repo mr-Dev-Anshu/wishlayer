@@ -34,7 +34,7 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`fixed h-screen scroll-hidden  border border-gray-300 ${
+      className={` h-screen scroll-hidden  border border-gray-300 ${
         isCollapsed ? "w-16" : "w-64"
       }  transition-all duration-300 h-screen overflow-y-scroll`}
     >
@@ -58,6 +58,11 @@ const Sidebar = () => {
             to: "/admin/decorationlist",
             icon: <MdAddBox />,
             label: "Decoration",
+          },
+          {
+            to: "/admin/eventlist",
+            icon: <MdAddBox />,
+            label: "Events",
           },
           {
             to: "/admin/reels",

@@ -4,6 +4,7 @@ import { notify } from "@/controller/notify";
 import { uploadFiles, uploadImage } from "@/controller/upload";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const AddCakePage = () => {
   
@@ -229,6 +230,7 @@ const AddCakePage = () => {
         </div>
         {message && <div className="text-center text-red-600">{message}</div>}
       </div>
+      <ToastContainer />
     </div>
   );
 };

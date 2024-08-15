@@ -43,7 +43,6 @@ const Decoration  = (props) => {
           </div>
         </div>
         <Image
-        
           className="w-full h-[150px] md:h-[250px] object-cover"
           src={headingimg}
         />

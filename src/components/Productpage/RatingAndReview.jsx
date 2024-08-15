@@ -167,5 +167,4 @@ const RatingAndReview = ({ id }) => {
     </div>
   );
 };
-
 export default RatingAndReview;
