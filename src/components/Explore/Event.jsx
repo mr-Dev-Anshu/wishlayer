@@ -5,6 +5,7 @@ import Explore from "../Explore";
 import { db } from "@/config/firebase.config";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import Image from "next/image";
+import EventCard from "../EventCard";
 
 const Event = (props) => {
   const [roomData, setRoomData] = useState();
@@ -30,24 +31,28 @@ const Event = (props) => {
 
   return (
     <div>
-        {
-           !props?.show &&  <div>
-           <div className="my-6 md:my-12">
-             <div className="text-2xl md:text-3xl font-bold text-center">
-               Explore Events 
-             </div>
-             <div className="flex justify-center mt-2">
-               <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
-             </div>
-           </div>
-           <Image
-             className="w-full h-[150px] md:h-[250px] object-cover"
-             src={headingimg}
-           />
-         </div>
-        }
-      <Explore  data={roomData} />
-
+      {!props?.show && (
+        <div>
+          <div className="my-6 md:my-12">
+            <div className="text-2xl md:text-3xl font-bold text-center">
+              Explore Events
+            </div>
+            <div className="flex justify-center mt-2">
+              <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
+            </div>
+          </div>
+          <Image
+            className="w-full h-[150px] md:h-[250px] object-cover"
+            src={headingimg}
+          />
+        </div>
+      )}
+      {/* <Explore data={roomData} /> */}
+      <div className="grid md:grid-cols-3 md:mx-6 md:my-4 mx-4 my-2 space-y-4 place-items-center h-[300px]  " >
+        {roomData?.map((item) => (
+          <EventCard img={item.cover_img} heading={item.title} />
+        ))}
+      </div>
       {/* <div>
         <Category data={offerData} title={"Choose by Event Location"} />
       </div> */}
