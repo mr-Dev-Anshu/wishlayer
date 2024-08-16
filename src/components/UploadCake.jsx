@@ -103,16 +103,7 @@ const UploadCake = () => {
                   accept="image/*"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Weight
-                </label>
-                <input
-                  onChange={(e) => setWeight(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
-                  type="Number"
-                ></input>
-              </div>
+
               <div>
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Phone Number
@@ -138,16 +129,7 @@ const UploadCake = () => {
                   </div>
                 </div>
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Address
-                </label>
-                <input
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
-                  type="text"
-                ></input>
-              </div>
+
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Message
