@@ -35,9 +35,10 @@ const RoomInfo = ({ data, id }) => {
   const [numberOfGuest, setNumberOfGuest] = useState();
   const [cartLoading, setCartLoading] = useState();
   const [days, setDays] = useState(1);
+  const [isExpend, setIsExpend] = useState(false);
   const router = useRouter();
   const isNullOrWhitespace = (input) => {
-    return !input  === 0;
+    return !input === 0;
   };
   useEffect(() => {
     if (checkInDate && checkOutDate) {
@@ -245,6 +246,29 @@ const RoomInfo = ({ data, id }) => {
               <span className="text-[#F06429]">T&C</span> and{" "}
               <span className="text-[#F06429]">Hotel Policies</span>
             </p>
+          </div>
+          <div className="mt-4 md:mt-6">
+            {isExpend ? (
+              <div>
+                {data?.description}{" "}
+                <span
+                  onClick={() => setIsExpend(!isExpend)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  show less{" "}
+                </span>
+              </div>
+            ) : (
+              <div>
+                {data?.description?.substring(0, 100)} ...{" "}
+                <span
+                  onClick={() => setIsExpend(!isExpend)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  read more
+                </span>
+              </div>
+            )}
           </div>
           <div className="py-10">
             <div className="p-4">

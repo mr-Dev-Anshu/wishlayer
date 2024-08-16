@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getSession } from "@/authThing/action";
 import {
   collection,
@@ -15,10 +15,15 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
+import EventPass from "@/components/EventPass";
+import { filterContext } from "@/context/FilterContext";
 const page = () => {
   const [allOrders, setAllOrders] = useState([]);
   const router = useRouter();
   const [loading, setLoading] = useState();
+  const [passData, setPassData] = useState();
+
+   const {showPass , setShowPass } = useContext(filterContext) ; 
 
   const getData = async () => {
     const session = await getSession();
@@ -55,6 +60,19 @@ const page = () => {
     }
   };
 
+  const handlePass = (order) => {
+    const pasData = {
+      name: order?.fullName,
+      photo: order?.photo,
+      phone: order?.phone,
+      title: order?.title,
+      startingDate: order.startingDate,
+      startingTime: order?.startingTime,
+    };
+    setPassData(pasData);
+    setShowPass(!showPass);
+  };
+
   useEffect(() => {
     getData();
     console.log(allOrders);
@@ -69,12 +87,9 @@ const page = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {allOrders.map((order, index) => (
-            <Link href={`/${order.type}?id=${order.id}`}>
-              <div
-                key={index}
-                className="p-4 border border-gray-300  rounded-lg"
-              >
-                <div>
+            <div key={index} className="p-4 border border-gray-300  rounded-lg">
+              <div>
+                <Link href={`/${order.type}?id=${order.id}`}>
                   <Image
                     width={200}
                     height={200}
@@ -82,37 +97,50 @@ const page = () => {
                     alt={order.title}
                     className="w-full h-[200px] object-cover rounded-md mb-4"
                   />
+                </Link>
 
-                  <p className="font-bold text-lg">Title: {order.title}</p>
+                <p className="font-bold text-lg">Title: {order.title}</p>
 
-                  <p>Address: {order.address}</p>
-                  <p>City: {order.city}</p>
-                  <p>Name: {order.fullName}</p>
-                  {order.weight ? <p>Weight: {order.weight} KG </p> : null}
-                  <p>Phone: {order.phone}</p>
-                  <p>Price: ₹{order.price}</p>
-                  <p>Message: {order.message}</p>
-                  
-                </div>
-                <div>
-                  status:{" "}
-                  {order.Confirmed && (
-                    <span className="text-green-600 font-bold  mt-4">
-                      Confirmed
-                    </span>
-                  )}{" "}
-                  {order.declined && (
-                    <span className="text-red-600 mt-4 font-bold">Decline</span>
-                  )}{" "}
-                  {!order.Confirmed && !order.declined ? (
-                    <span className="text-blue-600 mt-4 font-bold">
-                      Pending
-                    </span>
-                  ) : null}
-                </div>
+                <p>Address: {order.address}</p>
+                <p>City: {order.city}</p>
+                <p>Name: {order.fullName}</p>
+                {order.weight ? <p>Weight: {order.weight} KG </p> : null}
+                <p>Phone: {order.phone}</p>
+                <p>Price: ₹{order.price}</p>
+                <p>Message: {order.message}</p>
               </div>
-            </Link>
+              <div>
+                status:{" "}
+                {order.Confirmed && (
+                  <span className="text-green-600 font-bold  mt-4">
+                    Confirmed
+                  </span>
+                )}{" "}
+                {order.declined && (
+                  <span className="text-red-600 mt-4 font-bold">Decline</span>
+                )}{" "}
+                {!order.Confirmed && !order.declined ? (
+                  <span className="text-blue-600 mt-4 font-bold">Pending</span>
+                ) : null}
+              </div>
+              {order.type === "event" && order.Confirmed && (
+                <p
+                  onClick={() => handlePass(order)}
+                  className="text-green-600 font-semibold cursor-pointer "
+                >
+                  Show pass{" "}
+                </p>
+              )}
+            </div>
           ))}
+        </div>
+      )}
+
+      {showPass && (
+        <div className="fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className=" ">
+            <EventPass data={passData} />
+          </div>
         </div>
       )}
     </div>

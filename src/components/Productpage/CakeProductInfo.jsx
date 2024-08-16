@@ -56,6 +56,7 @@ const CakeProductInfo = ({ data, id }) => {
   const [orderData, setOrderData] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
   const [cartLoading, setCartLoading] = useState(false);
+  const [isExpend , setIsExpend] = useState(false) ; 
 
   const handleMainPrice = (value) => {
     setMainPrice(value);
@@ -417,10 +418,27 @@ const CakeProductInfo = ({ data, id }) => {
       </div>
       <div>
         <h1 className="text-lg font-semibold">Product Description</h1>
-        <p>
-          {data?.description}
-          <span className="text-[#43A1F0] cursor-pointer">Read more</span>
-        </p>
+        {isExpend ? (
+              <div>
+                {data?.description}{" "}
+                <span
+                  onClick={() => setIsExpend(!isExpend)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  show less{" "}
+                </span>
+              </div>
+            ) : (
+              <div>
+                {data?.description?.substring(0, 100)} ...{" "}
+                <span
+                  onClick={() => setIsExpend(!isExpend)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  read more
+                </span>
+              </div>
+            )}
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div

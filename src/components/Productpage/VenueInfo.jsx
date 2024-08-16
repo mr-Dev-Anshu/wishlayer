@@ -24,6 +24,7 @@ const VenueInfo = ({ id, data }) => {
   const [fullName, setFullName] = useState("");
   const [eventArrivalTime, setEventArrivalTime] = useState();
   const [menu, setMenu] = useState();
+  const [isExpend, setIsExpend] = useState(false);
   const handleMenuImage = (img) => {
     setMenuImage(img);
   };
@@ -120,13 +121,7 @@ const VenueInfo = ({ id, data }) => {
         <div className="p-2 w-full lg:w-auto">
           <div>
             <p className="text-xl font-medium">{data?.title}</p>
-            <p className="flex text-xs pb-2">
-              4.9{" "}
-              <span className="px-2 text-yellow-500 py-0.5">
-                <FaStar />
-              </span>
-              (2025)
-            </p>
+
             <hr />
           </div>
           <div className="flex flex-col lg:flex-row py-3 pt-10">
@@ -203,6 +198,27 @@ const VenueInfo = ({ id, data }) => {
                 ))}
             </div>
           </div>
+          {isExpend ? (
+            <div>
+              {data?.description}{" "}
+              <span
+                onClick={() => setIsExpend(!isExpend)}
+                className="text-red-600 cursor-pointer"
+              >
+                show less{" "}
+              </span>
+            </div>
+          ) : (
+            <div>
+              {data?.description?.substring(0, 100)} ...{" "}
+              <span
+                onClick={() => setIsExpend(!isExpend)}
+                className="text-red-600 cursor-pointer"
+              >
+                read more
+              </span>
+            </div>
+          )}
           <div className="border-2 border-[#F06429] rounded-md mt-6">
             <p className="border-b-2 border-[#F06429] px-6 py-2">About</p>
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -35,7 +35,8 @@ const OrdersPage = () => {
           order.type === "venue" ||
           order.type === "room" ||
           order.type === "cake" ||
-          order.type === "decoration"
+          order.type === "decoration"||
+          order.type === "event"
         ) {
           productRef = doc(db, "cakes", order.id);
           if (order.type !== "cake") {
@@ -115,6 +116,16 @@ const OrdersPage = () => {
           onClick={() => setOrderType("decoration")}
         >
           Decoration Orders
+        </button>
+        <button
+          className={`mx-2 px-4 py-2 rounded ${
+            orderType !== "event"
+              ? "bg-white text-[#F06429]"
+              : "bg-[#F06429] text-white"
+          }`}
+          onClick={() => setOrderType("event")}
+        >
+          Events  Orders
         </button>
       </div>
 
@@ -246,6 +257,38 @@ const OrdersPage = () => {
                     <div>
                       <span>Screen shots</span>
                       <a> {order.screenShot}</a>
+                    </div>
+                  )}
+                </div>
+              )}
+              {order.type === "event" && order.productDetails && (
+                <div>
+                  <p className="font-bold text-lg">Events  Order</p>
+                  <img
+                    src={order.productDetails.cover_img}
+                    alt={order.title}
+                    className="w-full h-48 object-cover rounded-lg mb-2"
+                  />
+                  <p className="font-semibold ">{order.productDetails.title}</p>
+                  <p>Description: {order.productDetails.description}</p>
+                  <p>Address: {order.address}</p>
+                  <p>City: {order.city}</p>
+                  <p>Name: {order.fullName}</p>
+                  <p>Weight: {order.weight} KG </p>
+                  <p>Phone: {order.phone}</p>
+                  <p>Price: ₹{order.productDetails.mainPrice}</p>
+                  <p>Message: {order.message}</p>
+                  <p>
+                    Payment Method :{" "}
+                    <span className="text-green-500">
+                      {order.method ? "" : "Cash on Delivery"}
+                    </span>
+                  </p>
+                  {order.utr && <p> UTR No : {order.utr}</p>}
+                  {order.screenShot && (
+                    <div>
+                      <span>Screen shots : </span>
+                      <a href={order.screenShot} className="text-red-600">See Image </a>
                     </div>
                   )}
                 </div>

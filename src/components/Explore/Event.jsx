@@ -6,6 +6,7 @@ import { db } from "@/config/firebase.config";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import Image from "next/image";
 import EventCard from "../EventCard";
+import Link from "next/link";
 
 const Event = (props) => {
   const [roomData, setRoomData] = useState();
@@ -48,9 +49,17 @@ const Event = (props) => {
         </div>
       )}
       {/* <Explore data={roomData} /> */}
-      <div className="grid md:grid-cols-3 md:mx-6 md:my-4 mx-4 my-2 space-y-4 place-items-center h-[300px]  " >
+      <div className="grid md:grid-cols-3  md:mx-6 md:my-4 mx-4 my-2 gap-4 space-y-6 md:space-y-0  items-center   ">
         {roomData?.map((item) => (
-          <EventCard img={item.cover_img} heading={item.title} />
+          <Link href={`/${item.type}?id=${item.id}`}>
+            <div className="">
+              <EventCard
+                img={item.cover_img}
+                heading={item.title}
+                data={item}
+              />
+            </div>
+          </Link>
         ))}
       </div>
       {/* <div>
