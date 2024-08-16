@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 
 const UploadCake = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("no message");
   const [weight, setWeight] = useState();
   const [image, setImage] = useState();
   const [loading, setLoading] = useState();
@@ -34,23 +34,19 @@ const UploadCake = () => {
     }
 
     const cakeImage = await uploadImage(image);
-    if(!cakeImage  || !weight || !address || !phone ) {
-        notify(0 , "Please Provide all the information ")
-          return ; 
+    if (!cakeImage || !phone) {
+      notify(0, "Please Provide all the information ");
+      return;
     }
     const cakeData = {
       message,
       image: cakeImage,
-      weight,
-      address,
       phone,
       type: "Customise Cake",
       price: "not Cleared",
     };
 
     console.log(cakeData);
-
-    
 
     try {
       const docRef = await addDoc(collection(db, "uploadedCake"), cakeData);
@@ -94,7 +90,7 @@ const UploadCake = () => {
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-2xl mb-4">Upload Your  Image</h2>
+            <h2 className="text-2xl mb-4">Upload Your Image</h2>
             <form>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -180,7 +176,7 @@ const UploadCake = () => {
           </div>
         </div>
       )}
-        <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };
