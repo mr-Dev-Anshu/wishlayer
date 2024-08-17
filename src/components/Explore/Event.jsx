@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import headingimg from "@/assets/roomBanner.png";
 import Explore from "../Explore";
 import { db } from "@/config/firebase.config";
@@ -7,6 +7,8 @@ import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import Image from "next/image";
 import EventCard from "../EventCard";
 import Link from "next/link";
+import { filterContext } from "@/context/FilterContext";
+import { useRouter } from "next/navigation";
 
 const Event = (props) => {
   const [roomData, setRoomData] = useState();
@@ -24,6 +26,15 @@ const Event = (props) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const router = useRouter();
+
+  const { setFilterData, filterData } = useContext(filterContext);
+  const handleMore = () => {
+    // console.log("this is for more ", data);
+    setFilterData([...filterData, roomData[0]?.type]);
+    router.push("/allproducts");
   };
 
   useEffect(() => {
@@ -48,10 +59,16 @@ const Event = (props) => {
           />
         </div>
       )}
+      <div className="flex justify-end text-red-400 mx-10 my-4  ">
+        {" "}
+        <span onClick={handleMore} className="cursor-pointer">
+          More
+        </span>{" "}
+      </div>
       {/* <Explore data={roomData} /> */}
       <div className="grid md:grid-cols-3  md:mx-6 md:my-4 mx-4 my-2 gap-4 space-y-6 md:space-y-0  items-center   ">
         {roomData?.map((item) => (
-          <Link href={`/${item.type}?id=${item.id}`}>
+          <a href={`/${item.type}?id=${item.id}`}>
             <div className="">
               <EventCard
                 img={item.cover_img}
@@ -59,7 +76,7 @@ const Event = (props) => {
                 data={item}
               />
             </div>
-          </Link>
+          </a>
         ))}
       </div>
       {/* <div>
