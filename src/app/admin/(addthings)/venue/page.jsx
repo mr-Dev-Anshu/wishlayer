@@ -129,7 +129,7 @@ const AddVenuePage = () => {
         </div>
         <div className="">
           <p className="md:text-xl font-bold flex">
-            <span>Ngar</span> <span className="text-red-600">*</span>
+            <span>Nagar</span> <span className="text-red-600">*</span>
           </p>
           <select
             onChange={(e) => setNagar(e.target.value)}

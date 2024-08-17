@@ -7,7 +7,7 @@ import { Nagar } from "@/constant/Nagar";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 const Filter = () => {
-  const filter = ["cake", "venue", "room", "decoration" , "event"];
+  const filter = ["cake", "venue", "room", "decoration", "event"];
   const { filterData, setFilterData } = useContext(filterContext);
   const [openPlace, setOpenPlace] = useState();
 
@@ -30,8 +30,10 @@ const Filter = () => {
             className="flex items-center text-sm md:text-base lg:text-lg font-semibold"
           >
             <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
-              <LiaGreaterThanSolid size={16} className="text-gray-500" />
-              <span>{item}</span>
+              <LiaGreaterThanSolid size={16} className="text-gray-500 " />
+              <span className="capitalize">
+                {item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()}
+              </span>
             </div>
             <div
               className="ml-auto cursor-pointer"

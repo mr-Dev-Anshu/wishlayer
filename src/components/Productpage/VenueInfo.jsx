@@ -148,7 +148,7 @@ const VenueInfo = ({ id, data }) => {
               >
                 <option value="">Select an option</option>
                 {[
-                  "Birtheday Party",
+                  "Birthday Party",
                   "Corporate Party",
                   "Bachelor Party",
                   "Farewell Party",
