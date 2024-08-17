@@ -16,13 +16,14 @@ const AddEventPage = () => {
   const [terms, setTerms] = useState([{ term: "" }]);
   const [loading, setLoading] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
-  const [mainPrice, setMainPrice] = useState("");
-  const [discountedPrice, setDiscountedPrice] = useState("");
   const [type, setType] = useState("event");
   const [startingDate, setStartingDate] = useState();
   const [startingTime, setStartingTimg] = useState();
   const [endTime, setEndTime] = useState();
-  const [endDate , setEndDate] = useState() ; 
+  const [endDate, setEndDate] = useState();
+  const [eventPrice, setEventPrice] = useState([
+    { person: "", discountedPrice: "", mainPrice: "" },
+  ]);
 
   const handleFile = (e) => {
     setImgs(e.target.files);
@@ -47,9 +48,8 @@ const AddEventPage = () => {
     e.preventDefault();
     setLoading(true);
 
-   
+  
 
-   
     if (!imgs || !coverImage) {
       notify(0, "Please select the Image");
       setLoading(false);
@@ -60,19 +60,20 @@ const AddEventPage = () => {
     const eventData = {
       title,
       description,
-      mainPrice,
-      discountedPrice,
+      eventPrice,
       discount,
       location,
       terms,
       eventType,
-      startingDate , 
-      type, 
-      startingTime ,
-      endDate , 
-      endTime , 
+      startingDate,
+      type,
+      startingTime,
+      endDate,
+      endTime,
       cover_img: coverImageUrl,
     };
+
+    
 
     try {
       const docRef = await addDoc(collection(db, "cakes"), eventData);
@@ -84,6 +85,34 @@ const AddEventPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDiscountedPrice = (index, value) => {
+    const neweventPrice = [...eventPrice];
+    neweventPrice[index].discountedPrice = value;
+    setEventPrice(neweventPrice);
+    console.log(eventPrice);
+  };
+
+  const handleMainPriceChange = (index, value) => {
+    const neweventPrice = [...eventPrice];
+    neweventPrice[index].mainPrice = value;
+    setEventPrice(neweventPrice);
+    console.log(eventPrice);
+  };
+
+  const handlePerson = (index, value) => {
+    const neweventPrice = [...eventPrice];
+    neweventPrice[index].person = value;
+    setEventPrice(neweventPrice);
+    console.log(eventPrice);
+  };
+
+  const addEventPrice = () => {
+    setEventPrice([
+      ...eventPrice,
+      { person: "", discountedPrice: "", mainPrice: "" },
+    ]);
   };
 
   return (
@@ -111,28 +140,50 @@ const AddEventPage = () => {
             rows="4"
           />
         </div>
-        <div>
+
+        <div className="">
           <p className="md:text-xl font-bold flex">
-            <span>Main Price</span> <span className="text-red-600">*</span>
+            <span>Weight Prices</span> <span className="text-red-600">*</span>
           </p>
-          <input
-            onChange={(e) => setMainPrice(e.target.value)}
-            placeholder="Enter Event Price"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
-        </div>
-        <div>
-          <p className="md:text-xl font-bold flex">
-            <span>Discounted Price</span>{" "}
-            <span className="text-red-600">*</span>
-          </p>
-          <input
-            onChange={(e) => setDiscountedPrice(e.target.value)}
-            placeholder="Enter Discounted Price"
-            type="number"
-            className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
-          />
+          {eventPrice.map((item, index) => (
+            <div className="grid grid-cols-3 space-y-2 items-center  gap-12 ">
+              <div className="col-span-1">
+                <select
+                  onChange={(e) => handlePerson(index, e.target.value)}
+                  className="border border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+                >
+                  <option value="">Select Option</option>
+                  <option value="king">King</option>
+                  <option value="queen">Queen </option>
+                  <option value="couple">Coupel's Price </option>
+                </select>
+              </div>
+              <div className="col-span-1">
+                <input
+                  onChange={(e) => handleMainPriceChange(index, e.target.value)}
+                  placeholder="Enter Cake Main  Price"
+                  type="number"
+                  className="border mb-1  border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+                />
+              </div>
+              <div className="col-span-1">
+                <input
+                  onChange={(e) => handleDiscountedPrice(index, e.target.value)}
+                  placeholder="Enter Cake Discounted  Price"
+                  type="number"
+                  className="border mb-1  border-gray-400 text-xl focus:border-blue-500 focus:outline-none rounded-md px-4 py-1 w-full"
+                />
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-end py-2">
+            <button
+              onClick={addEventPrice}
+              className="bg-blue-500  px-4 py-1 rounded-md text-white font-semibold cursor-pointer   "
+            >
+              Add
+            </button>
+          </div>
         </div>
         <div>
           <p className="md:text-xl font-bold flex">

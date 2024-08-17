@@ -25,7 +25,9 @@ const EventInfo = ({ data, id }) => {
   const [isFormOpen, setIsFormOpen] = useState();
   const [orderData, setOrderData] = useState();
   const [loading, setLoading] = useState();
-  
+  const [person, setPerson] = useState();
+  const [price, setPrice] = useState();
+
   const handlePayment = async (e) => {
     try {
       e.preventDefault();
@@ -37,24 +39,26 @@ const EventInfo = ({ data, id }) => {
         return;
       }
 
-      const imgUrl = await  uploadImage(img);
+      const imgUrl = await uploadImage(img);
 
       const eventData = {
         phone,
         fullName,
         message: message || "No Message Provided ",
         id,
-        price: data.discountedPrice,
+        price,
         type: data.type,
+        person,
         photo: imgUrl,
       };
 
-       console.log(eventData)
+      console.log(eventData);
       if (
         !eventData.phone ||
         !eventData.fullName ||
         !eventData.id ||
-        !eventData.photo
+        !eventData.photo ||
+        !eventData.price
       ) {
         notify(0, "Plese fill the reqired field");
         setLoading(false);
@@ -69,6 +73,12 @@ const EventInfo = ({ data, id }) => {
       setLoading(false);
       console.log(error);
     }
+  };
+
+  const handlePrice = (index) => {
+    setPrice(data?.eventPrice[index].discountedPrice);
+    setPerson(data?.eventPrice[index].person);
+    console.log(person, price);
   };
 
   const { paymentToggle, setPaymentToggle } = useContext(filterContext);
@@ -99,14 +109,37 @@ const EventInfo = ({ data, id }) => {
           </span>
           <span>{data.location} </span>
         </div>
-        <div className="md:flex flex-col md:flex-row gap-2 md:gap-4 text-lg md:text-xl font-semibold items-center">
-          <span className="line-through text-gray-500 ml-2">
-            ₹{data?.mainPrice}{" "}
-          </span>
-          <span className="text-red-500 ml-2">₹{data?.discountedPrice}</span>
-          <span className="text-green-500 ml-2">({data.discount}% OFF)</span>
-          <span className="text-sm ml-2">(inclusive of GST)</span>
-        </div>
+        {data?.eventPrice?.length > 0 ? (
+          <table className="w-full text-left font-semibold">
+            <thead>
+              <tr>
+                <th className="text-sm md:text-[15px] py-2">For</th>
+                <th className="text-sm md:text-[15px] py-2">Main Price</th>
+                <th className="text-sm md:text-[15px] py-2">
+                  Discounted Price
+                </th>
+                <th className="text-sm md:text-[15px] py-2">Discount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.eventPrice?.map((item, index) => (
+                <tr key={index} className="border-b">
+                  <td className="py-2">For {item.person}</td>
+                  <td className="py-2 line-through text-gray-500">
+                    ₹{item?.mainPrice}
+                  </td>
+                  <td className="py-2 text-red-500">
+                    ₹{item?.discountedPrice}
+                  </td>
+                  <td className="py-2 text-green-500">
+                    ({data.discount}% OFF)
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : null}
+
         <div className="">
           <p className="text-xl  underline font-semibold"> About</p>
           <p className=" text-sm font-medium ">{data?.description}</p>
@@ -162,6 +195,16 @@ const EventInfo = ({ data, id }) => {
                   className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
                 />
               </div>
+
+              <select
+                onChange={(e) => handlePrice(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none"
+              >
+                <option value="">Select Type </option>
+                {data.eventPrice?.map((item, index) => (
+                  <option value={index}>{item.person}</option>
+                ))}
+              </select>
               <div>
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Phone Number

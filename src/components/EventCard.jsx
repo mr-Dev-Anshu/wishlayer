@@ -45,7 +45,7 @@ const EventCard = (props) => {
           </span>
         </div>
         <div className="flex  font-medium justify-between  md:pr-8 ">
-          <p>₹{props?.data?.discountedPrice} | ONWORDS</p>
+          <p>₹{props?.data?.eventPrice[0].mainPrice} | ONWORDS</p>
           <p className="text-sm">
             {" "}
             <span className="text-sky-500">|</span>Buy Now{" "}

@@ -27,6 +27,8 @@ const EventPass = (props) => {
           <p className="text-gray-600">Date: {props.data.startingDate} </p>
           <p className="text-gray-600">Time: {props.data.startingTime} </p>
           <p className="text-gray-600">Phone: {props.data.phone}</p>
+          <p className="text-gray-600">Type: {props.data.person}</p>
+          <p className="text-gray-600">Paid : {props.data.price}</p>
           <p className="text-gray-600">Company: wishlayer.com</p>
         </div>
         <div className="bg-gray-100 text-center py-2">
