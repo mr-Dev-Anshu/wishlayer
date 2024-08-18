@@ -35,6 +35,12 @@ const PaymentQRCode = ({ data }) => {
         setLoading(false);
         return;
       }
+      if (utr.trim().length !== 12) {
+        setErrorMessage("Please Fill the valid  Utr Number ");
+        setLoading(false);
+        return;
+      }
+
       data.utr = utr;
       let url;
       if (ss) {
@@ -43,7 +49,7 @@ const PaymentQRCode = ({ data }) => {
       data.screenShot = url;
       data.method = "Paid";
       setLoading(true);
-     const docRef = await  addDoc(collection(db, "orders"), data);
+      const docRef = await addDoc(collection(db, "orders"), data);
       await Send_Email(data);
 
       setLoading(false);
