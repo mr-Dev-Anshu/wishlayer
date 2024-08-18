@@ -203,7 +203,8 @@ const EventInfo = ({ data, id }) => {
                 <option value="">Select Type </option>
                 {data.eventPrice?.map((item, index) => (
                   <option value={index}>
-                    {item.person.charAt(0).toUpperCase() + item.person.slice(1).toLowerCase()}
+                    {item.person.charAt(0).toUpperCase() +
+                      item.person.slice(1).toLowerCase()}
                   </option>
                 ))}
               </select>

@@ -23,7 +23,7 @@ const page = () => {
   const [loading, setLoading] = useState();
   const [passData, setPassData] = useState();
 
-   const {showPass , setShowPass } = useContext(filterContext) ; 
+  const { showPass, setShowPass } = useContext(filterContext);
 
   const getData = async () => {
     const session = await getSession();
@@ -68,6 +68,8 @@ const page = () => {
       title: order?.title,
       startingDate: order.startingDate,
       startingTime: order?.startingTime,
+      type: order?.person,
+      price: order?.price,
     };
     setPassData(pasData);
     setShowPass(!showPass);
