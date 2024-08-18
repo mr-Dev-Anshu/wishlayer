@@ -20,7 +20,7 @@ const OfferPage = () => {
     <div className="px-4 py-6 md:px-48 md:py-10">
       <div className="">
         <p className="flex justify-center font-semibold text-red-500">
-          India's Best Event Company
+          Celebrate Moments, Create Memories.
         </p>
         <p className="flex justify-center text-2xl md:text-4xl font-bold mt-4">
           Our Offerings
@@ -29,7 +29,6 @@ const OfferPage = () => {
           <div className="w-10 h-1 md:w-20 md:h-2 bg-[#F0642966] rounded-lg"></div>
         </div>
       </div>
-
       <div className="grid grid-cols-1 justify-center  md:pl-10 md:grid-cols-4 items-center space-y-4 mt-12">
         {offerData.map((item, index) => (
           <div
