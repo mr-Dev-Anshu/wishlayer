@@ -219,19 +219,7 @@ const VenueInfo = ({ id, data }) => {
               </span>
             </div>
           )}
-          <div className="border-2 border-[#F06429] rounded-md mt-6">
-            <p className="border-b-2 border-[#F06429] px-6 py-2">About</p>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {AboutContent.map((item, index) => {
-                return (
-                  <div className="flex p-4" key={index}>
-                    <p className="pr-4 p-1">{item.icon}</p>
-                    <p>{item.title}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          
         </div>
         {isFormOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
