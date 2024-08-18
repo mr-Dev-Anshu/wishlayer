@@ -12,15 +12,14 @@ const EventPass = (props) => {
   return (
     <div className="max-w-sm mx-auto  bg-white shadow-lg rounded-lg  ">
       <div className="  ">
-        <div className="flex justify-center items-center ">
+        <div className="relative h-[300px] w-[300px] rounded-md overflow-hidden">
           <Image
-          className=" rounded-md"
-          src={props.data.photo}
-          width={200}
-          height={100}
-        />
+            src={props.data.photo}
+            alt="Image"
+            layout="fill"
+            objectFit="cover"
+          />
         </div>
-        
         <div className="px-6 py-4 text-center">
           <h2 className="text-xl font-semibold text-gray-800">
             {props.data.name}{" "}
