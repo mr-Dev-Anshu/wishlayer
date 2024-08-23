@@ -43,6 +43,7 @@ export const login = async (formData) => {
     session.phone = user.phone;
     console.log(session);
     await session.save();
+    // notify(1,"Login Success full ")
     redirect("/");
   }
 

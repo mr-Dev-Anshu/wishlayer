@@ -85,7 +85,7 @@ const Footer = () => {
         <div className="flex justify-center border-b border-[#183968] px-10 text-gray-300 pt-2">
           <div>
             <p className="text-gray-300 md:pl-4 ">
-              Floriwish 2024 | All Rights Reserved
+              Wishlayer 2023 |&copy; All rights reserved 
             </p>
             <p className="text-gray-300 text-sm  md:text-xl">
               Designed and Developed By{" "}
