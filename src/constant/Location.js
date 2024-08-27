@@ -1,7 +1,8 @@
 export const LocationData = [
+  
   {
-    img: "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/uploads%2Fdc61e042f250ec9622d8bb579a6752b1.png?alt=media&token=e133fb1e-d6e1-4c8e-838a-24106474563b",
-    heading: "Gomati Nagar",
+    img: "https://firebasestorage.googleapis.com/v0/b/wishlayer-e67a5.appspot.com/o/location%2FWhatsApp%20Image%202024-08-24%20at%2017.41.55_eb67fb96.jpg?alt=media&token=1014e808-9f58-4904-8286-2e8ac6c00913",
+    heading: "Hazaratganj",
   },
   {
     img: "https://firebasestorage.googleapis.com/v0/b/wishlayer-e67a5.appspot.com/o/location%2FWhatsApp%20Image%202024-08-24%20at%2017.41.55_eb67fb96.jpg?alt=media&token=1014e808-9f58-4904-8286-2e8ac6c00913",
