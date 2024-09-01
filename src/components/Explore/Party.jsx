@@ -43,8 +43,11 @@ const Venue = (props) => {
             </div>
           </div>
           <Image
+            width={1200}
+            height={600}
             className="w-full h-[150px] md:h-[250px] object-cover"
-            src={headingimg}
+            src="https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/upload%2Fbeautiful-view-restaurant-with-tables.jpg?alt=media&token=0c39ade8-3b22-46dc-b5b5-021e1d972d92"
+            alt="Cake glass arrangement"
           />
         </div>
       )}

@@ -91,7 +91,7 @@ const EventInfo = ({ data, id }) => {
           <span className="text-xl">
             <MdOutlineEventAvailable />
           </span>
-          <span>{data?.eventType}</span>
+          <span>{data?.type}</span>
         </div>
         <div className="flex font-semibold text-sm md:text-[17px]  gap-4 item-center ">
           <span className="text-xl">

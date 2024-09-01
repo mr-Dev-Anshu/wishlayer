@@ -17,7 +17,7 @@ const CakeExplore = () => {
       </div>
       <Image
         className="w-full h-[150px] md:h-[250px] object-cover"
-        src={explorecake}
+        src={"https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/upload%2Fcake-glass-arrangement-with-copy-space.jpg?alt=media&token=45026435-3ce5-4383-89f1-26139c5e24aa"}
       />
       <div className="grid grid-cols-1 md:grid-cols-6 gap-4 px-4 md:px-12 py-8 md:py-12">
         {CakeData.map((item, index) => (

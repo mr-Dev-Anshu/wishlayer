@@ -21,7 +21,8 @@ export default function SimpleSlider({image , height , weight , autoPlay}) {
   
     return (
       <>
-        <Slider {...settings} className="slider-container">
+      <div className=""> 
+         <Slider {...settings} className="slider-container">
           <div>
             <Image src={image} alt="hero1" layout="responsive" width={weight} height={height} />
           </div>
@@ -32,6 +33,8 @@ export default function SimpleSlider({image , height , weight , autoPlay}) {
             <Image src={image} alt="hero3" layout="responsive" width={weight} height={height} />
           </div>
         </Slider>
+      </div>
+       
   
         <style jsx global>{`
           .slider-container {

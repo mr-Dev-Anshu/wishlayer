@@ -35,7 +35,7 @@ const CakeProductInfo = ({ data, id }) => {
   if (!data) {
     return <Spinner />;
   }
-  console.log(data)
+  console.log(data);
   const router = useRouter();
   const [weight, setWeight] = useState();
   const [discountedPrice, setDiscountedPrice] = useState();
@@ -56,7 +56,7 @@ const CakeProductInfo = ({ data, id }) => {
   const [orderData, setOrderData] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
   const [cartLoading, setCartLoading] = useState(false);
-  const [isExpend , setIsExpend] = useState(false) ; 
+  const [isExpend, setIsExpend] = useState(false);
 
   const handleMainPrice = (value) => {
     setMainPrice(value);
@@ -419,26 +419,26 @@ const CakeProductInfo = ({ data, id }) => {
       <div>
         <h1 className="text-lg font-semibold">Product Description</h1>
         {isExpend ? (
-              <div>
-                {data?.description}{" "}
-                <span
-                  onClick={() => setIsExpend(!isExpend)}
-                  className="text-red-600 cursor-pointer"
-                >
-                  show less{" "}
-                </span>
-              </div>
-            ) : (
-              <div>
-                {data?.description?.substring(0, 100)} ...{" "}
-                <span
-                  onClick={() => setIsExpend(!isExpend)}
-                  className="text-red-600 cursor-pointer"
-                >
-                  read more
-                </span>
-              </div>
-            )}
+          <div>
+            {data?.description}{" "}
+            <span
+              onClick={() => setIsExpend(!isExpend)}
+              className="text-red-600 cursor-pointer"
+            >
+              show less{" "}
+            </span>
+          </div>
+        ) : (
+          <div>
+            {data?.description?.substring(0, 100)} ...{" "}
+            <span
+              onClick={() => setIsExpend(!isExpend)}
+              className="text-red-600 cursor-pointer"
+            >
+              read more
+            </span>
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div
@@ -490,7 +490,7 @@ const CakeProductInfo = ({ data, id }) => {
             <form>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Full Name
+                Full Name
                 </label>
                 <input
                   onChange={(e) => setFullName(e.target.value)}
@@ -510,10 +510,7 @@ const CakeProductInfo = ({ data, id }) => {
                   id=""
                 >
                   <option value="">Select your City </option>
-                  <option value="Noida">Noida</option>
                   <option value="Lucknow">Lucknow </option>
-                  <option value="Banarash">Banarash</option>
-                  <option value="Prayagraj">Prayagraj </option>
                 </select>
               </div>
               <div className="mb-4">

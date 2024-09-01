@@ -23,7 +23,7 @@ export default function Home() {
           image={
             "https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/hero.png?alt=media&token=ca07f37d-7331-433b-96e5-012b2a82da2a"
           }
-          height={400}
+          height={100}
           weight={800}
           autoPlay={true}
         />

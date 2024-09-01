@@ -30,23 +30,26 @@ const Room = (props) => {
 
   return (
     <div>
-        {
-           !props?.show &&  <div>
-           <div className="my-6 md:my-12">
-             <div className="text-2xl md:text-3xl font-bold text-center">
-               Explore Rooms
-             </div>
-             <div className="flex justify-center mt-2">
-               <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
-             </div>
-           </div>
-           <Image
-             className="w-full h-[150px] md:h-[250px] object-cover"
-             src={headingimg}
-           />
-         </div>
-        }
-      <Explore  data={roomData} />
+      {!props?.show && (
+        <div>
+          <div className="my-6 md:my-12">
+            <div className="text-2xl md:text-3xl font-bold text-center">
+              Explore Rooms
+            </div>
+            <div className="flex justify-center mt-2">
+              <div className="w-10 h-1 md:w-14 md:h-2 bg-[#F0642966] rounded-lg"></div>
+            </div>
+          </div>
+          <Image
+            width={1200} 
+            height={600} 
+            className="w-full h-[150px] md:h-[250px] object-cover"
+            src="https://firebasestorage.googleapis.com/v0/b/news-f534b.appspot.com/o/upload%2Fluxurious-bedroom-with-large-bed-hardwood-floors-large-windows.jpg?alt=media&token=959c8edd-5f11-42ec-8e77-bfe51899de14"
+            alt="Cake glass arrangement"
+          />
+        </div>
+      )}
+      <Explore data={roomData} />
 
       {/* <div>
         <Category data={offerData} title={"Choose by Event Location"} />
