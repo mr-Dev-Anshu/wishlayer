@@ -306,7 +306,7 @@ const RoomInfo = ({ data, id }) => {
             </div>
           </div>
           <p className="text-[#F06429] py-2 px-5 font-semibold">
-            Amenities at Hotel Comfort Inn
+            Amenities at Hotel {data?.title}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
             {AboutContent.map((items, index) => {
